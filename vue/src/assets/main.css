@@ -1,0 +1,30 @@
+@import './base.css';
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Space Grotesk', sans-serif;
+  text-decoration: none;
+}
+
+body {
+  background: var(--bg);
+}
+
+section {
+  display: flex;
+  justify-content: center;
+}
+
+.app_width {
+  width: 1250px;
+  max-width: 100%;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  background: none;
+}
