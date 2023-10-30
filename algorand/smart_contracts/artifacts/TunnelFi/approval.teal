@@ -1,0 +1,598 @@
+#pragma version 8
+intcblock 0 1 4 6
+bytecblock 0x 0x746f74616c5f737570706c79 0x00 0x6d696e5f737570706c79 0x72656c61796572 0x151f7c75
+txn NumAppArgs
+intc_0 // 0
+==
+bnz main_l20
+txna ApplicationArgs 0
+pushbytes 0x7549cae4 // "opt_in_asset(asset)void"
+==
+bnz main_l19
+txna ApplicationArgs 0
+pushbytes 0x8d87c9eb // "create_collateral(string,string,(uint64,address))uint64"
+==
+bnz main_l18
+txna ApplicationArgs 0
+pushbytes 0x21df7cea // "add_pair(byte,byte)void"
+==
+bnz main_l17
+txna ApplicationArgs 0
+pushbytes 0xd0a79409 // "supply(pay)void"
+==
+bnz main_l16
+txna ApplicationArgs 0
+pushbytes 0x9a073397 // "borrow()void"
+==
+bnz main_l15
+txna ApplicationArgs 0
+pushbytes 0xf97e9f27 // "repay(pay)void"
+==
+bnz main_l14
+txna ApplicationArgs 0
+pushbytes 0xb7355fd1 // "withdraw()void"
+==
+bnz main_l13
+txna ApplicationArgs 0
+pushbytes 0x903f4535 // "portal_transfer(byte[])byte[]"
+==
+bnz main_l12
+txna ApplicationArgs 0
+pushbytes 0x3239e646 // "un_bridge(axfer,uint64)void"
+==
+bnz main_l11
+err
+main_l11:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub unbridgecaster_18
+intc_1 // 1
+return
+main_l12:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub portaltransfercaster_17
+intc_1 // 1
+return
+main_l13:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub withdrawcaster_16
+intc_1 // 1
+return
+main_l14:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub repaycaster_15
+intc_1 // 1
+return
+main_l15:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub borrowcaster_14
+intc_1 // 1
+return
+main_l16:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub supplycaster_13
+intc_1 // 1
+return
+main_l17:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub addpaircaster_12
+intc_1 // 1
+return
+main_l18:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub createcollateralcaster_11
+intc_1 // 1
+return
+main_l19:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub optinassetcaster_10
+intc_1 // 1
+return
+main_l20:
+txn OnCompletion
+intc_0 // NoOp
+==
+bnz main_l22
+err
+main_l22:
+txn ApplicationID
+intc_0 // 0
+==
+assert
+callsub create_0
+intc_1 // 1
+return
+
+// create
+create_0:
+proto 0 0
+pushbytes 0x626f72726f775f617072 // "borrow_apr"
+intc_0 // 0
+app_global_put
+pushbytes 0x6c7476 // "ltv"
+pushint 8000 // 8000
+app_global_put
+bytec_3 // "min_supply"
+pushint 1000000 // 1000000
+app_global_put
+bytec 4 // "relayer"
+pushint 86525623 // 86525623
+app_global_put
+pushbytes 0x737570706c795f617072 // "supply_apr"
+intc_0 // 0
+app_global_put
+pushbytes 0x746f74616c5f626f72726f77 // "total_borrow"
+intc_0 // 0
+app_global_put
+bytec_1 // "total_supply"
+intc_0 // 0
+app_global_put
+retsub
+
+// opt_in_asset
+optinasset_1:
+proto 1 0
+txn Sender
+global CreatorAddress
+==
+// unauthorized
+assert
+itxn_begin
+intc_2 // axfer
+itxn_field TypeEnum
+global CurrentApplicationAddress
+itxn_field AssetReceiver
+frame_dig -1
+txnas Assets
+itxn_field XferAsset
+intc_0 // 0
+itxn_field AssetAmount
+intc_0 // 0
+itxn_field Fee
+itxn_submit
+retsub
+
+// create_collateral
+createcollateral_2:
+proto 3 1
+intc_0 // 0
+dup
+txn Sender
+global CreatorAddress
+==
+// unauthorized
+assert
+itxn_begin
+pushint 3 // acfg
+itxn_field TypeEnum
+intc_3 // 6
+itxn_field ConfigAssetDecimals
+frame_dig -2
+extract 2 0
+itxn_field ConfigAssetUnitName
+global CurrentApplicationAddress
+itxn_field ConfigAssetManager
+global CurrentApplicationAddress
+itxn_field ConfigAssetReserve
+frame_dig -3
+extract 2 0
+itxn_field ConfigAssetName
+global CurrentApplicationAddress
+itxn_field ConfigAssetClawback
+global CurrentApplicationAddress
+itxn_field ConfigAssetFreeze
+itxn_submit
+txn CreatedAssetID
+frame_bury 1
+frame_dig 1
+itob
+box_del
+pop
+frame_dig 1
+itob
+frame_dig -1
+box_put
+txn CreatedAssetID
+frame_bury 0
+retsub
+
+// add_pair
+addpair_3:
+proto 2 0
+txn Sender
+global CreatorAddress
+==
+// unauthorized
+assert
+bytec_2 // 0x00
+intc_0 // 0
+frame_dig -2
+setbyte
+box_del
+pop
+bytec_2 // 0x00
+intc_0 // 0
+frame_dig -2
+setbyte
+bytec_2 // 0x00
+intc_0 // 0
+frame_dig -1
+setbyte
+box_put
+retsub
+
+// supply
+supply_4:
+proto 1 0
+bytec_0 // ""
+intc_0 // 0
+dupn 3
+bytec_0 // ""
+dup
+frame_dig -1
+gtxns Receiver
+global CurrentApplicationAddress
+==
+// Receiver not valid
+assert
+txn Sender
+box_len
+store 1
+store 0
+load 1
+bz supply_4_l2
+intc_0 // 0
+return
+supply_4_l2:
+frame_dig -1
+gtxns Amount
+bytec_3 // "min_supply"
+app_global_get
+>=
+// Amount not sufficient
+assert
+bytec_1 // "total_supply"
+bytec_1 // "total_supply"
+app_global_get
+frame_dig -1
+gtxns Amount
++
+app_global_put
+frame_dig -1
+gtxns Amount
+frame_bury 1
+global LatestTimestamp
+frame_bury 2
+frame_dig 1
+itob
+frame_dig 2
+itob
+concat
+frame_bury 0
+txn Sender
+box_del
+pop
+txn Sender
+frame_dig 0
+box_put
+retsub
+
+// borrow
+borrow_5:
+proto 0 0
+retsub
+
+// repay
+repay_6:
+proto 1 0
+bytec_0 // ""
+retsub
+
+// withdraw
+withdraw_7:
+proto 0 0
+retsub
+
+// portal_transfer
+portaltransfer_8:
+proto 1 1
+bytec_0 // ""
+intc_0 // 0
+dupn 5
+bytec_0 // ""
+intc_0 // 0
+dupn 5
+bytec_0 // ""
+intc_0 // 0
+dup
+bytec_0 // ""
+dup
+pushint 1234 // 1234
+store 2
+intc_0 // 0
+store 3
+pushbytes 0x74657374 // "test"
+store 4
+intc_0 // 0
+store 5
+itxn_begin
+intc_2 // axfer
+itxn_field TypeEnum
+load 2
+itxn_field XferAsset
+load 3
+itxn_field AssetAmount
+load 4
+itxn_field AssetReceiver
+global CurrentApplicationAddress
+itxn_field Sender
+load 5
+itxn_field FreezeAsset
+intc_0 // 0
+itxn_field Fee
+itxn_submit
+frame_dig 18
+extract 2 0
+frame_bury 0
+frame_dig 0
+len
+itob
+extract 6 0
+frame_dig 0
+concat
+frame_bury 0
+retsub
+
+// un_bridge
+unbridge_9:
+proto 2 0
+frame_dig -1
+itob
+box_len
+store 8
+store 7
+load 8
+// Target does not exists
+assert
+pushbytes 0x03 // 0x03
+pushint 32 // 32
+bzero
+concat
+pushint 32 // 32
+bzero
+concat
+pushbytes 0x0008 // 0x0008
+concat
+frame_dig -1
+itob
+box_get
+store 10
+store 9
+load 10
+assert
+load 9
+concat
+pushbytes 0x0001 // 0x0001
+concat
+global CurrentApplicationAddress
+concat
+pushbytes 0x48656c6c6f // "Hello"
+concat
+store 6
+itxn_begin
+intc_3 // appl
+itxn_field TypeEnum
+bytec 4 // "relayer"
+app_global_get
+itxn_field ApplicationID
+pushbytes 0x7075626c6973684d657373616765 // "publishMessage"
+itxn_field ApplicationArgs
+load 6
+itxn_field ApplicationArgs
+intc_0 // 0
+itob
+itxn_field ApplicationArgs
+global CurrentApplicationAddress
+itxn_field Accounts
+itxn_submit
+retsub
+
+// opt_in_asset_caster
+optinassetcaster_10:
+proto 0 0
+intc_0 // 0
+txna ApplicationArgs 1
+intc_0 // 0
+getbyte
+frame_bury 0
+frame_dig 0
+callsub optinasset_1
+retsub
+
+// create_collateral_caster
+createcollateralcaster_11:
+proto 0 0
+intc_0 // 0
+bytec_0 // ""
+dupn 2
+txna ApplicationArgs 1
+frame_bury 1
+txna ApplicationArgs 2
+frame_bury 2
+txna ApplicationArgs 3
+frame_bury 3
+frame_dig 1
+frame_dig 2
+frame_dig 3
+callsub createcollateral_2
+frame_bury 0
+bytec 5 // 0x151f7c75
+frame_dig 0
+itob
+concat
+log
+retsub
+
+// add_pair_caster
+addpaircaster_12:
+proto 0 0
+intc_0 // 0
+dup
+txna ApplicationArgs 1
+intc_0 // 0
+getbyte
+frame_bury 0
+txna ApplicationArgs 2
+intc_0 // 0
+getbyte
+frame_bury 1
+frame_dig 0
+frame_dig 1
+callsub addpair_3
+retsub
+
+// supply_caster
+supplycaster_13:
+proto 0 0
+intc_0 // 0
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 0
+frame_dig 0
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 0
+callsub supply_4
+retsub
+
+// borrow_caster
+borrowcaster_14:
+proto 0 0
+callsub borrow_5
+retsub
+
+// repay_caster
+repaycaster_15:
+proto 0 0
+intc_0 // 0
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 0
+frame_dig 0
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 0
+callsub repay_6
+retsub
+
+// withdraw_caster
+withdrawcaster_16:
+proto 0 0
+callsub withdraw_7
+retsub
+
+// portal_transfer_caster
+portaltransfercaster_17:
+proto 0 0
+bytec_0 // ""
+dup
+txna ApplicationArgs 1
+frame_bury 1
+frame_dig 1
+callsub portaltransfer_8
+frame_bury 0
+bytec 5 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// un_bridge_caster
+unbridgecaster_18:
+proto 0 0
+intc_0 // 0
+dup
+txna ApplicationArgs 1
+btoi
+frame_bury 1
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 0
+frame_dig 0
+gtxns TypeEnum
+intc_2 // axfer
+==
+assert
+frame_dig 0
+frame_dig 1
+callsub unbridge_9
+retsub

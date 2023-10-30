@@ -6,7 +6,7 @@ algod_server: http://localhost
 algod_token: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 author_email: devarogundade@gmail.com
 author_name: Arogundade Ibrahim
-contract_name: tunnel
+contract_name: tunnelfi
 deployment_language: python
 ide_jetbrains: false
 ide_vscode: true
@@ -14,7 +14,7 @@ indexer_port: 8980
 indexer_server: http://localhost
 indexer_token: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 preset_name: starter
-project_name: tunnel
+project_name: tunnelfi
 python_linter: none
 use_dispenser: false
 use_github_actions: false

@@ -1,0 +1,120 @@
+{
+    "name": "TunnelFi",
+    "methods": [
+        {
+            "name": "opt_in_asset",
+            "args": [
+                {
+                    "type": "asset",
+                    "name": "asset"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "create_collateral",
+            "args": [
+                {
+                    "type": "string",
+                    "name": "asset_name"
+                },
+                {
+                    "type": "string",
+                    "name": "asset_unit_name"
+                },
+                {
+                    "type": "(uint64,address)",
+                    "name": "collateral"
+                }
+            ],
+            "returns": {
+                "type": "uint64"
+            }
+        },
+        {
+            "name": "add_pair",
+            "args": [
+                {
+                    "type": "byte",
+                    "name": "pair0"
+                },
+                {
+                    "type": "byte",
+                    "name": "pair1"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "supply",
+            "args": [
+                {
+                    "type": "pay",
+                    "name": "payment"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "borrow",
+            "args": [],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "repay",
+            "args": [
+                {
+                    "type": "pay",
+                    "name": "payment"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "withdraw",
+            "args": [],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "portal_transfer",
+            "args": [
+                {
+                    "type": "byte[]",
+                    "name": "vaa"
+                }
+            ],
+            "returns": {
+                "type": "byte[]"
+            }
+        },
+        {
+            "name": "un_bridge",
+            "args": [
+                {
+                    "type": "axfer",
+                    "name": "axfer"
+                },
+                {
+                    "type": "uint64",
+                    "name": "targetChain"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        }
+    ],
+    "networks": {}
+}

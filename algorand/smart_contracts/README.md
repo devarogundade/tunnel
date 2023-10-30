@@ -1,6 +1,6 @@
 ## How to add new smart contracts?
 
-By the default the template creates a single `HelloWorld` contract under tunnel folder in the `smart_contracts` directory. To add a new contract:
+By the default the template creates a single `HelloWorld` contract under tunnelfi folder in the `smart_contracts` directory. To add a new contract:
 
 1. From the root of the repository execute `algokit generate smart-contract`. This will create a new starter smart contract and deployment configuration file under `{your_contract_name}` subfolder under `smart_contracts` directory.
 2. Each contract potentially has different creation parameters and deployment steps. Hence, you need to define your deployment logic in `deploy_config.py`file.

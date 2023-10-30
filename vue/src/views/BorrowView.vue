@@ -38,22 +38,88 @@
                 <div class="borrow_app">
                     <div class="context">
                         <div class="tabs">
-                            <button class="tab tab_active">
+                            <button :class="tab == 1 ? 'tab tab_active' : 'tab'" @click="tab = 1">
                                 <p>Borrow</p>
                             </button>
 
-                            <button class="tab">
+                            <button :class="tab == 2 ? 'tab tab_active' : 'tab'" @click="tab = 2">
                                 <p>Repay</p>
                             </button>
                         </div>
 
-                        <div class="borrow">
+                        <div class="borrow" v-if="tab == 1">
                             <div class="borrow_header">
                                 <p>Borrow Algo</p>
                             </div>
 
+                            <div class="fields">
+                                <div class="input_field">
+                                    <div class="input_field_label">
+                                        <p>Enter collateral amount</p>
+                                        <div class="input_collateral">
+                                            <img src="/images/algo.png" alt="Wormhole Shares">
+                                        </div>
+                                    </div>
+                                    <input type="number" placeholder="0.00">
+                                    <div class="input_text">Balance: <span>100.00 WORMHOLE SHARES</span></div>
+                                </div>
+
+                                <div class="principal"></div>
+
+                                <div class="input_field">
+                                    <div class="input_field_label">
+                                        <p>Principal (You will get)</p>
+                                        <div class="input_collateral">
+                                            <img src="/images/algo.png" alt="Algo">
+                                        </div>
+                                    </div>
+
+                                    <div class="principal_amount">
+                                        <h3>100 ALGO</h3>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="borrow_action">
                                 <PrimaryButton :text="'Borrow'" />
+                            </div>
+                        </div>
+
+                        <div class="borrow" v-if="tab == 2">
+                            <div class="borrow_header">
+                                <p>Repay Algo</p>
+                            </div>
+
+                            <div class="fields">
+                                <div class="input_field">
+                                    <div class="input_field_label">
+                                        <p>Enter principal amount</p>
+                                        <div class="input_collateral">
+                                            <img src="/images/algo.png" alt="ALGO">
+                                        </div>
+                                    </div>
+                                    <input type="number" placeholder="0.00">
+                                    <div class="input_text">Balance: <span>100.00 ALGO</span></div>
+                                </div>
+
+                                <div class="principal"></div>
+
+                                <div class="input_field">
+                                    <div class="input_field_label">
+                                        <p>Collateral (You will get)</p>
+                                        <div class="input_collateral">
+                                            <img src="/images/algo.png" alt="Algo">
+                                        </div>
+                                    </div>
+
+                                    <div class="principal_amount">
+                                        <h3>50 W SHARES...</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="borrow_action">
+                                <PrimaryButton :text="'Repay'" />
                             </div>
                         </div>
                     </div>
@@ -74,6 +140,17 @@
 
 <script setup>
 import PrimaryButton from '../components/PrimaryButton.vue'
+</script>
+
+<script>
+export default {
+    data() {
+        return {
+            tab: 1
+        }
+    },
+    methods: {}
+}
 </script>
 
 <style scoped>
@@ -151,14 +228,72 @@ import PrimaryButton from '../components/PrimaryButton.vue'
 }
 
 .borrow_action {
-    margin-top: 450px;
+    margin-top: 30px;
     padding: 20px;
     background: var(--bg-lighter);
+}
+
+.borrow_header {
+    margin-bottom: 20px;
 }
 
 .borrow_header p {
     padding: 20px 30px;
     color: white;
-    font-size: 20px;
+    font-size: 16px;
+}
+
+.fields {
+    padding: 0 30px;
+}
+
+.input_field_label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input_field_label>p {
+    color: gray;
+    font-size: 16px;
+}
+
+.input_field div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.input_field input {
+    height: 50px;
+    margin-top: 10px;
+    width: 100%;
+    border: none;
+    padding: 0 10px;
+    border-radius: 4px;
+    background: var(--bg-lighter);
+    font-size: 16px;
+    outline: none;
+    color: white;
+}
+
+.input_text {
+    color: gray;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.principal {
+    margin: 40px 0;
+    border-top: 1px solid gray;
+}
+
+.principal_amount {
+    padding: 10px 0;
+}
+
+.principal_amount h3 {
+    font-size: 40px;
+    color: white;
 }
 </style>

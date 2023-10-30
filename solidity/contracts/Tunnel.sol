@@ -8,13 +8,14 @@ import "./../../../T-REX/contracts/token/IToken.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 
 contract Tunnel is IWormholeReceiver {
-    IWormholeRelayer private _relayer;
+    IWormholeRelayer private _wormholeRelayer;
     mapping(uint256 => bytes32) private _targetIds;
     mapping(bytes32 => bool) private _delivered;
-    mapping(address => mapping(uint256 => bytes32)) private _rwaReceiver;
+
+    mapping(address => mapping(uint256 => bytes32)) private _receiver;
 
     uint256 private GAS_LIMIT;
-    uint8 private CONSISTENCY_LEVEL;
+    uint8 private CONSISTENCY_LEVEL = 200;
     uint256 private immutable CHAIN_ID;
 
     event RWALocked(
@@ -37,9 +38,9 @@ contract Tunnel is IWormholeReceiver {
 
     event RWAReceiverUpdated();
 
-    constructor(address relayer_, uint256 chainId_) {
+    constructor(address wormholeRelayer_, uint256 chainId_) {
         CHAIN_ID = chainId_;
-        _relayer = IWormholeRelayer(relayer_);
+        _wormholeRelayer = IWormholeRelayer(wormholeRelayer_);
     }
 
     function createReceiver(
@@ -49,11 +50,11 @@ contract Tunnel is IWormholeReceiver {
         address caller = _msgSender();
 
         require(
-            _rwaReceiver[caller][targetChain] == bytes32(0),
+            _receiver[caller][targetChain] == bytes32(0),
             "Receiver already created"
         );
 
-        _rwaReceiver[caller][targetChain] = receiverAddress;
+        _receiver[caller][targetChain] = receiverAddress;
 
         emit RWAReceiverCreated(caller, receiverAddress, targetChain);
     }
@@ -65,11 +66,11 @@ contract Tunnel is IWormholeReceiver {
         address caller = _msgSender();
 
         require(
-            _rwaReceiver[caller][targetChain] != bytes32(0),
+            _receiver[caller][targetChain] != bytes32(0),
             "Receiver not created"
         );
 
-        _rwaReceiver[caller][targetChain] = receiverAddress;
+        _receiver[caller][targetChain] = receiverAddress;
 
         emit RWAReceiverCreated(caller, receiverAddress, targetChain);
     }
@@ -102,7 +103,7 @@ contract Tunnel is IWormholeReceiver {
     ) external payable {
         address caller = _msgSender();
 
-        bytes32 receiver = _rwaReceiver[caller][targetChain];
+        bytes32 receiver = _receiver[caller][targetChain];
         require(receiver != bytes(0), "Receiver not set");
 
         address targetId = _targetIds[targetChain];
@@ -117,7 +118,7 @@ contract Tunnel is IWormholeReceiver {
 
         require(msg.value >= cost, "Insufficient gas supplied");
 
-        _relayer.send{value: cost}(
+        _wormholeRelayer.send{value: cost}(
             targetChain,
             _targetIds[targetChain],
             payload,
@@ -143,7 +144,10 @@ contract Tunnel is IWormholeReceiver {
         uint16 sourceChain,
         bytes32 deliveryHash
     ) external payable override {
-        require(msg.sender == address(wormholeRelayer), "Only relayer allowed");
+        require(
+            msg.sender == address(_wormholeRelayer),
+            "Only wormhole relayer allowed"
+        );
 
         // Ensure no duplicate deliveries
         require(!_delivered[deliveryHash], "Message already processed");
@@ -170,4 +174,6 @@ contract Tunnel is IWormholeReceiver {
     function refundChain() public returns (uint256) {
         return CHAIN_ID;
     }
+
+    receive() external payable {}
 }

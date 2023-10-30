@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "tunnel"
+name = "tunnelfi"
 version = "0.1.0"
 description = "Algorand smart contracts"
 authors = ["Arogundade Ibrahim <devarogundade@gmail.com>"]

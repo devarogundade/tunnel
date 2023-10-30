@@ -6,7 +6,7 @@ from algokit_utils import (
 )
 from algosdk.v2client.algod import AlgodClient
 
-from smart_contracts.tunnel import contract as tunnel_contract
+from smart_contracts.tunnelfi import contract as tunnel_contract
 
 
 @pytest.fixture(scope="session")
