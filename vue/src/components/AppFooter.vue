@@ -1,3 +1,3 @@
 <template>
-    <main style="margin-top: 120px;"></main>
+    <main style="padding-top: 120px;"></main>
 </template>

@@ -57,7 +57,7 @@
                                     <div class="input_field_label">
                                         <p>Enter collateral amount</p>
                                         <div class="input_collateral">
-                                            <img src="../public/images/algo.png" alt="Wormhole Shares">
+                                            <img src="../public/images/wormhole.png" alt="Wormhole Shares">
                                         </div>
                                     </div>
                                     <input type="number" placeholder="0.00">
@@ -113,7 +113,7 @@
                                     </div>
 
                                     <div class="principal_amount">
-                                        <h3>50 W SHARES...</h3>
+                                        <h3>50 W SHARES</h3>
                                     </div>
                                 </div>
                             </div>
@@ -308,6 +308,7 @@ export default {
 .input_field_label img {
     width: 20px;
     height: 20px;
+    border-radius: 10px;
 }
 
 .input_field_label>p {
