@@ -10,6 +10,17 @@ export default defineConfig({
     vue(),
     vueJsx(),
   ],
+  define: {
+    'process.env': {}
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      // Node.js global to browser globalThis
+      define: {
+        global: 'globalThis',
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

@@ -8,7 +8,7 @@
                         <div class="box_item">
                             <p>Liquidity</p>
                             <div class="amount">
-                                <img src="/images/algo.png" alt="Algo">
+                                <img src="../public/images/algo.png" alt="Algo">
                                 <p>1,000,323 Algo</p>
                             </div>
                         </div>
@@ -16,8 +16,8 @@
                         <div class="box_item">
                             <p>APR</p>
                             <div class="amount">
-                                <img src="/images/algo.png" alt="Algo">
-                                <p>120 Percent</p>
+                                <img src="../public/images/algo.png" alt="Algo">
+                                <p>8.31%</p>
                             </div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                                     <div class="input_field_label">
                                         <p>Enter collateral amount</p>
                                         <div class="input_collateral">
-                                            <img src="/images/algo.png" alt="Wormhole Shares">
+                                            <img src="../public/images/algo.png" alt="Wormhole Shares">
                                         </div>
                                     </div>
                                     <input type="number" placeholder="0.00">
@@ -62,7 +62,7 @@
                                     <div class="input_field_label">
                                         <p>Principal (You will get)</p>
                                         <div class="input_collateral">
-                                            <img src="/images/algo.png" alt="Algo">
+                                            <img src="../public/images/algo.png" alt="Algo">
                                         </div>
                                     </div>
 
@@ -87,7 +87,7 @@
                                     <div class="input_field_label">
                                         <p>Enter principal amount</p>
                                         <div class="input_collateral">
-                                            <img src="/images/algo.png" alt="ALGO">
+                                            <img src="../public/images/algo.png" alt="ALGO">
                                         </div>
                                     </div>
                                     <input type="number" placeholder="0.00">
@@ -100,7 +100,7 @@
                                     <div class="input_field_label">
                                         <p>Collateral (You will get)</p>
                                         <div class="input_collateral">
-                                            <img src="/images/algo.png" alt="Algo">
+                                            <img src="../public/images/algo.png" alt="Algo">
                                         </div>
                                     </div>
 
@@ -121,6 +121,38 @@
                                 <button class="tab tab_active">
                                     <p>Activities</p>
                                 </button>
+                            </div>
+
+                            <div style="display: flex; justify-content: flex-end;">
+                                <div class="activities">
+                                    <table>
+                                        <div class="thead">
+                                            <thead>
+                                                <tr>
+                                                    <td>Txn hash</td>
+                                                    <td>Action</td>
+                                                    <td>Amount</td>
+                                                    <td>Timestamp</td>
+                                                </tr>
+                                            </thead>
+                                        </div>
+                                        <div class="tbody" v-for="index in 6">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Ox1234...56</td>
+                                                    <td>Supply</td>
+                                                    <td>
+                                                        <div>
+                                                            <img src="../public/images/algo.png" alt="">
+                                                            <p>0.02</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>12:30, Saturday 23</td>
+                                                </tr>
+                                            </tbody>
+                                        </div>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -175,6 +207,25 @@ export default {
     justify-content: space-between;
     border-bottom: white solid 1px;
 }
+
+.box_item .amount {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.box_item .amount p {
+    font-size: 24px;
+    font-weight: 500;
+    color: gray;
+}
+
+.box_item img {
+    width: 24px;
+    height: 24px;
+}
+
+
 
 .box_item:last-child {
     border-bottom: none;
@@ -245,6 +296,11 @@ export default {
     align-items: center;
 }
 
+.input_field_label img {
+    width: 20px;
+    height: 20px;
+}
+
 .input_field_label>p {
     color: gray;
     font-size: 16px;
@@ -287,5 +343,60 @@ export default {
 .principal_amount h3 {
     font-size: 40px;
     color: white;
+}
+
+.activities {
+    border: 2px solid var(--bg-lighter);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.thead {
+    padding: 0 20px;
+}
+
+thead {
+    height: 60px;
+}
+
+thead td {
+    width: calc(400px / 3);
+    color: white;
+    font-size: 14px;
+}
+
+.tbody {
+    padding: 0 20px;
+    background: var(--bg-lighter);
+    margin-bottom: 2px;
+}
+
+.tbody:last-child {
+    margin: 0;
+}
+
+tbody {
+    height: 60px;
+}
+
+tbody img {
+    width: 18px;
+    height: 18px;
+}
+
+tbody td {
+    width: calc(400px / 3);
+    color: grey;
+    font-size: 14px;
+}
+
+tbody div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+td:last-child {
+    text-align: right;
 }
 </style>

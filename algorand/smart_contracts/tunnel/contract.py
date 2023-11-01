@@ -1,9 +1,7 @@
 from beaker import *
 from pyteal import *
+from typing import Literal
 from beaker.lib.storage import BoxMapping
-
-# Constants
-COLLATERAL_LIST_SIZE = 16
 
 
 class Supply(abi.NamedTuple):
@@ -64,7 +62,7 @@ class TunnelState:
     pairs = BoxMapping(key_type=abi.Byte, value_type=abi.Byte)
 
     # Target contract pairs
-    targetIds = BoxMapping(key_type=abi.Uint64, value_type=abi.Byte)
+    sourceIds = BoxMapping(key_type=abi.Uint64, value_type=abi.Byte)
 
     # Address -> Borrow borrow
     borrows = BoxMapping(key_type=abi.Address, value_type=Borrow)
@@ -76,6 +74,9 @@ class TunnelState:
 def read_next(vaa: Expr, offset: int, t: abi.BaseType) -> tuple[int, Expr]:
     size = t.type_spec().byte_length_static()
     return offset + size, t.decode(vaa, start_index=Int(offset), length=Int(size))
+
+
+Bytes32 = abi.StaticBytes[Literal[32]]
 
 
 class ContractTransferVAA:
@@ -102,9 +103,9 @@ class ContractTransferVAA:
         #: Type of message
         self.type = abi.Uint8()
         #: amount of transfer
-        self.amount = abi.Byte()
+        self.amount = abi.make(Bytes32)
         #: asset transferred
-        self.contract = abi.Byte()
+        self.contract = abi.make(Bytes32)
         #: Id of the chain the token originated
         self.from_chain = abi.Uint16()
         #: Receiver of the token transfer
@@ -112,7 +113,7 @@ class ContractTransferVAA:
         #: Id of the chain where the token transfer should be redeemed
         self.to_chain = abi.Uint16()
         #: Amount to pay relayer
-        self.fee = abi.Byte()
+        self.fee = abi.make(Bytes32)
         #: Address that sent the transfer
         self.from_address = abi.Address()
 
@@ -183,8 +184,9 @@ def create() -> Expr:
     return app.initialize_global_state()
 
 
+# opt_into_asset method that opts the contract account into an ASA
 @app.external(authorize=Authorize.only(Global.creator_address()))
-def opt_in_asset(asset: abi.Asset) -> Expr:
+def opt_into_asset(asset: abi.Asset) -> Expr:
     # On-chain logic that uses multiple expressions, always goes in the returned Seq
     return Seq(
         # Send the transaction to opt in
@@ -206,40 +208,24 @@ def opt_in_asset(asset: abi.Asset) -> Expr:
 
 
 @app.external(authorize=Authorize.only(Global.creator_address()))
-def create_collateral(
-    asset_name: abi.String,
-    asset_unit_name: abi.String,
+def add_collateral(
+    asset_id: abi.Uint64,
     collateral: Collateral,
-    *,
-    output: abi.Uint64,
 ) -> Expr:
-    asset_id = abi.Uint64()
-
     # On-chain logic that uses multiple expressions, always goes in the returned Seq
-    return Seq(
-        InnerTxnBuilder.Execute(
-            {
-                TxnField.type_enum: TxnType.AssetConfig,
-                TxnField.config_asset_decimals: Int(6),
-                TxnField.config_asset_unit_name: asset_unit_name.get(),
-                TxnField.config_asset_manager: Global.current_application_address(),
-                TxnField.config_asset_reserve: Global.current_application_address(),
-                TxnField.config_asset_name: asset_name.get(),
-                # We can freeze permissioned asset
-                TxnField.config_asset_clawback: Global.current_application_address(),
-                TxnField.config_asset_freeze: Global.current_application_address(),
-            }
-        ),
-        asset_id.set(Txn.created_asset_id()),
-        app.state.supported_collaterals[asset_id].set(collateral),
-        output.set(Txn.created_asset_id()),
-    )
+    return app.state.supported_collaterals[asset_id].set(collateral)
 
 
 @app.external(authorize=Authorize.only(Global.creator_address()))
 def add_pair(pair0: abi.Byte, pair1: abi.Byte) -> Expr:
     # On-chain logic that uses multiple expressions, always goes in the returned Seq
     return Seq(app.state.pairs[pair0].set(pair1))
+
+
+@app.external(authorize=Authorize.only(Global.creator_address()))
+def set_target_id(sourceChain: abi.Uint64, address: abi.Byte) -> Expr:
+    # On-chain logic that uses multiple expressions, always goes in the returned Seq
+    return Seq(app.state.sourceIds[sourceChain].set(address))
 
 
 @app.external
@@ -252,16 +238,17 @@ def supply(payment: abi.PaymentTransaction) -> Expr:
 
     # On-chain logic that uses multiple expressions, always goes in the returned Seq
     return Seq(
-        # Assert the receiver is the contract address
+        # Check the receiver is the contract address
         Assert(
             payment.get().receiver() == Global.current_application_address(),
             comment="Receiver not valid",
         ),
-        # Assert user does not have a supply position
-        If(app.state.supplies[Txn.sender()].exists()).Then(
-            Reject(),
+        # Check user does not have a supply position
+        Assert(
+            app.state.supplies[Txn.sender()].exists() == Int(0),
+            comment="Already has a position",
         ),
-        # Assert the supply amount is sufficient
+        # Check the supply amount is sufficient
         Assert(
             payment.get().amount() >= app.state.min_supply.get(),
             comment="Amount not sufficient",
@@ -270,9 +257,10 @@ def supply(payment: abi.PaymentTransaction) -> Expr:
         app.state.total_supply.set(
             app.state.total_supply.get() + payment.get().amount()
         ),
-        # Set user position
+        # Initialize user position
         amount.set(payment.get().amount()),
         start_at.set(Global.latest_timestamp()),
+        # Set user position
         supply.set(amount, start_at),
         # Update user position
         app.state.supplies[Txn.sender()].set(supply),
@@ -280,34 +268,47 @@ def supply(payment: abi.PaymentTransaction) -> Expr:
 
 
 @app.external
+def supply_profile(address: abi.Address, *, output: Supply) -> Expr:
+    # Temporary variables
+    supply = app.state.supplies[address].get()
+
+    # On-chain logic that uses multiple expressions, always goes in the returned Seq
+    return Seq()
+
+
+@app.external
 def borrow() -> Expr:
     return Seq()
 
 
-@app.external
-def repay(payment: abi.PaymentTransaction) -> Expr:
-    # Temporary variables
-    total_borrow = ScratchVar(TealType.uint64)
-    borrow = Borrow()
+# @app.external
+# def repay(payment: abi.PaymentTransaction) -> Expr:
+#     # Temporary variables
+#     borrow = app.state.borrows[Txn.sender()]
+#     principal = abi.Uint64()
 
-    # On-chain logic that uses multiple expressions, always goes in the returned Seq
-    return Seq()
+#     # On-chain logic that uses multiple expressions, always goes in the returned Seq
+#     return Seq(
+#         Assert(borrow.exists(), comment="You dont have a borrow position"),
+#         #
+#         Assert(payment.get().amount() >= principal.get()),
+#         borrow.delete(),
+#     )
 
 
-@app.external
-def withdraw() -> Expr:
-    # Temporary variables
+# @app.external
+# def withdraw() -> Expr:
+#     # Temporary variables
+#     supply = app.state.supplies[Txn.sender()]
 
-    # On-chain logic that uses multiple expressions, always goes in the returned Seq
-    return Seq()
+#     # On-chain logic that uses multiple expressions, always goes in the returned Seq
+#     return Seq(supply.delete())
 
 
 @app.external
 def portal_transfer(vaa: abi.DynamicBytes, *, output: abi.DynamicBytes) -> Expr:
     # Temporary variables
     (data := ContractTransferVAA()).decode(vaa.get())
-
-    payload = data.payload.get()
 
     # TODO
 
@@ -333,22 +334,24 @@ def portal_transfer(vaa: abi.DynamicBytes, *, output: abi.DynamicBytes) -> Expr:
                 TxnField.fee: Int(0),
             }
         ),
-        output.set(payload),
     )
 
 
 @app.external
-def un_bridge(axfer: abi.AssetTransferTransaction, targetChain: abi.Uint64) -> Expr:
+def un_bridge(sourceChain: abi.Uint64) -> Expr:
     # Temporary variables
-    message = Bytes("Hello")
+    message = Bytes("Hello World")
     payload = ScratchVar(TealType.bytes)
-    publish_selector = Bytes("publishMessage")
+    publish_signature = Bytes("publishMessage")
 
-    targetId = app.state.targetIds[targetChain]
+    borrow = app.state.borrows[Txn.sender()]
+
+    sourceId = app.state.sourceIds[sourceChain]
 
     # On-chain logic that uses multiple expressions, always goes in the returned Seq
     return Seq(
-        Assert(targetId.exists(), comment="Target does not exists"),
+        Assert(borrow.exists() == Int(0), comment="You have a borrow position"),
+        Assert(sourceId.exists(), comment="Target does not exists"),
         payload.store(
             Concat(
                 # Type: its a payload3
@@ -360,7 +363,9 @@ def un_bridge(axfer: abi.AssetTransferTransaction, targetChain: abi.Uint64) -> E
                 # FromChain: (0008 is Algorand)
                 Bytes("base16", "0008"),
                 # ToAddress
-                targetId.get(),
+                # sourceId.get(),
+                BytesZero(Int(24)),
+                Global.current_application_address(),
                 # ToChain
                 Bytes("base16", "0001"),
                 # FromAddress
@@ -371,14 +376,15 @@ def un_bridge(axfer: abi.AssetTransferTransaction, targetChain: abi.Uint64) -> E
         ),
         InnerTxnBuilder.Execute(
             {
+                TxnField.on_completion: OnComplete.NoOp,
                 TxnField.type_enum: TxnType.ApplicationCall,
                 TxnField.application_id: app.state.relayer.get(),
                 TxnField.application_args: [
-                    publish_selector,
+                    publish_signature,
                     payload.load(),
                     Itob(Int(0)),
                 ],
-                TxnField.accounts: [Global.current_application_address()],
+                TxnField.fee: Int(0),
             }
         ),
     )

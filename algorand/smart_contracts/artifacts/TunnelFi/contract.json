@@ -2,7 +2,7 @@
     "name": "TunnelFi",
     "methods": [
         {
-            "name": "opt_in_asset",
+            "name": "opt_into_asset",
             "args": [
                 {
                     "type": "asset",
@@ -14,15 +14,11 @@
             }
         },
         {
-            "name": "create_collateral",
+            "name": "add_collateral",
             "args": [
                 {
-                    "type": "string",
-                    "name": "asset_name"
-                },
-                {
-                    "type": "string",
-                    "name": "asset_unit_name"
+                    "type": "uint64",
+                    "name": "asset_id"
                 },
                 {
                     "type": "(uint64,address)",
@@ -30,7 +26,7 @@
                 }
             ],
             "returns": {
-                "type": "uint64"
+                "type": "void"
             }
         },
         {
@@ -50,6 +46,22 @@
             }
         },
         {
+            "name": "set_target_id",
+            "args": [
+                {
+                    "type": "uint64",
+                    "name": "sourceChain"
+                },
+                {
+                    "type": "byte",
+                    "name": "address"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
             "name": "supply",
             "args": [
                 {
@@ -62,26 +74,19 @@
             }
         },
         {
-            "name": "borrow",
-            "args": [],
-            "returns": {
-                "type": "void"
-            }
-        },
-        {
-            "name": "repay",
+            "name": "supply_profile",
             "args": [
                 {
-                    "type": "pay",
-                    "name": "payment"
+                    "type": "address",
+                    "name": "address"
                 }
             ],
             "returns": {
-                "type": "void"
+                "type": "(uint64,uint64)"
             }
         },
         {
-            "name": "withdraw",
+            "name": "borrow",
             "args": [],
             "returns": {
                 "type": "void"
@@ -103,12 +108,8 @@
             "name": "un_bridge",
             "args": [
                 {
-                    "type": "axfer",
-                    "name": "axfer"
-                },
-                {
                     "type": "uint64",
-                    "name": "targetChain"
+                    "name": "sourceChain"
                 }
             ],
             "returns": {

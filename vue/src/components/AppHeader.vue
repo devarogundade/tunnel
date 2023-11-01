@@ -22,48 +22,68 @@
                     </RouterLink>
                 </div>
 
-                <button @click="open" class="connect_wallets">
+                <button @click="connection = true" class="connect_wallets">
                     <p>Connect Wallets</p>
                 </button>
             </header>
         </div>
+
+        <WalletConnect @close="connection = false" v-if="connection" />
     </section>
 </template>
 
 <script setup>
 import TunnelLogo from '../components/icons/TunnelLogo.vue'
+import WalletConnect from '../components/WalletConnect.vue'
 </script>
 
 <script>
-import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/vue'
+import { PeraWalletConnect } from "@perawallet/connect"
+import { defaultWagmiConfig } from '@web3modal/wagmi/vue'
 import { bscTestnet } from '@wagmi/core/chains'
+import { watchAccount } from '@wagmi/core'
 
 const projectId = import.meta.env.VITE_PROJECT_ID
 
 export default {
     data() {
         return {
-            modal: null
+            connection: false
         }
     },
+    mounted() {
+        const metadata = {
+            name: 'TunnelFi',
+            description: 'Connect Your Web3 Wallet',
+            url: 'https://web3modal.com',
+            icons: ['https://avatars.githubusercontent.com/u/37784886']
+        }
+
+        const chains = [bscTestnet]
+        defaultWagmiConfig({ chains, projectId, metadata })
+
+        watchAccount((account) => {
+            this.$store.commit('setWallet0', account.address)
+        })
+
+        const peraWallet = new PeraWalletConnect({
+            chainId: this.$algorandTestnet().id,
+        });
+
+        peraWallet.reconnectSession().then((accounts) => {
+            peraWallet.connector?.on("disconnect", this.peraDisconnect(peraWallet))
+
+            if (peraWallet.isConnected && accounts.length) {
+                this.$store.commit('setWallet1', accounts[0])
+            }
+        }).catch((error) => {
+            console.error(error)
+        });
+    },
     methods: {
-        connect0: async function () {
-            const metadata = {
-                name: 'TunnelFi',
-                description: 'Connect Your Web3 Wallet',
-                url: 'https://web3modal.com',
-                icons: ['https://avatars.githubusercontent.com/u/37784886']
-            }
-
-            const chains = [bscTestnet]
-            const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
-
-            if (!this.modal) {
-                this.modal = createWeb3Modal({ wagmiConfig, projectId, chains, defaultChain: bscTestnet })
-                this.modal.open()
-            } else {
-                this.modal.open({ view: 'Account' })
-            }
+        peraDisconnect: async function (peraWallet) {
+            peraWallet.disconnect()
+            this.$store.commit('setWallet1', null)
         }
     }
 }

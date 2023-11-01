@@ -13,7 +13,10 @@ const store = createStore({
     state() {
         return {
             wallet0: null,
-            wallet1: null
+            wallet1: null,
+            prices: {
+                "WShares": 1
+            }
         }
     },
     mutations: {
