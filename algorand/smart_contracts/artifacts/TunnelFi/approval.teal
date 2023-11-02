@@ -1,6 +1,6 @@
 #pragma version 8
 intcblock 0 1 4 32
-bytecblock 0x 0x00 0x746f74616c5f737570706c79 0x6d696e5f737570706c79 0x72656c61796572 0x151f7c75
+bytecblock 0x 0x00 0x746f74616c5f737570706c79 0x776f726d686f6c655f6964 0x6d696e5f737570706c79 0x776f726d686f6c655f61646472657373 0x7075626c6973684d657373616765 0x151f7c75
 txn NumAppArgs
 intc_0 // 0
 ==
@@ -26,11 +26,11 @@ pushbytes 0xd0a79409 // "supply(pay)void"
 ==
 bnz main_l15
 txna ApplicationArgs 0
-pushbytes 0xe96cf011 // "supply_profile(address)(uint64,uint64)"
+pushbytes 0xa5427f8a // "supply_of(address)(uint64,uint64)"
 ==
 bnz main_l14
 txna ApplicationArgs 0
-pushbytes 0x9a073397 // "borrow()void"
+pushbytes 0xfda3b416 // "borrow(pay)void"
 ==
 bnz main_l13
 txna ApplicationArgs 0
@@ -51,7 +51,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub unbridgecaster_18
+callsub unbridgecaster_19
 intc_1 // 1
 return
 main_l12:
@@ -63,7 +63,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub portaltransfercaster_17
+callsub portaltransfercaster_18
 intc_1 // 1
 return
 main_l13:
@@ -75,7 +75,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub borrowcaster_16
+callsub borrowcaster_17
 intc_1 // 1
 return
 main_l14:
@@ -87,7 +87,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub supplyprofilecaster_15
+callsub supplyofcaster_16
 intc_1 // 1
 return
 main_l15:
@@ -99,7 +99,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub supplycaster_14
+callsub supplycaster_15
 intc_1 // 1
 return
 main_l16:
@@ -111,7 +111,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub settargetidcaster_13
+callsub settargetidcaster_14
 intc_1 // 1
 return
 main_l17:
@@ -123,7 +123,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub addpaircaster_12
+callsub addpaircaster_13
 intc_1 // 1
 return
 main_l18:
@@ -135,7 +135,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub addcollateralcaster_11
+callsub addcollateralcaster_12
 intc_1 // 1
 return
 main_l19:
@@ -147,7 +147,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub optintoassetcaster_10
+callsub optintoassetcaster_11
 intc_1 // 1
 return
 main_l20:
@@ -174,11 +174,8 @@ app_global_put
 pushbytes 0x6c7476 // "ltv"
 pushint 8000 // 8000
 app_global_put
-bytec_3 // "min_supply"
+bytec 4 // "min_supply"
 pushint 1000000 // 1000000
-app_global_put
-bytec 4 // "relayer"
-pushint 86525623 // 86525623
 app_global_put
 pushbytes 0x737570706c795f617072 // "supply_apr"
 intc_0 // 0
@@ -188,6 +185,12 @@ intc_0 // 0
 app_global_put
 bytec_2 // "total_supply"
 intc_0 // 0
+app_global_put
+bytec 5 // "wormhole_address"
+pushbytes 0x4332535a4244345a46464458414e42435554473547425545574d5133344a53354c464744525445564a424158445246365a57423751344b48484d // "C2SZBD4ZFFDXANBCUTG5GBUEWMQ34JS5LFGDRTEVJBAXDRF6ZWB7Q4KHHM"
+app_global_put
+bytec_3 // "wormhole_id"
+pushint 86525623 // 86525623
 app_global_put
 retsub
 
@@ -303,7 +306,7 @@ intc_0 // 0
 assert
 frame_dig -1
 gtxns Amount
-bytec_3 // "min_supply"
+bytec 4 // "min_supply"
 app_global_get
 >=
 // Amount not sufficient
@@ -334,15 +337,23 @@ frame_dig 0
 box_put
 retsub
 
-// supply_profile
-supplyprofile_6:
+// supply_of
+supplyof_6:
 proto 1 1
 bytec_0 // ""
+frame_dig -1
+box_get
+store 3
+store 2
+load 3
+assert
+load 2
+frame_bury 0
 retsub
 
 // borrow
 borrow_7:
-proto 0 0
+proto 1 0
 retsub
 
 // portal_transfer
@@ -362,51 +373,50 @@ intc_0 // 0
 bytec_0 // ""
 dupn 2
 pushint 1234 // 1234
-store 2
-intc_0 // 0
-store 3
-pushbytes 0x74657374 // "test"
 store 4
 intc_0 // 0
 store 5
+pushbytes 0x74657374 // "test"
+store 6
+intc_0 // 0
+store 7
 itxn_begin
 intc_2 // axfer
 itxn_field TypeEnum
-load 2
-itxn_field XferAsset
-load 3
-itxn_field AssetAmount
 load 4
+itxn_field XferAsset
+load 5
+itxn_field AssetAmount
+load 6
 itxn_field AssetReceiver
 global CurrentApplicationAddress
 itxn_field Sender
-load 5
+load 7
 itxn_field FreezeAsset
 intc_0 // 0
 itxn_field Fee
 itxn_submit
 retsub
 
-// un_bridge
-unbridge_9:
-proto 1 0
-txn Sender
-box_len
-store 8
-store 7
-load 8
-intc_0 // 0
-==
-// You have a borrow position
-assert
-frame_dig -1
-itob
-box_len
+// getMessageFee
+getMessageFee_9:
+proto 0 1
+bytec_3 // "wormhole_id"
+app_global_get
+pushbytes 0x4d657373616765466565 // "MessageFee"
+app_global_get_ex
+store 11
 store 10
-store 9
-load 10
-// Target does not exists
+load 11
 assert
+load 10
+retsub
+
+// un_bridge
+unbridge_10:
+proto 1 0
+callsub getMessageFee_9
+store 8
 pushbytes 0x03 // 0x03
 intc_3 // 32
 bzero
@@ -427,29 +437,41 @@ global CurrentApplicationAddress
 concat
 pushbytes 0x48656c6c6f20576f726c64 // "Hello World"
 concat
-store 6
+store 9
 itxn_begin
-intc_0 // NoOp
-itxn_field OnCompletion
+intc_1 // pay
+itxn_field TypeEnum
+bytec 5 // "wormhole_address"
+app_global_get
+itxn_field Receiver
+load 8
+itxn_field Amount
+intc_0 // 0
+itxn_field Fee
+itxn_next
 pushint 6 // appl
 itxn_field TypeEnum
-bytec 4 // "relayer"
+bytec_3 // "wormhole_id"
 app_global_get
 itxn_field ApplicationID
-pushbytes 0x7075626c6973684d657373616765 // "publishMessage"
+bytec 6 // "publishMessage"
 itxn_field ApplicationArgs
-load 6
+load 9
 itxn_field ApplicationArgs
 intc_0 // 0
 itob
 itxn_field ApplicationArgs
+txna Accounts 1
+itxn_field Accounts
+bytec 6 // "publishMessage"
+itxn_field Note
 intc_0 // 0
 itxn_field Fee
 itxn_submit
 retsub
 
 // opt_into_asset_caster
-optintoassetcaster_10:
+optintoassetcaster_11:
 proto 0 0
 intc_0 // 0
 txna ApplicationArgs 1
@@ -461,7 +483,7 @@ callsub optintoasset_1
 retsub
 
 // add_collateral_caster
-addcollateralcaster_11:
+addcollateralcaster_12:
 proto 0 0
 intc_0 // 0
 bytec_0 // ""
@@ -476,7 +498,7 @@ callsub addcollateral_2
 retsub
 
 // add_pair_caster
-addpaircaster_12:
+addpaircaster_13:
 proto 0 0
 intc_0 // 0
 dup
@@ -494,7 +516,7 @@ callsub addpair_3
 retsub
 
 // set_target_id_caster
-settargetidcaster_13:
+settargetidcaster_14:
 proto 0 0
 intc_0 // 0
 dup
@@ -511,7 +533,7 @@ callsub settargetid_4
 retsub
 
 // supply_caster
-supplycaster_14:
+supplycaster_15:
 proto 0 0
 intc_0 // 0
 txn GroupIndex
@@ -527,30 +549,41 @@ frame_dig 0
 callsub supply_5
 retsub
 
-// supply_profile_caster
-supplyprofilecaster_15:
+// supply_of_caster
+supplyofcaster_16:
 proto 0 0
 bytec_0 // ""
 dup
 txna ApplicationArgs 1
 frame_bury 1
 frame_dig 1
-callsub supplyprofile_6
+callsub supplyof_6
 frame_bury 0
-bytec 5 // 0x151f7c75
+bytec 7 // 0x151f7c75
 frame_dig 0
 concat
 log
 retsub
 
 // borrow_caster
-borrowcaster_16:
+borrowcaster_17:
 proto 0 0
+intc_0 // 0
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 0
+frame_dig 0
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 0
 callsub borrow_7
 retsub
 
 // portal_transfer_caster
-portaltransfercaster_17:
+portaltransfercaster_18:
 proto 0 0
 bytec_0 // ""
 dup
@@ -559,19 +592,19 @@ frame_bury 1
 frame_dig 1
 callsub portaltransfer_8
 frame_bury 0
-bytec 5 // 0x151f7c75
+bytec 7 // 0x151f7c75
 frame_dig 0
 concat
 log
 retsub
 
 // un_bridge_caster
-unbridgecaster_18:
+unbridgecaster_19:
 proto 0 0
 intc_0 // 0
 txna ApplicationArgs 1
 btoi
 frame_bury 0
 frame_dig 0
-callsub unbridge_9
+callsub unbridge_10
 retsub

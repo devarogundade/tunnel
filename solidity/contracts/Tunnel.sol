@@ -1,178 +1,134 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "./interfaces/IWormholeRelayer.sol";
-import "./interfaces/IWormholeReceiver.sol";
+import "./interfaces/IWormhole.sol";
 
-import "./../../../T-REX/contracts/token/IToken.sol";
+import "./interfaces/IERC3643.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 
-contract Tunnel is IWormholeReceiver {
-    IWormholeRelayer private _wormholeRelayer;
-    mapping(uint256 => bytes32) private _targetIds;
-    mapping(bytes32 => bool) private _delivered;
+contract Tunnel is Context {
+    IWormhole private _wormhole;
 
-    mapping(address => mapping(uint256 => bytes32)) private _receiver;
+    uint32 private _nonce;
+
+    mapping(uint32 => bool) private _delivered;
+
+    mapping(bytes32 => address) private _evmWallet;
+    mapping(address => bytes32) private _algoWallet;
+
+    mapping(uint256 => address) private _evmAsset;
+    mapping(address => uint256) private _algoAsset;
 
     uint256 private GAS_LIMIT;
     uint8 private CONSISTENCY_LEVEL = 200;
-    uint256 private immutable CHAIN_ID;
 
-    event RWALocked(
-        address tokenAddress,
+    event AssetLocked(
+        address assetId,
         uint256 amount,
-        address from,
-        address to,
+        address evmWallet,
+        bytes32 algoWallet,
         uint256 timestamp
     );
 
-    event RWAReleased(
-        address tokenAddress,
-        unit256 amount,
-        address from,
-        address to,
+    event AssetReleased(
+        address assetId,
+        uint256 amount,
+        bytes32 algoWallet,
+        address evmWallet,
         uint256 timestamp
     );
 
-    event RWAReceiverCreated();
+    event WalletCreated(address evmWallet, bytes32 algoWallet);
 
-    event RWAReceiverUpdated();
-
-    constructor(address wormholeRelayer_, uint256 chainId_) {
-        CHAIN_ID = chainId_;
-        _wormholeRelayer = IWormholeRelayer(wormholeRelayer_);
+    constructor(address wormhole_) {
+        _wormhole = IWormhole(wormhole_);
     }
 
-    function createReceiver(
-        uint256 targetChain,
-        bytes32 receiverAddress
-    ) external {
-        address caller = _msgSender();
+    function createWallet(bytes32 algoWallet) external {
+        address evmWallet = _msgSender();
 
         require(
-            _receiver[caller][targetChain] == bytes32(0),
-            "Receiver already created"
+            _algoWallet[evmWallet] == bytes32(0),
+            "Algo wallet already used"
         );
-
-        _receiver[caller][targetChain] = receiverAddress;
-
-        emit RWAReceiverCreated(caller, receiverAddress, targetChain);
-    }
-
-    function updateReceiver(
-        uint256 targetChain,
-        bytes32 newReceiverAddress
-    ) external payable {
-        address caller = _msgSender();
 
         require(
-            _receiver[caller][targetChain] != bytes32(0),
-            "Receiver not created"
+            _evmWallet[algoWallet] == address(0),
+            "Evm wallet already used"
         );
 
-        _receiver[caller][targetChain] = receiverAddress;
+        _algoWallet[evmWallet] = algoWallet;
+        _evmWallet[algoWallet] = evmWallet;
 
-        emit RWAReceiverCreated(caller, receiverAddress, targetChain);
+        emit WalletCreated(evmWallet, algoWallet);
     }
 
     /// @dev For getting briging fee
-    function deliveryPrice(
-        uint256 targetChain
-    ) external view returns (uint256) {
-        (uint256 nativePriceQuote, ) = _relayer.quoteDeliveryPrice(
-            targetChain,
-            receiverValue,
-            encodedExecutionParameters,
-            deliveryProviderAddress
-        );
-
-        return nativePriceQuote;
-    }
-
-    /// @dev For setting extension contract ids
-    function setTargetId(uint256 targetChain, bytes32 targetId) external {
-        _targetIds[targetChain] = targetId;
+    function messageFee() public view returns (uint256) {
+        return _wormhole.messageFee();
     }
 
     /// @dev This function locks the Original NFT
     /// and tell whirlExtension Contract to mint a new similar NFT
-    function bridge(
-        uint256 targetChain,
-        address assetId,
-        uint256 amount
-    ) external payable {
+    function bridge(address assetId, uint256 amount) external payable {
         address caller = _msgSender();
 
-        bytes32 receiver = _receiver[caller][targetChain];
-        require(receiver != bytes(0), "Receiver not set");
-
-        address targetId = _targetIds[targetChain];
-        require(targetId != bytes(0), "RWA not listed");
-
-        IToken asset = IToken(assetId);
+        IERC3643 asset = IERC3643(assetId);
         asset.transferFrom(caller, address(this), amount);
 
-        bytes memory payload = abi.encode(assetId, amount, caller, receiver);
+        bytes memory payload = abi.encode(
+            _algoAsset[assetId],
+            _algoAmount(amount),
+            _algoWallet[caller]
+        );
 
-        uint256 cost = deliveryPrice(targetChain);
-
-        require(msg.value >= cost, "Insufficient gas supplied");
-
-        _wormholeRelayer.send{value: cost}(
-            targetChain,
-            _targetIds[targetChain],
+        _wormhole.publishMessage{value: messageFee()}(
+            _nonce,
             payload,
-            receiverValue,
-            paymentForExtraReceiverValue,
-            encodedExecutionParameters,
-            refundChain(),
-            refundAddress(),
-            deliveryProviderAddress,
-            messageKeys,
             CONSISTENCY_LEVEL
         );
 
-        emit RWALocked(assetId, amount, caller, receiver, block.timestamp);
+        _nonce++;
+
+        emit AssetLocked(
+            assetId,
+            amount,
+            caller,
+            _algoWallet[caller],
+            block.timestamp
+        );
     }
 
-    /// @dev This function unlocks the Original NFT to the
-    /// owner of the burnt similar NFT on whirlExtension
-    function receiveWormholeMessages(
-        bytes memory payload,
-        bytes[] memory additionalVaas,
-        bytes32 sourceAddress,
-        uint16 sourceChain,
-        bytes32 deliveryHash
-    ) external payable override {
-        require(
-            msg.sender == address(_wormholeRelayer),
-            "Only wormhole relayer allowed"
-        );
-
+    // @dev This function unlocks the Original asset to the
+    function receiveMessage(uint32 nonce, bytes memory payload) external {
         // Ensure no duplicate deliveries
-        require(!_delivered[deliveryHash], "Message already processed");
-        _delivered[deliveryHash] = true;
-
-        address caller = address(this);
+        require(!_delivered[nonce], "Message already processed");
+        _delivered[nonce] = true;
 
         // Parse the payload and do the corresponding actions!
-        (address assetId, uint256 amount, address receiver) = abi.decode(
+        (uint256 assetId, uint256 amount, bytes32 algoWallet) = abi.decode(
             payload,
-            (address, uint256, address)
+            (uint256, uint256, bytes32)
         );
 
-        IToken asset = IToken(assetId);
-        asset.transfer(receiver, tokenId);
+        IERC3643 asset = IERC3643(_evmAsset[assetId]);
+        asset.transfer(_evmWallet[algoWallet], _evmAmount(amount));
 
-        emit RWAReleased(assetId, amount, caller, receiver, block.timestamp);
+        emit AssetReleased(
+            _evmAsset[assetId],
+            _evmAmount(amount),
+            algoWallet,
+            _evmWallet[algoWallet],
+            block.timestamp
+        );
     }
 
-    function refundAddress() public returns (address) {
-        return address(this);
+    function _evmAmount(uint256 amount) private pure returns (uint256) {
+        return amount * 100_000;
     }
 
-    function refundChain() public returns (uint256) {
-        return CHAIN_ID;
+    function _algoAmount(uint256 amount) private pure returns (uint256) {
+        return amount / 100_000;
     }
 
     receive() external payable {}

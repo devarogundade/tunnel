@@ -55,8 +55,14 @@ class TunnelState:
     # Total borrow:
     total_borrow = GlobalStateValue(stack_type=TealType.uint64, default=Int(0))
 
-    # Relayer: Wormhole Relayer
-    relayer = GlobalStateValue(stack_type=TealType.uint64, default=Int(86525623))
+    # Wormhole: Core Id
+    wormhole_id = GlobalStateValue(stack_type=TealType.uint64, default=Int(86525623))
+
+    # Wormhole: Core Address
+    wormhole_address = GlobalStateValue(
+        stack_type=TealType.bytes,
+        default=Bytes("C2SZBD4ZFFDXANBCUTG5GBUEWMQ34JS5LFGDRTEVJBAXDRF6ZWB7Q4KHHM"),
+    )
 
     # Address pairs from ETH CONTRACT -> ALGO CONTRACT
     pairs = BoxMapping(key_type=abi.Byte, value_type=abi.Byte)
@@ -112,7 +118,7 @@ class ContractTransferVAA:
         self.to_address = abi.Address()
         #: Id of the chain where the token transfer should be redeemed
         self.to_chain = abi.Uint16()
-        #: Amount to pay relayer
+        #: Amount to pay wormhole_id
         self.fee = abi.make(Bytes32)
         #: Address that sent the transfer
         self.from_address = abi.Address()
@@ -267,17 +273,18 @@ def supply(payment: abi.PaymentTransaction) -> Expr:
     )
 
 
-@app.external
-def supply_profile(address: abi.Address, *, output: Supply) -> Expr:
-    # Temporary variables
-    supply = app.state.supplies[address].get()
-
-    # On-chain logic that uses multiple expressions, always goes in the returned Seq
-    return Seq()
+# @app.external
+# def borrow_of(address: abi.Address, *, output: Borrow) -> Expr:
+#     return app.state.borrows[address.get()].store_into(output)
 
 
 @app.external
-def borrow() -> Expr:
+def supply_of(address: abi.Address, *, output: Supply) -> Expr:
+    return app.state.supplies[address.get()].store_into(output)
+
+
+@app.external
+def borrow(payment: abi.PaymentTransaction) -> Expr:
     return Seq()
 
 
@@ -337,21 +344,28 @@ def portal_transfer(vaa: abi.DynamicBytes, *, output: abi.DynamicBytes) -> Expr:
     )
 
 
+@Subroutine(TealType.uint64)
+def getMessageFee() -> Expr:
+    maybe = App.globalGetEx(app.state.wormhole_id.get(), Bytes("MessageFee"))
+    return Seq(maybe, Assert(maybe.hasValue()), maybe.value())
+
+
 @app.external
 def un_bridge(sourceChain: abi.Uint64) -> Expr:
     # Temporary variables
+    mfee = ScratchVar()
     message = Bytes("Hello World")
     payload = ScratchVar(TealType.bytes)
     publish_signature = Bytes("publishMessage")
 
-    borrow = app.state.borrows[Txn.sender()]
-
-    sourceId = app.state.sourceIds[sourceChain]
+    # borrow = app.state.borrows[Txn.sender()]
+    # sourceId = app.state.sourceIds[sourceChain]
 
     # On-chain logic that uses multiple expressions, always goes in the returned Seq
     return Seq(
-        Assert(borrow.exists() == Int(0), comment="You have a borrow position"),
-        Assert(sourceId.exists(), comment="Target does not exists"),
+        # Assert(borrow.exists() == Int(0), comment="You have a borrow position"),
+        # Assert(sourceId.exists(), comment="Target does not exists"),
+        mfee.store(getMessageFee()),
         payload.store(
             Concat(
                 # Type: its a payload3
@@ -374,17 +388,29 @@ def un_bridge(sourceChain: abi.Uint64) -> Expr:
                 message,
             )
         ),
-        InnerTxnBuilder.Execute(
+        InnerTxnBuilder.Begin(),
+        InnerTxnBuilder.SetFields(
             {
-                TxnField.on_completion: OnComplete.NoOp,
+                TxnField.type_enum: TxnType.Payment,
+                TxnField.receiver: app.state.wormhole_address.get(),
+                TxnField.amount: mfee.load(),
+                TxnField.fee: Int(0),
+            }
+        ),
+        InnerTxnBuilder.Next(),
+        InnerTxnBuilder.SetFields(
+            {
                 TxnField.type_enum: TxnType.ApplicationCall,
-                TxnField.application_id: app.state.relayer.get(),
+                TxnField.application_id: app.state.wormhole_id.get(),
                 TxnField.application_args: [
                     publish_signature,
                     payload.load(),
                     Itob(Int(0)),
                 ],
+                TxnField.accounts: [Txn.accounts[1]],
+                TxnField.note: publish_signature,
                 TxnField.fee: Int(0),
             }
         ),
+        InnerTxnBuilder.Submit(),
     )

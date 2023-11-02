@@ -1,0 +1,542 @@
+{
+  "contractName": "IClaimTopicsRegistry",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "claimTopic",
+          "type": "uint256"
+        }
+      ],
+      "name": "ClaimTopicAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "claimTopic",
+          "type": "uint256"
+        }
+      ],
+      "name": "ClaimTopicRemoved",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_claimTopic",
+          "type": "uint256"
+        }
+      ],
+      "name": "addClaimTopic",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_claimTopic",
+          "type": "uint256"
+        }
+      ],
+      "name": "removeClaimTopic",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getClaimTopics",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnershipOnClaimTopicsRegistryContract",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"claimTopic\",\"type\":\"uint256\"}],\"name\":\"ClaimTopicAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"claimTopic\",\"type\":\"uint256\"}],\"name\":\"ClaimTopicRemoved\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_claimTopic\",\"type\":\"uint256\"}],\"name\":\"addClaimTopic\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getClaimTopics\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_claimTopic\",\"type\":\"uint256\"}],\"name\":\"removeClaimTopic\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnershipOnClaimTopicsRegistryContract\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"addClaimTopic(uint256)\":{\"details\":\"Add a trusted claim topic (For example: KYC=1, AML=2). Only owner can call. emits `ClaimTopicAdded` event\",\"params\":{\"_claimTopic\":\"The claim topic index\"}},\"getClaimTopics()\":{\"details\":\"Get the trusted claim topics for the security token\",\"returns\":{\"_0\":\"Array of trusted claim topics\"}},\"removeClaimTopic(uint256)\":{\"details\":\"Remove a trusted claim topic (For example: KYC=1, AML=2).  Only owner can call.  emits `ClaimTopicRemoved` event\",\"params\":{\"_claimTopic\":\"The claim topic index\"}},\"transferOwnershipOnClaimTopicsRegistryContract(address)\":{\"details\":\"Transfers the Ownership of ClaimTopics to a new Owner.  Only owner can call.\",\"params\":{\"_newOwner\":\"The new owner of this contract.\"}}},\"version\":1},\"userdoc\":{\"events\":{\"ClaimTopicAdded(uint256)\":{\"notice\":\"this event is emitted when a claim topic has been added to the ClaimTopicsRegistry  the event is emitted by the 'addClaimTopic' function  `claimTopic` is the required claim added to the Claim Topics Registry\"},\"ClaimTopicRemoved(uint256)\":{\"notice\":\"this event is emitted when a claim topic has been removed from the ClaimTopicsRegistry  the event is emitted by the 'removeClaimTopic' function  `claimTopic` is the required claim removed from the Claim Topics Registry\"}},\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/interfaces/IClaimTopicsRegistry.sol\":\"IClaimTopicsRegistry\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/interfaces/IClaimTopicsRegistry.sol\":{\"keccak256\":\"0xaa23e9b3c07a6620942eb805238c70a37b681e4df4497a80498fbd20da5faabc\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e82da344556272e5d99efa5af48eaf6576ef2559f01126831330bc8a28b3b597\",\"dweb:/ipfs/Qme6U4dz1cg293onxJUcmFmKyKg5EZm35k9KDKj4DJneEM\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.17;\r\n\r\ninterface IClaimTopicsRegistry {\r\n    /**\r\n     *  this event is emitted when a claim topic has been added to the ClaimTopicsRegistry\r\n     *  the event is emitted by the 'addClaimTopic' function\r\n     *  `claimTopic` is the required claim added to the Claim Topics Registry\r\n     */\r\n    event ClaimTopicAdded(uint256 indexed claimTopic);\r\n\r\n    /**\r\n     *  this event is emitted when a claim topic has been removed from the ClaimTopicsRegistry\r\n     *  the event is emitted by the 'removeClaimTopic' function\r\n     *  `claimTopic` is the required claim removed from the Claim Topics Registry\r\n     */\r\n    event ClaimTopicRemoved(uint256 indexed claimTopic);\r\n\r\n    /**\r\n     * @dev Add a trusted claim topic (For example: KYC=1, AML=2).\r\n     * Only owner can call.\r\n     * emits `ClaimTopicAdded` event\r\n     * @param _claimTopic The claim topic index\r\n     */\r\n    function addClaimTopic(uint256 _claimTopic) external;\r\n\r\n    /**\r\n     *  @dev Remove a trusted claim topic (For example: KYC=1, AML=2).\r\n     *  Only owner can call.\r\n     *  emits `ClaimTopicRemoved` event\r\n     *  @param _claimTopic The claim topic index\r\n     */\r\n    function removeClaimTopic(uint256 _claimTopic) external;\r\n\r\n    /**\r\n     *  @dev Get the trusted claim topics for the security token\r\n     *  @return Array of trusted claim topics\r\n     */\r\n    function getClaimTopics() external view returns (uint256[] memory);\r\n\r\n    /**\r\n     *  @dev Transfers the Ownership of ClaimTopics to a new Owner.\r\n     *  Only owner can call.\r\n     *  @param _newOwner The new owner of this contract.\r\n     */\r\n    function transferOwnershipOnClaimTopicsRegistryContract(\r\n        address _newOwner\r\n    ) external;\r\n}\r\n",
+  "sourcePath": "C:\\Users\\DELL\\Documents\\tunnel\\solidity\\contracts\\interfaces\\IClaimTopicsRegistry.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/interfaces/IClaimTopicsRegistry.sol",
+    "exportedSymbols": {
+      "IClaimTopicsRegistry": [
+        784
+      ]
+    },
+    "id": 785,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 748,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".17"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:24:7"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IClaimTopicsRegistry",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 784,
+        "linearizedBaseContracts": [
+          784
+        ],
+        "name": "IClaimTopicsRegistry",
+        "nameLocation": "71:20:7",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 749,
+              "nodeType": "StructuredDocumentation",
+              "src": "99:245:7",
+              "text": "  this event is emitted when a claim topic has been added to the ClaimTopicsRegistry\n  the event is emitted by the 'addClaimTopic' function\n  `claimTopic` is the required claim added to the Claim Topics Registry"
+            },
+            "eventSelector": "01c928b7f7ade2949e92366aa9454dbef3a416b731cf6ec786ba9595bbd814d6",
+            "id": 753,
+            "name": "ClaimTopicAdded",
+            "nameLocation": "356:15:7",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 752,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 751,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "claimTopic",
+                  "nameLocation": "388:10:7",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 753,
+                  "src": "372:26:7",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 750,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "372:7:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "371:28:7"
+            },
+            "src": "350:50:7"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 754,
+              "nodeType": "StructuredDocumentation",
+              "src": "408:256:7",
+              "text": "  this event is emitted when a claim topic has been removed from the ClaimTopicsRegistry\n  the event is emitted by the 'removeClaimTopic' function\n  `claimTopic` is the required claim removed from the Claim Topics Registry"
+            },
+            "eventSelector": "0b1381093c776453c1bbe54fd68be1b235c65db61d099cb50d194b2991e0eec5",
+            "id": 758,
+            "name": "ClaimTopicRemoved",
+            "nameLocation": "676:17:7",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 757,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 756,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "claimTopic",
+                  "nameLocation": "710:10:7",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 758,
+                  "src": "694:26:7",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 755,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "694:7:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "693:28:7"
+            },
+            "src": "670:52:7"
+          },
+          {
+            "documentation": {
+              "id": 759,
+              "nodeType": "StructuredDocumentation",
+              "src": "730:196:7",
+              "text": " @dev Add a trusted claim topic (For example: KYC=1, AML=2).\n Only owner can call.\n emits `ClaimTopicAdded` event\n @param _claimTopic The claim topic index"
+            },
+            "functionSelector": "c7b22551",
+            "id": 764,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "addClaimTopic",
+            "nameLocation": "941:13:7",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 762,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 761,
+                  "mutability": "mutable",
+                  "name": "_claimTopic",
+                  "nameLocation": "963:11:7",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 764,
+                  "src": "955:19:7",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 760,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "955:7:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "954:21:7"
+            },
+            "returnParameters": {
+              "id": 763,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "984:0:7"
+            },
+            "scope": 784,
+            "src": "932:53:7",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 765,
+              "nodeType": "StructuredDocumentation",
+              "src": "993:205:7",
+              "text": "  @dev Remove a trusted claim topic (For example: KYC=1, AML=2).\n  Only owner can call.\n  emits `ClaimTopicRemoved` event\n  @param _claimTopic The claim topic index"
+            },
+            "functionSelector": "08297846",
+            "id": 770,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "removeClaimTopic",
+            "nameLocation": "1213:16:7",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 768,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 767,
+                  "mutability": "mutable",
+                  "name": "_claimTopic",
+                  "nameLocation": "1238:11:7",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 770,
+                  "src": "1230:19:7",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 766,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1230:7:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1229:21:7"
+            },
+            "returnParameters": {
+              "id": 769,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1259:0:7"
+            },
+            "scope": 784,
+            "src": "1204:56:7",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 771,
+              "nodeType": "StructuredDocumentation",
+              "src": "1268:125:7",
+              "text": "  @dev Get the trusted claim topics for the security token\n  @return Array of trusted claim topics"
+            },
+            "functionSelector": "df09d604",
+            "id": 777,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getClaimTopics",
+            "nameLocation": "1408:14:7",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 772,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1422:2:7"
+            },
+            "returnParameters": {
+              "id": 776,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 775,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 777,
+                  "src": "1448:16:7",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
+                    "typeString": "uint256[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 773,
+                      "name": "uint256",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1448:7:7",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 774,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1448:9:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                      "typeString": "uint256[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1447:18:7"
+            },
+            "scope": 784,
+            "src": "1399:67:7",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 778,
+              "nodeType": "StructuredDocumentation",
+              "src": "1474:169:7",
+              "text": "  @dev Transfers the Ownership of ClaimTopics to a new Owner.\n  Only owner can call.\n  @param _newOwner The new owner of this contract."
+            },
+            "functionSelector": "d5144472",
+            "id": 783,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "transferOwnershipOnClaimTopicsRegistryContract",
+            "nameLocation": "1658:46:7",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 781,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 780,
+                  "mutability": "mutable",
+                  "name": "_newOwner",
+                  "nameLocation": "1723:9:7",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 783,
+                  "src": "1715:17:7",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 779,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1715:7:7",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1704:35:7"
+            },
+            "returnParameters": {
+              "id": 782,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1748:0:7"
+            },
+            "scope": 784,
+            "src": "1649:100:7",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 785,
+        "src": "61:1691:7",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:1721:7"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.17+commit.8df45f5f.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.11",
+  "updatedAt": "2023-11-02T14:27:00.966Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "addClaimTopic(uint256)": {
+        "details": "Add a trusted claim topic (For example: KYC=1, AML=2). Only owner can call. emits `ClaimTopicAdded` event",
+        "params": {
+          "_claimTopic": "The claim topic index"
+        }
+      },
+      "getClaimTopics()": {
+        "details": "Get the trusted claim topics for the security token",
+        "returns": {
+          "_0": "Array of trusted claim topics"
+        }
+      },
+      "removeClaimTopic(uint256)": {
+        "details": "Remove a trusted claim topic (For example: KYC=1, AML=2).  Only owner can call.  emits `ClaimTopicRemoved` event",
+        "params": {
+          "_claimTopic": "The claim topic index"
+        }
+      },
+      "transferOwnershipOnClaimTopicsRegistryContract(address)": {
+        "details": "Transfers the Ownership of ClaimTopics to a new Owner.  Only owner can call.",
+        "params": {
+          "_newOwner": "The new owner of this contract."
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "events": {
+      "ClaimTopicAdded(uint256)": {
+        "notice": "this event is emitted when a claim topic has been added to the ClaimTopicsRegistry  the event is emitted by the 'addClaimTopic' function  `claimTopic` is the required claim added to the Claim Topics Registry"
+      },
+      "ClaimTopicRemoved(uint256)": {
+        "notice": "this event is emitted when a claim topic has been removed from the ClaimTopicsRegistry  the event is emitted by the 'removeClaimTopic' function  `claimTopic` is the required claim removed from the Claim Topics Registry"
+      }
+    },
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

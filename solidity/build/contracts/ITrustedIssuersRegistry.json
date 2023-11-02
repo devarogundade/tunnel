@@ -1,0 +1,1357 @@
+{
+  "contractName": "ITrustedIssuersRegistry",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "contract IClaimIssuer",
+          "name": "trustedIssuer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256[]",
+          "name": "claimTopics",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "ClaimTopicsUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "contract IClaimIssuer",
+          "name": "trustedIssuer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256[]",
+          "name": "claimTopics",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "TrustedIssuerAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "contract IClaimIssuer",
+          "name": "trustedIssuer",
+          "type": "address"
+        }
+      ],
+      "name": "TrustedIssuerRemoved",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IClaimIssuer",
+          "name": "_trustedIssuer",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_claimTopics",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "addTrustedIssuer",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IClaimIssuer",
+          "name": "_trustedIssuer",
+          "type": "address"
+        }
+      ],
+      "name": "removeTrustedIssuer",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IClaimIssuer",
+          "name": "_trustedIssuer",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_claimTopics",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "updateIssuerClaimTopics",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getTrustedIssuers",
+      "outputs": [
+        {
+          "internalType": "contract IClaimIssuer[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_issuer",
+          "type": "address"
+        }
+      ],
+      "name": "isTrustedIssuer",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IClaimIssuer",
+          "name": "_trustedIssuer",
+          "type": "address"
+        }
+      ],
+      "name": "getTrustedIssuerClaimTopics",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_issuer",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_claimTopic",
+          "type": "uint256"
+        }
+      ],
+      "name": "hasClaimTopic",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnershipOnIssuersRegistryContract",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"contract IClaimIssuer\",\"name\":\"trustedIssuer\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256[]\",\"name\":\"claimTopics\",\"type\":\"uint256[]\"}],\"name\":\"ClaimTopicsUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"contract IClaimIssuer\",\"name\":\"trustedIssuer\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256[]\",\"name\":\"claimTopics\",\"type\":\"uint256[]\"}],\"name\":\"TrustedIssuerAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"contract IClaimIssuer\",\"name\":\"trustedIssuer\",\"type\":\"address\"}],\"name\":\"TrustedIssuerRemoved\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"contract IClaimIssuer\",\"name\":\"_trustedIssuer\",\"type\":\"address\"},{\"internalType\":\"uint256[]\",\"name\":\"_claimTopics\",\"type\":\"uint256[]\"}],\"name\":\"addTrustedIssuer\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IClaimIssuer\",\"name\":\"_trustedIssuer\",\"type\":\"address\"}],\"name\":\"getTrustedIssuerClaimTopics\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getTrustedIssuers\",\"outputs\":[{\"internalType\":\"contract IClaimIssuer[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_issuer\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_claimTopic\",\"type\":\"uint256\"}],\"name\":\"hasClaimTopic\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_issuer\",\"type\":\"address\"}],\"name\":\"isTrustedIssuer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IClaimIssuer\",\"name\":\"_trustedIssuer\",\"type\":\"address\"}],\"name\":\"removeTrustedIssuer\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnershipOnIssuersRegistryContract\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IClaimIssuer\",\"name\":\"_trustedIssuer\",\"type\":\"address\"},{\"internalType\":\"uint256[]\",\"name\":\"_claimTopics\",\"type\":\"uint256[]\"}],\"name\":\"updateIssuerClaimTopics\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"addTrustedIssuer(address,uint256[])\":{\"details\":\"registers a ClaimIssuer contract as trusted claim issuer.  Requires that a ClaimIssuer contract doesn't already exist  Requires that the claimTopics set is not empty\",\"params\":{\"_claimTopics\":\"the set of claim topics that the trusted issuer is allowed to emit  This function can only be called by the owner of the Trusted Issuers Registry contract  emits a `TrustedIssuerAdded` event\",\"_trustedIssuer\":\"The ClaimIssuer contract address of the trusted claim issuer.\"}},\"getTrustedIssuerClaimTopics(address)\":{\"details\":\"Function for getting all the claim topic of trusted claim issuer  Requires the provided ClaimIssuer contract to be registered in the trusted issuers registry.\",\"params\":{\"_trustedIssuer\":\"the trusted issuer concerned.\"},\"returns\":{\"_0\":\"The set of claim topics that the trusted issuer is allowed to emit\"}},\"getTrustedIssuers()\":{\"details\":\"Function for getting all the trusted claim issuers stored.\",\"returns\":{\"_0\":\"array of all claim issuers registered.\"}},\"hasClaimTopic(address,uint256)\":{\"details\":\"Function for checking if the trusted claim issuer is allowed  to emit a certain claim topic\",\"params\":{\"_claimTopic\":\"the Claim Topic that has to be checked to know if the `issuer` is allowed to emit it\",\"_issuer\":\"the address of the trusted issuer's ClaimIssuer contract\"},\"returns\":{\"_0\":\"true if the issuer is trusted for this claim topic.\"}},\"isTrustedIssuer(address)\":{\"details\":\"Checks if the ClaimIssuer contract is trusted\",\"params\":{\"_issuer\":\"the address of the ClaimIssuer contract\"},\"returns\":{\"_0\":\"true if the issuer is trusted, false otherwise.\"}},\"removeTrustedIssuer(address)\":{\"details\":\"Removes the ClaimIssuer contract of a trusted claim issuer.  Requires that the claim issuer contract to be registered first\",\"params\":{\"_trustedIssuer\":\"the claim issuer to remove.  This function can only be called by the owner of the Trusted Issuers Registry contract  emits a `TrustedIssuerRemoved` event\"}},\"transferOwnershipOnIssuersRegistryContract(address)\":{\"details\":\"Transfers the Ownership of TrustedIssuersRegistry to a new Owner.\",\"params\":{\"_newOwner\":\"The new owner of this contract.  This function can only be called by the owner of the Trusted Issuers Registry contract  emits an `OwnershipTransferred` event\"}},\"updateIssuerClaimTopics(address,uint256[])\":{\"details\":\"Updates the set of claim topics that a trusted issuer is allowed to emit.  Requires that this ClaimIssuer contract already exists in the registry  Requires that the provided claimTopics set is not empty\",\"params\":{\"_claimTopics\":\"the set of claim topics that the trusted issuer is allowed to emit  This function can only be called by the owner of the Trusted Issuers Registry contract  emits a `ClaimTopicsUpdated` event\",\"_trustedIssuer\":\"the claim issuer to update.\"}}},\"version\":1},\"userdoc\":{\"events\":{\"ClaimTopicsUpdated(address,uint256[])\":{\"notice\":\"this event is emitted when the set of claim topics is changed for a given trusted issuer.  the event is emitted by the updateIssuerClaimTopics function  `trustedIssuer` is the address of the trusted issuer's ClaimIssuer contract  `claimTopics` is the set of claims that the trusted issuer is allowed to emit\"},\"TrustedIssuerAdded(address,uint256[])\":{\"notice\":\"this event is emitted when a trusted issuer is added in the registry.  the event is emitted by the addTrustedIssuer function  `trustedIssuer` is the address of the trusted issuer's ClaimIssuer contract  `claimTopics` is the set of claims that the trusted issuer is allowed to emit\"},\"TrustedIssuerRemoved(address)\":{\"notice\":\"this event is emitted when a trusted issuer is removed from the registry.  the event is emitted by the removeTrustedIssuer function  `trustedIssuer` is the address of the trusted issuer's ClaimIssuer contract\"}},\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/interfaces/ITrustedIssuersRegistry.sol\":\"ITrustedIssuersRegistry\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@onchain-id/solidity/contracts/interface/IClaimIssuer.sol\":{\"keccak256\":\"0x3a12f842236b7ff3579bbd245fb0b243f77e98cd721ea165d679324a099af20d\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://a70c3c9183bb995a8fe01e1438c5cceab748f4d20b2da501e6232f2e62835240\",\"dweb:/ipfs/QmafwCmChS3jFUcZVU5SujANLfu1uX13e1HaMokc8ga6Wz\"]},\"@onchain-id/solidity/contracts/interface/IERC734.sol\":{\"keccak256\":\"0x8c8a5a7951ee25569288c0c6662b59599deec7d0f2fcb74c8f80a8fd9354e8af\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://f8d9b77d41bcd0f68eac91543b9e162dadb3078e13d558db153307f3ee01f819\",\"dweb:/ipfs/QmXs6vjAfnXFz1VQxNBGQUv5i2DHr9AeJ9ezG5RQHy4bWd\"]},\"@onchain-id/solidity/contracts/interface/IERC735.sol\":{\"keccak256\":\"0xaaea6f3ecdc5f30e795e07aacdfc1b177741ef174910e943e96f6de7a8db6efb\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://ebb12c62267e4f33475cfe554bbc32740b8a1e2a620d88338490fb0dcb0d4523\",\"dweb:/ipfs/QmTXg9XUuEcTMZBc3FbGRaSekxEv8rE3oyYJQUJ9Zi3qo9\"]},\"@onchain-id/solidity/contracts/interface/IIdentity.sol\":{\"keccak256\":\"0x206c93ed62a48802edcad87e229f53c74817349a49f5ef21ea4780ab27b39cdf\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://82a0e205a814739ac45b4d1fc490aa40f5f0da4e9a9f1fb1d998c595850a29c4\",\"dweb:/ipfs/QmTqc9Z9mGmCPw3v76S2oAFkxjjQXrpgJ5YYzYj5gtbrnN\"]},\"project:/contracts/interfaces/ITrustedIssuersRegistry.sol\":{\"keccak256\":\"0x176773e6d25d31a7d0b0ac6ee53163bb0c0e30aba5c668fd394116445aa4b5cc\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5c7fd18a031d5fcfcc3baead0c0633ae1baa356df0d0821536fa3bc35f114535\",\"dweb:/ipfs/QmdzfSJuNtsryaksy8LJpzPyGW9TsMS2d3SEMWdQLtx2X5\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.17;\r\n\r\nimport \"@onchain-id/solidity/contracts/interface/IClaimIssuer.sol\";\r\n\r\ninterface ITrustedIssuersRegistry {\r\n    /**\r\n     *  this event is emitted when a trusted issuer is added in the registry.\r\n     *  the event is emitted by the addTrustedIssuer function\r\n     *  `trustedIssuer` is the address of the trusted issuer's ClaimIssuer contract\r\n     *  `claimTopics` is the set of claims that the trusted issuer is allowed to emit\r\n     */\r\n    event TrustedIssuerAdded(\r\n        IClaimIssuer indexed trustedIssuer,\r\n        uint[] claimTopics\r\n    );\r\n\r\n    /**\r\n     *  this event is emitted when a trusted issuer is removed from the registry.\r\n     *  the event is emitted by the removeTrustedIssuer function\r\n     *  `trustedIssuer` is the address of the trusted issuer's ClaimIssuer contract\r\n     */\r\n    event TrustedIssuerRemoved(IClaimIssuer indexed trustedIssuer);\r\n\r\n    /**\r\n     *  this event is emitted when the set of claim topics is changed for a given trusted issuer.\r\n     *  the event is emitted by the updateIssuerClaimTopics function\r\n     *  `trustedIssuer` is the address of the trusted issuer's ClaimIssuer contract\r\n     *  `claimTopics` is the set of claims that the trusted issuer is allowed to emit\r\n     */\r\n    event ClaimTopicsUpdated(\r\n        IClaimIssuer indexed trustedIssuer,\r\n        uint[] claimTopics\r\n    );\r\n\r\n    /**\r\n     *  @dev registers a ClaimIssuer contract as trusted claim issuer.\r\n     *  Requires that a ClaimIssuer contract doesn't already exist\r\n     *  Requires that the claimTopics set is not empty\r\n     *  @param _trustedIssuer The ClaimIssuer contract address of the trusted claim issuer.\r\n     *  @param _claimTopics the set of claim topics that the trusted issuer is allowed to emit\r\n     *  This function can only be called by the owner of the Trusted Issuers Registry contract\r\n     *  emits a `TrustedIssuerAdded` event\r\n     */\r\n    function addTrustedIssuer(\r\n        IClaimIssuer _trustedIssuer,\r\n        uint[] calldata _claimTopics\r\n    ) external;\r\n\r\n    /**\r\n     *  @dev Removes the ClaimIssuer contract of a trusted claim issuer.\r\n     *  Requires that the claim issuer contract to be registered first\r\n     *  @param _trustedIssuer the claim issuer to remove.\r\n     *  This function can only be called by the owner of the Trusted Issuers Registry contract\r\n     *  emits a `TrustedIssuerRemoved` event\r\n     */\r\n    function removeTrustedIssuer(IClaimIssuer _trustedIssuer) external;\r\n\r\n    /**\r\n     *  @dev Updates the set of claim topics that a trusted issuer is allowed to emit.\r\n     *  Requires that this ClaimIssuer contract already exists in the registry\r\n     *  Requires that the provided claimTopics set is not empty\r\n     *  @param _trustedIssuer the claim issuer to update.\r\n     *  @param _claimTopics the set of claim topics that the trusted issuer is allowed to emit\r\n     *  This function can only be called by the owner of the Trusted Issuers Registry contract\r\n     *  emits a `ClaimTopicsUpdated` event\r\n     */\r\n    function updateIssuerClaimTopics(\r\n        IClaimIssuer _trustedIssuer,\r\n        uint[] calldata _claimTopics\r\n    ) external;\r\n\r\n    /**\r\n     *  @dev Function for getting all the trusted claim issuers stored.\r\n     *  @return array of all claim issuers registered.\r\n     */\r\n    function getTrustedIssuers() external view returns (IClaimIssuer[] memory);\r\n\r\n    /**\r\n     *  @dev Checks if the ClaimIssuer contract is trusted\r\n     *  @param _issuer the address of the ClaimIssuer contract\r\n     *  @return true if the issuer is trusted, false otherwise.\r\n     */\r\n    function isTrustedIssuer(address _issuer) external view returns (bool);\r\n\r\n    /**\r\n     *  @dev Function for getting all the claim topic of trusted claim issuer\r\n     *  Requires the provided ClaimIssuer contract to be registered in the trusted issuers registry.\r\n     *  @param _trustedIssuer the trusted issuer concerned.\r\n     *  @return The set of claim topics that the trusted issuer is allowed to emit\r\n     */\r\n    function getTrustedIssuerClaimTopics(\r\n        IClaimIssuer _trustedIssuer\r\n    ) external view returns (uint[] memory);\r\n\r\n    /**\r\n     *  @dev Function for checking if the trusted claim issuer is allowed\r\n     *  to emit a certain claim topic\r\n     *  @param _issuer the address of the trusted issuer's ClaimIssuer contract\r\n     *  @param _claimTopic the Claim Topic that has to be checked to know if the `issuer` is allowed to emit it\r\n     *  @return true if the issuer is trusted for this claim topic.\r\n     */\r\n    function hasClaimTopic(\r\n        address _issuer,\r\n        uint _claimTopic\r\n    ) external view returns (bool);\r\n\r\n    /**\r\n     *  @dev Transfers the Ownership of TrustedIssuersRegistry to a new Owner.\r\n     *  @param _newOwner The new owner of this contract.\r\n     *  This function can only be called by the owner of the Trusted Issuers Registry contract\r\n     *  emits an `OwnershipTransferred` event\r\n     */\r\n    function transferOwnershipOnIssuersRegistryContract(\r\n        address _newOwner\r\n    ) external;\r\n}\r\n",
+  "sourcePath": "C:\\Users\\DELL\\Documents\\tunnel\\solidity\\contracts\\interfaces\\ITrustedIssuersRegistry.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/interfaces/ITrustedIssuersRegistry.sol",
+    "exportedSymbols": {
+      "IClaimIssuer": [
+        49
+      ],
+      "IERC734": [
+        196
+      ],
+      "IERC735": [
+        304
+      ],
+      "IIdentity": [
+        328
+      ],
+      "ITrustedIssuersRegistry": [
+        1636
+      ]
+    },
+    "id": 1637,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1541,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".17"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:24:12"
+      },
+      {
+        "absolutePath": "@onchain-id/solidity/contracts/interface/IClaimIssuer.sol",
+        "file": "@onchain-id/solidity/contracts/interface/IClaimIssuer.sol",
+        "id": 1542,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 1637,
+        "sourceUnit": 50,
+        "src": "61:67:12",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "ITrustedIssuersRegistry",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 1636,
+        "linearizedBaseContracts": [
+          1636
+        ],
+        "name": "ITrustedIssuersRegistry",
+        "nameLocation": "142:23:12",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 1543,
+              "nodeType": "StructuredDocumentation",
+              "src": "173:326:12",
+              "text": "  this event is emitted when a trusted issuer is added in the registry.\n  the event is emitted by the addTrustedIssuer function\n  `trustedIssuer` is the address of the trusted issuer's ClaimIssuer contract\n  `claimTopics` is the set of claims that the trusted issuer is allowed to emit"
+            },
+            "eventSelector": "fedc33fd34859594822c0ff6f3f4f9fc279cc6d5cae53068f706a088e4500872",
+            "id": 1551,
+            "name": "TrustedIssuerAdded",
+            "nameLocation": "511:18:12",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 1550,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1546,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "trustedIssuer",
+                  "nameLocation": "561:13:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1551,
+                  "src": "540:34:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_IClaimIssuer_$49",
+                    "typeString": "contract IClaimIssuer"
+                  },
+                  "typeName": {
+                    "id": 1545,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 1544,
+                      "name": "IClaimIssuer",
+                      "nameLocations": [
+                        "540:12:12"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 49,
+                      "src": "540:12:12"
+                    },
+                    "referencedDeclaration": 49,
+                    "src": "540:12:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IClaimIssuer_$49",
+                      "typeString": "contract IClaimIssuer"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1549,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "claimTopics",
+                  "nameLocation": "592:11:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1551,
+                  "src": "585:18:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
+                    "typeString": "uint256[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 1547,
+                      "name": "uint",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "585:4:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 1548,
+                    "nodeType": "ArrayTypeName",
+                    "src": "585:6:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                      "typeString": "uint256[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "529:81:12"
+            },
+            "src": "505:106:12"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 1552,
+              "nodeType": "StructuredDocumentation",
+              "src": "619:246:12",
+              "text": "  this event is emitted when a trusted issuer is removed from the registry.\n  the event is emitted by the removeTrustedIssuer function\n  `trustedIssuer` is the address of the trusted issuer's ClaimIssuer contract"
+            },
+            "eventSelector": "2214ded40113cc3fb63fc206cafee88270b0a903dac7245d54efdde30ebb0321",
+            "id": 1557,
+            "name": "TrustedIssuerRemoved",
+            "nameLocation": "877:20:12",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 1556,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1555,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "trustedIssuer",
+                  "nameLocation": "919:13:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1557,
+                  "src": "898:34:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_IClaimIssuer_$49",
+                    "typeString": "contract IClaimIssuer"
+                  },
+                  "typeName": {
+                    "id": 1554,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 1553,
+                      "name": "IClaimIssuer",
+                      "nameLocations": [
+                        "898:12:12"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 49,
+                      "src": "898:12:12"
+                    },
+                    "referencedDeclaration": 49,
+                    "src": "898:12:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IClaimIssuer_$49",
+                      "typeString": "contract IClaimIssuer"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "897:36:12"
+            },
+            "src": "871:63:12"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 1558,
+              "nodeType": "StructuredDocumentation",
+              "src": "942:353:12",
+              "text": "  this event is emitted when the set of claim topics is changed for a given trusted issuer.\n  the event is emitted by the updateIssuerClaimTopics function\n  `trustedIssuer` is the address of the trusted issuer's ClaimIssuer contract\n  `claimTopics` is the set of claims that the trusted issuer is allowed to emit"
+            },
+            "eventSelector": "ec753cfc52044f61676f18a11e500093a9f2b1cd5e4942bc476f2b0438159bcf",
+            "id": 1566,
+            "name": "ClaimTopicsUpdated",
+            "nameLocation": "1307:18:12",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 1565,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1561,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "trustedIssuer",
+                  "nameLocation": "1357:13:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1566,
+                  "src": "1336:34:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_IClaimIssuer_$49",
+                    "typeString": "contract IClaimIssuer"
+                  },
+                  "typeName": {
+                    "id": 1560,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 1559,
+                      "name": "IClaimIssuer",
+                      "nameLocations": [
+                        "1336:12:12"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 49,
+                      "src": "1336:12:12"
+                    },
+                    "referencedDeclaration": 49,
+                    "src": "1336:12:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IClaimIssuer_$49",
+                      "typeString": "contract IClaimIssuer"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1564,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "claimTopics",
+                  "nameLocation": "1388:11:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1566,
+                  "src": "1381:18:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
+                    "typeString": "uint256[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 1562,
+                      "name": "uint",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1381:4:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 1563,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1381:6:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                      "typeString": "uint256[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1325:81:12"
+            },
+            "src": "1301:106:12"
+          },
+          {
+            "documentation": {
+              "id": 1567,
+              "nodeType": "StructuredDocumentation",
+              "src": "1415:537:12",
+              "text": "  @dev registers a ClaimIssuer contract as trusted claim issuer.\n  Requires that a ClaimIssuer contract doesn't already exist\n  Requires that the claimTopics set is not empty\n  @param _trustedIssuer The ClaimIssuer contract address of the trusted claim issuer.\n  @param _claimTopics the set of claim topics that the trusted issuer is allowed to emit\n  This function can only be called by the owner of the Trusted Issuers Registry contract\n  emits a `TrustedIssuerAdded` event"
+            },
+            "functionSelector": "9f63ea98",
+            "id": 1576,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "addTrustedIssuer",
+            "nameLocation": "1967:16:12",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1574,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1570,
+                  "mutability": "mutable",
+                  "name": "_trustedIssuer",
+                  "nameLocation": "2007:14:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1576,
+                  "src": "1994:27:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_IClaimIssuer_$49",
+                    "typeString": "contract IClaimIssuer"
+                  },
+                  "typeName": {
+                    "id": 1569,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 1568,
+                      "name": "IClaimIssuer",
+                      "nameLocations": [
+                        "1994:12:12"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 49,
+                      "src": "1994:12:12"
+                    },
+                    "referencedDeclaration": 49,
+                    "src": "1994:12:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IClaimIssuer_$49",
+                      "typeString": "contract IClaimIssuer"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1573,
+                  "mutability": "mutable",
+                  "name": "_claimTopics",
+                  "nameLocation": "2048:12:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1576,
+                  "src": "2032:28:12",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_uint256_$dyn_calldata_ptr",
+                    "typeString": "uint256[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 1571,
+                      "name": "uint",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "2032:4:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 1572,
+                    "nodeType": "ArrayTypeName",
+                    "src": "2032:6:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                      "typeString": "uint256[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1983:84:12"
+            },
+            "returnParameters": {
+              "id": 1575,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2076:0:12"
+            },
+            "scope": 1636,
+            "src": "1958:119:12",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 1577,
+              "nodeType": "StructuredDocumentation",
+              "src": "2085:359:12",
+              "text": "  @dev Removes the ClaimIssuer contract of a trusted claim issuer.\n  Requires that the claim issuer contract to be registered first\n  @param _trustedIssuer the claim issuer to remove.\n  This function can only be called by the owner of the Trusted Issuers Registry contract\n  emits a `TrustedIssuerRemoved` event"
+            },
+            "functionSelector": "b93d28eb",
+            "id": 1583,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "removeTrustedIssuer",
+            "nameLocation": "2459:19:12",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1581,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1580,
+                  "mutability": "mutable",
+                  "name": "_trustedIssuer",
+                  "nameLocation": "2492:14:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1583,
+                  "src": "2479:27:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_IClaimIssuer_$49",
+                    "typeString": "contract IClaimIssuer"
+                  },
+                  "typeName": {
+                    "id": 1579,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 1578,
+                      "name": "IClaimIssuer",
+                      "nameLocations": [
+                        "2479:12:12"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 49,
+                      "src": "2479:12:12"
+                    },
+                    "referencedDeclaration": 49,
+                    "src": "2479:12:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IClaimIssuer_$49",
+                      "typeString": "contract IClaimIssuer"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2478:29:12"
+            },
+            "returnParameters": {
+              "id": 1582,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2516:0:12"
+            },
+            "scope": 1636,
+            "src": "2450:67:12",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 1584,
+              "nodeType": "StructuredDocumentation",
+              "src": "2525:540:12",
+              "text": "  @dev Updates the set of claim topics that a trusted issuer is allowed to emit.\n  Requires that this ClaimIssuer contract already exists in the registry\n  Requires that the provided claimTopics set is not empty\n  @param _trustedIssuer the claim issuer to update.\n  @param _claimTopics the set of claim topics that the trusted issuer is allowed to emit\n  This function can only be called by the owner of the Trusted Issuers Registry contract\n  emits a `ClaimTopicsUpdated` event"
+            },
+            "functionSelector": "04bc7e84",
+            "id": 1593,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updateIssuerClaimTopics",
+            "nameLocation": "3080:23:12",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1591,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1587,
+                  "mutability": "mutable",
+                  "name": "_trustedIssuer",
+                  "nameLocation": "3127:14:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1593,
+                  "src": "3114:27:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_IClaimIssuer_$49",
+                    "typeString": "contract IClaimIssuer"
+                  },
+                  "typeName": {
+                    "id": 1586,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 1585,
+                      "name": "IClaimIssuer",
+                      "nameLocations": [
+                        "3114:12:12"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 49,
+                      "src": "3114:12:12"
+                    },
+                    "referencedDeclaration": 49,
+                    "src": "3114:12:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IClaimIssuer_$49",
+                      "typeString": "contract IClaimIssuer"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1590,
+                  "mutability": "mutable",
+                  "name": "_claimTopics",
+                  "nameLocation": "3168:12:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1593,
+                  "src": "3152:28:12",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_uint256_$dyn_calldata_ptr",
+                    "typeString": "uint256[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 1588,
+                      "name": "uint",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "3152:4:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 1589,
+                    "nodeType": "ArrayTypeName",
+                    "src": "3152:6:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                      "typeString": "uint256[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3103:84:12"
+            },
+            "returnParameters": {
+              "id": 1592,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3196:0:12"
+            },
+            "scope": 1636,
+            "src": "3071:126:12",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 1594,
+              "nodeType": "StructuredDocumentation",
+              "src": "3205:141:12",
+              "text": "  @dev Function for getting all the trusted claim issuers stored.\n  @return array of all claim issuers registered."
+            },
+            "functionSelector": "d9dd24c5",
+            "id": 1601,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getTrustedIssuers",
+            "nameLocation": "3361:17:12",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1595,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3378:2:12"
+            },
+            "returnParameters": {
+              "id": 1600,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1599,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1601,
+                  "src": "3404:21:12",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_contract$_IClaimIssuer_$49_$dyn_memory_ptr",
+                    "typeString": "contract IClaimIssuer[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 1597,
+                      "nodeType": "UserDefinedTypeName",
+                      "pathNode": {
+                        "id": 1596,
+                        "name": "IClaimIssuer",
+                        "nameLocations": [
+                          "3404:12:12"
+                        ],
+                        "nodeType": "IdentifierPath",
+                        "referencedDeclaration": 49,
+                        "src": "3404:12:12"
+                      },
+                      "referencedDeclaration": 49,
+                      "src": "3404:12:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_IClaimIssuer_$49",
+                        "typeString": "contract IClaimIssuer"
+                      }
+                    },
+                    "id": 1598,
+                    "nodeType": "ArrayTypeName",
+                    "src": "3404:14:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_contract$_IClaimIssuer_$49_$dyn_storage_ptr",
+                      "typeString": "contract IClaimIssuer[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3403:23:12"
+            },
+            "scope": 1636,
+            "src": "3352:75:12",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 1602,
+              "nodeType": "StructuredDocumentation",
+              "src": "3435:201:12",
+              "text": "  @dev Checks if the ClaimIssuer contract is trusted\n  @param _issuer the address of the ClaimIssuer contract\n  @return true if the issuer is trusted, false otherwise."
+            },
+            "functionSelector": "ef2ed1a4",
+            "id": 1609,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isTrustedIssuer",
+            "nameLocation": "3651:15:12",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1605,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1604,
+                  "mutability": "mutable",
+                  "name": "_issuer",
+                  "nameLocation": "3675:7:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1609,
+                  "src": "3667:15:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1603,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3667:7:12",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3666:17:12"
+            },
+            "returnParameters": {
+              "id": 1608,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1607,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1609,
+                  "src": "3707:4:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 1606,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3707:4:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3706:6:12"
+            },
+            "scope": 1636,
+            "src": "3642:71:12",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 1610,
+              "nodeType": "StructuredDocumentation",
+              "src": "3721:338:12",
+              "text": "  @dev Function for getting all the claim topic of trusted claim issuer\n  Requires the provided ClaimIssuer contract to be registered in the trusted issuers registry.\n  @param _trustedIssuer the trusted issuer concerned.\n  @return The set of claim topics that the trusted issuer is allowed to emit"
+            },
+            "functionSelector": "c28fb278",
+            "id": 1619,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getTrustedIssuerClaimTopics",
+            "nameLocation": "4074:27:12",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1614,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1613,
+                  "mutability": "mutable",
+                  "name": "_trustedIssuer",
+                  "nameLocation": "4125:14:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1619,
+                  "src": "4112:27:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_IClaimIssuer_$49",
+                    "typeString": "contract IClaimIssuer"
+                  },
+                  "typeName": {
+                    "id": 1612,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 1611,
+                      "name": "IClaimIssuer",
+                      "nameLocations": [
+                        "4112:12:12"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 49,
+                      "src": "4112:12:12"
+                    },
+                    "referencedDeclaration": 49,
+                    "src": "4112:12:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IClaimIssuer_$49",
+                      "typeString": "contract IClaimIssuer"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4101:45:12"
+            },
+            "returnParameters": {
+              "id": 1618,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1617,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1619,
+                  "src": "4170:13:12",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
+                    "typeString": "uint256[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 1615,
+                      "name": "uint",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "4170:4:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 1616,
+                    "nodeType": "ArrayTypeName",
+                    "src": "4170:6:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                      "typeString": "uint256[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4169:15:12"
+            },
+            "scope": 1636,
+            "src": "4065:120:12",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 1620,
+              "nodeType": "StructuredDocumentation",
+              "src": "4193:389:12",
+              "text": "  @dev Function for checking if the trusted claim issuer is allowed\n  to emit a certain claim topic\n  @param _issuer the address of the trusted issuer's ClaimIssuer contract\n  @param _claimTopic the Claim Topic that has to be checked to know if the `issuer` is allowed to emit it\n  @return true if the issuer is trusted for this claim topic."
+            },
+            "functionSelector": "34a89987",
+            "id": 1629,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "hasClaimTopic",
+            "nameLocation": "4597:13:12",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1625,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1622,
+                  "mutability": "mutable",
+                  "name": "_issuer",
+                  "nameLocation": "4629:7:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1629,
+                  "src": "4621:15:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1621,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4621:7:12",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1624,
+                  "mutability": "mutable",
+                  "name": "_claimTopic",
+                  "nameLocation": "4652:11:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1629,
+                  "src": "4647:16:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 1623,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4647:4:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4610:60:12"
+            },
+            "returnParameters": {
+              "id": 1628,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1627,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1629,
+                  "src": "4694:4:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 1626,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4694:4:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4693:6:12"
+            },
+            "scope": 1636,
+            "src": "4588:112:12",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 1630,
+              "nodeType": "StructuredDocumentation",
+              "src": "4708:293:12",
+              "text": "  @dev Transfers the Ownership of TrustedIssuersRegistry to a new Owner.\n  @param _newOwner The new owner of this contract.\n  This function can only be called by the owner of the Trusted Issuers Registry contract\n  emits an `OwnershipTransferred` event"
+            },
+            "functionSelector": "e36dce28",
+            "id": 1635,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "transferOwnershipOnIssuersRegistryContract",
+            "nameLocation": "5016:42:12",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1633,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1632,
+                  "mutability": "mutable",
+                  "name": "_newOwner",
+                  "nameLocation": "5077:9:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1635,
+                  "src": "5069:17:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1631,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5069:7:12",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5058:35:12"
+            },
+            "returnParameters": {
+              "id": 1634,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5102:0:12"
+            },
+            "scope": 1636,
+            "src": "5007:96:12",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 1637,
+        "src": "132:4974:12",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:5075:12"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.17+commit.8df45f5f.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.11",
+  "updatedAt": "2023-11-02T14:27:01.000Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "addTrustedIssuer(address,uint256[])": {
+        "details": "registers a ClaimIssuer contract as trusted claim issuer.  Requires that a ClaimIssuer contract doesn't already exist  Requires that the claimTopics set is not empty",
+        "params": {
+          "_claimTopics": "the set of claim topics that the trusted issuer is allowed to emit  This function can only be called by the owner of the Trusted Issuers Registry contract  emits a `TrustedIssuerAdded` event",
+          "_trustedIssuer": "The ClaimIssuer contract address of the trusted claim issuer."
+        }
+      },
+      "getTrustedIssuerClaimTopics(address)": {
+        "details": "Function for getting all the claim topic of trusted claim issuer  Requires the provided ClaimIssuer contract to be registered in the trusted issuers registry.",
+        "params": {
+          "_trustedIssuer": "the trusted issuer concerned."
+        },
+        "returns": {
+          "_0": "The set of claim topics that the trusted issuer is allowed to emit"
+        }
+      },
+      "getTrustedIssuers()": {
+        "details": "Function for getting all the trusted claim issuers stored.",
+        "returns": {
+          "_0": "array of all claim issuers registered."
+        }
+      },
+      "hasClaimTopic(address,uint256)": {
+        "details": "Function for checking if the trusted claim issuer is allowed  to emit a certain claim topic",
+        "params": {
+          "_claimTopic": "the Claim Topic that has to be checked to know if the `issuer` is allowed to emit it",
+          "_issuer": "the address of the trusted issuer's ClaimIssuer contract"
+        },
+        "returns": {
+          "_0": "true if the issuer is trusted for this claim topic."
+        }
+      },
+      "isTrustedIssuer(address)": {
+        "details": "Checks if the ClaimIssuer contract is trusted",
+        "params": {
+          "_issuer": "the address of the ClaimIssuer contract"
+        },
+        "returns": {
+          "_0": "true if the issuer is trusted, false otherwise."
+        }
+      },
+      "removeTrustedIssuer(address)": {
+        "details": "Removes the ClaimIssuer contract of a trusted claim issuer.  Requires that the claim issuer contract to be registered first",
+        "params": {
+          "_trustedIssuer": "the claim issuer to remove.  This function can only be called by the owner of the Trusted Issuers Registry contract  emits a `TrustedIssuerRemoved` event"
+        }
+      },
+      "transferOwnershipOnIssuersRegistryContract(address)": {
+        "details": "Transfers the Ownership of TrustedIssuersRegistry to a new Owner.",
+        "params": {
+          "_newOwner": "The new owner of this contract.  This function can only be called by the owner of the Trusted Issuers Registry contract  emits an `OwnershipTransferred` event"
+        }
+      },
+      "updateIssuerClaimTopics(address,uint256[])": {
+        "details": "Updates the set of claim topics that a trusted issuer is allowed to emit.  Requires that this ClaimIssuer contract already exists in the registry  Requires that the provided claimTopics set is not empty",
+        "params": {
+          "_claimTopics": "the set of claim topics that the trusted issuer is allowed to emit  This function can only be called by the owner of the Trusted Issuers Registry contract  emits a `ClaimTopicsUpdated` event",
+          "_trustedIssuer": "the claim issuer to update."
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "events": {
+      "ClaimTopicsUpdated(address,uint256[])": {
+        "notice": "this event is emitted when the set of claim topics is changed for a given trusted issuer.  the event is emitted by the updateIssuerClaimTopics function  `trustedIssuer` is the address of the trusted issuer's ClaimIssuer contract  `claimTopics` is the set of claims that the trusted issuer is allowed to emit"
+      },
+      "TrustedIssuerAdded(address,uint256[])": {
+        "notice": "this event is emitted when a trusted issuer is added in the registry.  the event is emitted by the addTrustedIssuer function  `trustedIssuer` is the address of the trusted issuer's ClaimIssuer contract  `claimTopics` is the set of claims that the trusted issuer is allowed to emit"
+      },
+      "TrustedIssuerRemoved(address)": {
+        "notice": "this event is emitted when a trusted issuer is removed from the registry.  the event is emitted by the removeTrustedIssuer function  `trustedIssuer` is the address of the trusted issuer's ClaimIssuer contract"
+      }
+    },
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

@@ -74,7 +74,7 @@
             }
         },
         {
-            "name": "supply_profile",
+            "name": "supply_of",
             "args": [
                 {
                     "type": "address",
@@ -87,7 +87,12 @@
         },
         {
             "name": "borrow",
-            "args": [],
+            "args": [
+                {
+                    "type": "pay",
+                    "name": "payment"
+                }
+            ],
             "returns": {
                 "type": "void"
             }
