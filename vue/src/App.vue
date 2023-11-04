@@ -14,7 +14,7 @@ import AppFooter from './components/AppFooter.vue';
 
 <style scoped>
 .app {
-  background-image: url('/src/public/images/wave.png');
+  background-image: url('//images/wave.png');
   background-position: top center;
   background-repeat: repeat-y;
   background-size: 1440px 800px;

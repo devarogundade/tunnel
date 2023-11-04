@@ -1,71 +1,55 @@
 #pragma version 8
-intcblock 0 1 4 32
-bytecblock 0x 0x00 0x746f74616c5f737570706c79 0x776f726d686f6c655f6964 0x6d696e5f737570706c79 0x776f726d686f6c655f61646472657373 0x7075626c6973684d657373616765 0x151f7c75
+intcblock 0 1 4 1000000
+bytecblock 0x 0x746f74616c5f737570706c79 0x636f6c6c61746572616c 0x746f74616c5f626f72726f77 0x726174655f64697669646572 0x151f7c75 0x626f72726f775f617072 0x6c7476 0x6d696e5f737570706c79 0x737570706c795f617072 0x7075626c6973684d657373616765
 txn NumAppArgs
 intc_0 // 0
 ==
-bnz main_l20
+bnz main_l24
 txna ApplicationArgs 0
-pushbytes 0x2826b202 // "opt_into_asset(asset)void"
+pushbytes 0x7549cae4 // "opt_in_asset(asset)void"
 ==
-bnz main_l19
+bnz main_l23
 txna ApplicationArgs 0
-pushbytes 0xc435a2d7 // "add_collateral(uint64,(uint64,address))void"
+pushbytes 0x2d24230c // "set_collateral(byte,byte,uint64)void"
 ==
-bnz main_l18
-txna ApplicationArgs 0
-pushbytes 0x21df7cea // "add_pair(byte,byte)void"
-==
-bnz main_l17
-txna ApplicationArgs 0
-pushbytes 0x159a3f16 // "set_target_id(uint64,byte)void"
-==
-bnz main_l16
+bnz main_l22
 txna ApplicationArgs 0
 pushbytes 0xd0a79409 // "supply(pay)void"
 ==
+bnz main_l21
+txna ApplicationArgs 0
+pushbytes 0x760e9fed // "weeeee(asset)uint64"
+==
+bnz main_l20
+txna ApplicationArgs 0
+pushbytes 0xab635af5 // "borrow(asset)void"
+==
+bnz main_l19
+txna ApplicationArgs 0
+pushbytes 0xf97e9f27 // "repay(pay)void"
+==
+bnz main_l18
+txna ApplicationArgs 0
+pushbytes 0xb7355fd1 // "withdraw()void"
+==
+bnz main_l17
+txna ApplicationArgs 0
+pushbytes 0x38281b87 // "receiveMessage(uint64,asset,uint64,account)void"
+==
+bnz main_l16
+txna ApplicationArgs 0
+pushbytes 0xa3abe71b // "un_bridge(asset,application,account)void"
+==
 bnz main_l15
 txna ApplicationArgs 0
-pushbytes 0xa5427f8a // "supply_of(address)(uint64,uint64)"
+pushbytes 0xd01b7676 // "borrow_of(address)(uint64,uint64,uint64)"
 ==
 bnz main_l14
 txna ApplicationArgs 0
-pushbytes 0xfda3b416 // "borrow(pay)void"
+pushbytes 0xa5427f8a // "supply_of(address)(uint64,uint64)"
 ==
 bnz main_l13
-txna ApplicationArgs 0
-pushbytes 0x903f4535 // "portal_transfer(byte[])byte[]"
-==
-bnz main_l12
-txna ApplicationArgs 0
-pushbytes 0x6ad69bb4 // "un_bridge(uint64)void"
-==
-bnz main_l11
 err
-main_l11:
-txn OnCompletion
-intc_0 // NoOp
-==
-txn ApplicationID
-intc_0 // 0
-!=
-&&
-assert
-callsub unbridgecaster_19
-intc_1 // 1
-return
-main_l12:
-txn OnCompletion
-intc_0 // NoOp
-==
-txn ApplicationID
-intc_0 // 0
-!=
-&&
-assert
-callsub portaltransfercaster_18
-intc_1 // 1
-return
 main_l13:
 txn OnCompletion
 intc_0 // NoOp
@@ -75,7 +59,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub borrowcaster_17
+callsub supplyofcaster_25
 intc_1 // 1
 return
 main_l14:
@@ -87,7 +71,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub supplyofcaster_16
+callsub borrowofcaster_24
 intc_1 // 1
 return
 main_l15:
@@ -99,7 +83,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub supplycaster_15
+callsub unbridgecaster_23
 intc_1 // 1
 return
 main_l16:
@@ -111,7 +95,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub settargetidcaster_14
+callsub receiveMessagecaster_22
 intc_1 // 1
 return
 main_l17:
@@ -123,7 +107,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub addpaircaster_13
+callsub withdrawcaster_21
 intc_1 // 1
 return
 main_l18:
@@ -135,7 +119,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub addcollateralcaster_12
+callsub repaycaster_20
 intc_1 // 1
 return
 main_l19:
@@ -147,16 +131,64 @@ intc_0 // 0
 !=
 &&
 assert
-callsub optintoassetcaster_11
+callsub borrowcaster_19
 intc_1 // 1
 return
 main_l20:
 txn OnCompletion
 intc_0 // NoOp
 ==
-bnz main_l22
-err
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub weeeeecaster_18
+intc_1 // 1
+return
+main_l21:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub supplycaster_17
+intc_1 // 1
+return
 main_l22:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub setcollateralcaster_16
+intc_1 // 1
+return
+main_l23:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub optinassetcaster_15
+intc_1 // 1
+return
+main_l24:
+txn OnCompletion
+intc_0 // NoOp
+==
+bnz main_l26
+err
+main_l26:
 txn ApplicationID
 intc_0 // 0
 ==
@@ -168,34 +200,34 @@ return
 // create
 create_0:
 proto 0 0
-pushbytes 0x626f72726f775f617072 // "borrow_apr"
+bytec 6 // "borrow_apr"
+pushint 1030000 // 1030000
+app_global_put
+bytec_2 // "collateral"
 intc_0 // 0
 app_global_put
-pushbytes 0x6c7476 // "ltv"
-pushint 8000 // 8000
+bytec 7 // "ltv"
+pushint 800000 // 800000
 app_global_put
-bytec 4 // "min_supply"
-pushint 1000000 // 1000000
+bytec 8 // "min_supply"
+intc_3 // 1000000
 app_global_put
-pushbytes 0x737570706c795f617072 // "supply_apr"
+bytec 4 // "rate_divider"
+intc_3 // 1000000
+app_global_put
+bytec 9 // "supply_apr"
+pushint 1050000 // 1050000
+app_global_put
+bytec_3 // "total_borrow"
 intc_0 // 0
 app_global_put
-pushbytes 0x746f74616c5f626f72726f77 // "total_borrow"
+bytec_1 // "total_supply"
 intc_0 // 0
-app_global_put
-bytec_2 // "total_supply"
-intc_0 // 0
-app_global_put
-bytec 5 // "wormhole_address"
-pushbytes 0x4332535a4244345a46464458414e42435554473547425545574d5133344a53354c464744525445564a424158445246365a57423751344b48484d // "C2SZBD4ZFFDXANBCUTG5GBUEWMQ34JS5LFGDRTEVJBAXDRF6ZWB7Q4KHHM"
-app_global_put
-bytec_3 // "wormhole_id"
-pushint 86525623 // 86525623
 app_global_put
 retsub
 
-// opt_into_asset
-optintoasset_1:
+// opt_in_asset
+optinasset_1:
 proto 1 0
 txn Sender
 global CreatorAddress
@@ -215,74 +247,46 @@ itxn_field AssetAmount
 intc_0 // 0
 itxn_field Fee
 itxn_submit
+bytec_2 // "collateral"
+frame_dig -1
+txnas Assets
+app_global_put
 retsub
 
-// add_collateral
-addcollateral_2:
-proto 2 0
+// set_collateral
+setcollateral_2:
+proto 3 0
 txn Sender
 global CreatorAddress
 ==
 // unauthorized
 assert
-frame_dig -2
-itob
-box_del
-pop
-frame_dig -2
-itob
+itxn_begin
+pushint 3 // acfg
+itxn_field TypeEnum
+pushbytes 0x576f726d686f6c6520536861726573 // "Wormhole Shares"
+itxn_field ConfigAssetName
+pushbytes 0x57534841524553 // "WSHARES"
+itxn_field ConfigAssetUnitName
+global CurrentApplicationAddress
+itxn_field ConfigAssetClawback
+global CurrentApplicationAddress
+itxn_field ConfigAssetReserve
+global CurrentApplicationAddress
+itxn_field ConfigAssetFreeze
+global CurrentApplicationAddress
+itxn_field ConfigAssetManager
+intc_1 // 1
+itxn_field ConfigAssetDefaultFrozen
 frame_dig -1
-box_put
-retsub
-
-// add_pair
-addpair_3:
-proto 2 0
-txn Sender
-global CreatorAddress
-==
-// unauthorized
-assert
-bytec_1 // 0x00
+itxn_field ConfigAssetTotal
 intc_0 // 0
-frame_dig -2
-setbyte
-box_del
-pop
-bytec_1 // 0x00
-intc_0 // 0
-frame_dig -2
-setbyte
-bytec_1 // 0x00
-intc_0 // 0
-frame_dig -1
-setbyte
-box_put
-retsub
-
-// set_target_id
-settargetid_4:
-proto 2 0
-txn Sender
-global CreatorAddress
-==
-// unauthorized
-assert
-frame_dig -2
-itob
-box_del
-pop
-frame_dig -2
-itob
-bytec_1 // 0x00
-intc_0 // 0
-frame_dig -1
-setbyte
-box_put
+itxn_field ConfigAssetDecimals
+itxn_submit
 retsub
 
 // supply
-supply_5:
+supply_3:
 proto 1 0
 bytec_0 // ""
 intc_0 // 0
@@ -306,13 +310,13 @@ intc_0 // 0
 assert
 frame_dig -1
 gtxns Amount
-bytec 4 // "min_supply"
+bytec 8 // "min_supply"
 app_global_get
 >=
 // Amount not sufficient
 assert
-bytec_2 // "total_supply"
-bytec_2 // "total_supply"
+bytec_1 // "total_supply"
+bytec_1 // "total_supply"
 app_global_get
 frame_dig -1
 gtxns Amount
@@ -335,205 +339,454 @@ pop
 txn Sender
 frame_dig 0
 box_put
+bytec_1 // "total_supply"
+bytec_1 // "total_supply"
+app_global_get
+frame_dig -1
+gtxns Amount
++
+app_global_put
 retsub
 
-// supply_of
-supplyof_6:
+// weeeee
+weeeee_4:
 proto 1 1
-bytec_0 // ""
+intc_0 // 0
+txn Sender
 frame_dig -1
-box_get
+txnas Assets
+asset_holding_get AssetBalance
 store 3
 store 2
 load 3
+// Asset not frozen
 assert
 load 2
 frame_bury 0
 retsub
 
 // borrow
-borrow_7:
+borrow_5:
 proto 1 0
-retsub
-
-// portal_transfer
-portaltransfer_8:
-proto 1 1
 bytec_0 // ""
 intc_0 // 0
-dupn 5
-bytec_0 // ""
-intc_0 // 0
-dupn 2
+dupn 4
 bytec_0 // ""
 dup
-intc_0 // 0
-bytec_0 // ""
-intc_0 // 0
-bytec_0 // ""
-dupn 2
-pushint 1234 // 1234
-store 4
-intc_0 // 0
+bytec_2 // "collateral"
+app_global_get
+frame_dig -1
+txnas Assets
+==
+// Wrong collateral
+assert
+txn Sender
+frame_dig -1
+txnas Assets
+asset_holding_get AssetFrozen
 store 5
-pushbytes 0x74657374 // "test"
-store 6
-intc_0 // 0
-store 7
-itxn_begin
-intc_2 // axfer
-itxn_field TypeEnum
-load 4
-itxn_field XferAsset
+store 4
 load 5
-itxn_field AssetAmount
+// Asset not frozen
+assert
+load 4
+intc_1 // 1
+==
+// Asset not frozen
+assert
+global LatestTimestamp
+frame_bury 1
+txn Sender
+frame_dig -1
+txnas Assets
+asset_holding_get AssetBalance
+store 7
+store 6
+load 7
+// Not balance found
+assert
 load 6
-itxn_field AssetReceiver
+frame_bury 3
+load 6
+intc_1 // 1
+callsub principalOf_13
+frame_bury 2
+itxn_begin
+intc_1 // pay
+itxn_field TypeEnum
+frame_dig 2
+itxn_field Amount
+txn Sender
+itxn_field Receiver
 global CurrentApplicationAddress
 itxn_field Sender
-load 7
-itxn_field FreezeAsset
 intc_0 // 0
 itxn_field Fee
 itxn_submit
+frame_dig 2
+itob
+frame_dig 3
+itob
+concat
+frame_dig 1
+itob
+concat
+frame_bury 0
+txn Sender
+box_del
+pop
+txn Sender
+frame_dig 0
+box_put
+bytec_3 // "total_borrow"
+bytec_3 // "total_borrow"
+app_global_get
+frame_dig 2
++
+app_global_put
 retsub
 
-// getMessageFee
-getMessageFee_9:
-proto 0 1
-bytec_3 // "wormhole_id"
-app_global_get
-pushbytes 0x4d657373616765466565 // "MessageFee"
-app_global_get_ex
+// repay
+repay_6:
+proto 1 0
+bytec_0 // ""
+intc_0 // 0
+dupn 2
+txn Sender
+box_len
+store 9
+store 8
+load 9
+// You dont have a borrow position
+assert
+txn Sender
+box_get
 store 11
 store 10
 load 11
 assert
 load 10
+frame_bury 0
+frame_dig 0
+intc_0 // 0
+extract_uint64
+frame_bury 3
+frame_dig 0
+pushint 16 // 16
+extract_uint64
+frame_bury 2
+frame_dig 3
+frame_dig 2
+bytec 6 // "borrow_apr"
+app_global_get
+callsub interestOf_14
+frame_bury 1
+frame_dig -1
+gtxns Receiver
+global CurrentApplicationAddress
+==
+assert
+frame_dig -1
+gtxns Amount
+frame_dig 1
+frame_dig 3
++
+>=
+// Insufficient amount
+assert
+bytec_3 // "total_borrow"
+bytec_3 // "total_borrow"
+app_global_get
+frame_dig 3
+-
+app_global_put
 retsub
 
-// un_bridge
-unbridge_10:
-proto 1 0
-callsub getMessageFee_9
-store 8
-pushbytes 0x03 // 0x03
-intc_3 // 32
-bzero
-concat
-intc_3 // 32
-bzero
-concat
-pushbytes 0x0008 // 0x0008
-concat
-pushint 24 // 24
-bzero
-concat
-global CurrentApplicationAddress
-concat
-pushbytes 0x0001 // 0x0001
-concat
-global CurrentApplicationAddress
-concat
-pushbytes 0x48656c6c6f20576f726c64 // "Hello World"
-concat
-store 9
+// withdraw
+withdraw_7:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+dupn 2
+txn Sender
+box_len
+store 13
+store 12
+load 13
+// You have a supply position
+assert
+txn Sender
+box_get
+store 15
+store 14
+load 15
+assert
+load 14
+frame_bury 0
+frame_dig 0
+pushint 8 // 8
+extract_uint64
+frame_bury 2
+frame_dig 0
+intc_0 // 0
+extract_uint64
+frame_bury 3
+frame_dig 3
+frame_dig 2
+bytec 9 // "supply_apr"
+app_global_get
+callsub interestOf_14
+frame_bury 1
 itxn_begin
 intc_1 // pay
 itxn_field TypeEnum
-bytec 5 // "wormhole_address"
-app_global_get
-itxn_field Receiver
-load 8
+frame_dig 1
+frame_dig 3
++
 itxn_field Amount
+txn Sender
+itxn_field Receiver
+global CurrentApplicationAddress
+itxn_field Sender
+intc_0 // 0
+itxn_field Fee
+itxn_submit
+bytec_1 // "total_supply"
+bytec_1 // "total_supply"
+app_global_get
+frame_dig 3
+-
+app_global_put
+retsub
+
+// receiveMessage
+receiveMessage_8:
+proto 4 0
+itxn_begin
+intc_2 // axfer
+itxn_field TypeEnum
+frame_dig -3
+txnas Assets
+itxn_field XferAsset
+frame_dig -2
+itxn_field AssetAmount
+frame_dig -1
+txnas Accounts
+itxn_field AssetReceiver
+global CurrentApplicationAddress
+itxn_field AssetSender
+intc_0 // 0
+itxn_field Fee
+itxn_submit
+retsub
+
+// un_bridge
+unbridge_9:
+proto 3 0
+intc_0 // 0
+bytec_2 // "collateral"
+app_global_get
+frame_dig -3
+txnas Assets
+==
+// Wrong collateral
+assert
+txn Sender
+box_len
+store 18
+store 17
+load 18
+intc_0 // 0
+==
+// You have a borrow position
+assert
+txn Sender
+frame_dig -3
+txnas Assets
+asset_holding_get AssetBalance
+store 20
+store 19
+load 20
+// Not balance found
+assert
+frame_dig -2
+txnas Applications
+callsub getMessageFee_12
+frame_bury 0
+bytec_2 // "collateral"
+app_global_get
+itob
+load 19
+itob
+concat
+txn Sender
+concat
+store 16
+itxn_begin
+intc_1 // pay
+itxn_field TypeEnum
+frame_dig -1
+txnas Accounts
+itxn_field Receiver
+frame_dig 0
+itxn_field Amount
+intc_0 // 0
+itxn_field Fee
+itxn_next
+pushint 5 // afrz
+itxn_field TypeEnum
+frame_dig -3
+txnas Assets
+itxn_field FreezeAsset
+txn Sender
+itxn_field FreezeAssetAccount
+intc_0 // 0
+itxn_field FreezeAssetFrozen
+global CurrentApplicationAddress
+itxn_field Sender
+intc_0 // 0
+itxn_field Fee
+intc_2 // axfer
+itxn_field TypeEnum
+frame_dig -3
+txnas Assets
+itxn_field XferAsset
+load 19
+itxn_field AssetAmount
+global CurrentApplicationAddress
+itxn_field AssetReceiver
+txn Sender
+itxn_field AssetSender
 intc_0 // 0
 itxn_field Fee
 itxn_next
 pushint 6 // appl
 itxn_field TypeEnum
-bytec_3 // "wormhole_id"
-app_global_get
+frame_dig -2
+txnas Applications
 itxn_field ApplicationID
-bytec 6 // "publishMessage"
+bytec 10 // "publishMessage"
 itxn_field ApplicationArgs
-load 9
+load 16
 itxn_field ApplicationArgs
 intc_0 // 0
 itob
 itxn_field ApplicationArgs
 txna Accounts 1
 itxn_field Accounts
-bytec 6 // "publishMessage"
+bytec 10 // "publishMessage"
 itxn_field Note
 intc_0 // 0
 itxn_field Fee
 itxn_submit
 retsub
 
-// opt_into_asset_caster
-optintoassetcaster_11:
-proto 0 0
-intc_0 // 0
-txna ApplicationArgs 1
-intc_0 // 0
-getbyte
-frame_bury 0
-frame_dig 0
-callsub optintoasset_1
-retsub
-
-// add_collateral_caster
-addcollateralcaster_12:
-proto 0 0
-intc_0 // 0
+// borrow_of
+borrowof_10:
+proto 1 1
 bytec_0 // ""
-txna ApplicationArgs 1
-btoi
+frame_dig -1
+box_get
+store 24
+store 23
+load 24
+assert
+load 23
 frame_bury 0
-txna ApplicationArgs 2
-frame_bury 1
-frame_dig 0
-frame_dig 1
-callsub addcollateral_2
 retsub
 
-// add_pair_caster
-addpaircaster_13:
-proto 0 0
-intc_0 // 0
-dup
-txna ApplicationArgs 1
-intc_0 // 0
-getbyte
+// supply_of
+supplyof_11:
+proto 1 1
+bytec_0 // ""
+frame_dig -1
+box_get
+store 26
+store 25
+load 26
+assert
+load 25
 frame_bury 0
-txna ApplicationArgs 2
-intc_0 // 0
-getbyte
-frame_bury 1
-frame_dig 0
-frame_dig 1
-callsub addpair_3
 retsub
 
-// set_target_id_caster
-settargetidcaster_14:
+// getMessageFee
+getMessageFee_12:
+proto 1 1
+frame_dig -1
+pushbytes 0x4d657373616765466565 // "MessageFee"
+app_global_get_ex
+store 22
+store 21
+load 22
+assert
+load 21
+retsub
+
+// principalOf
+principalOf_13:
+proto 2 1
+frame_dig -2
+frame_dig -1
+*
+bytec 7 // "ltv"
+app_global_get
+*
+bytec 4 // "rate_divider"
+app_global_get
+/
+retsub
+
+// interestOf
+interestOf_14:
+proto 3 1
+frame_dig -3
+frame_dig -1
+*
+global LatestTimestamp
+frame_dig -2
+-
+*
+bytec 4 // "rate_divider"
+app_global_get
+/
+retsub
+
+// opt_in_asset_caster
+optinassetcaster_15:
 proto 0 0
 intc_0 // 0
-dup
 txna ApplicationArgs 1
-btoi
+intc_0 // 0
+getbyte
+frame_bury 0
+frame_dig 0
+callsub optinasset_1
+retsub
+
+// set_collateral_caster
+setcollateralcaster_16:
+proto 0 0
+intc_0 // 0
+dupn 2
+txna ApplicationArgs 1
+intc_0 // 0
+getbyte
 frame_bury 0
 txna ApplicationArgs 2
 intc_0 // 0
 getbyte
 frame_bury 1
+txna ApplicationArgs 3
+btoi
+frame_bury 2
 frame_dig 0
 frame_dig 1
-callsub settargetid_4
+frame_dig 2
+callsub setcollateral_2
 retsub
 
 // supply_caster
-supplycaster_15:
+supplycaster_17:
 proto 0 0
 intc_0 // 0
 txn GroupIndex
@@ -546,27 +799,42 @@ intc_1 // pay
 ==
 assert
 frame_dig 0
-callsub supply_5
+callsub supply_3
 retsub
 
-// supply_of_caster
-supplyofcaster_16:
+// weeeee_caster
+weeeeecaster_18:
 proto 0 0
-bytec_0 // ""
+intc_0 // 0
 dup
 txna ApplicationArgs 1
+intc_0 // 0
+getbyte
 frame_bury 1
 frame_dig 1
-callsub supplyof_6
+callsub weeeee_4
 frame_bury 0
-bytec 7 // 0x151f7c75
+bytec 5 // 0x151f7c75
 frame_dig 0
+itob
 concat
 log
 retsub
 
 // borrow_caster
-borrowcaster_17:
+borrowcaster_19:
+proto 0 0
+intc_0 // 0
+txna ApplicationArgs 1
+intc_0 // 0
+getbyte
+frame_bury 0
+frame_dig 0
+callsub borrow_5
+retsub
+
+// repay_caster
+repaycaster_20:
 proto 0 0
 intc_0 // 0
 txn GroupIndex
@@ -579,32 +847,92 @@ intc_1 // pay
 ==
 assert
 frame_dig 0
-callsub borrow_7
+callsub repay_6
 retsub
 
-// portal_transfer_caster
-portaltransfercaster_18:
+// withdraw_caster
+withdrawcaster_21:
+proto 0 0
+callsub withdraw_7
+retsub
+
+// receiveMessage_caster
+receiveMessagecaster_22:
+proto 0 0
+intc_0 // 0
+dupn 3
+txna ApplicationArgs 1
+btoi
+frame_bury 0
+txna ApplicationArgs 2
+intc_0 // 0
+getbyte
+frame_bury 1
+txna ApplicationArgs 3
+btoi
+frame_bury 2
+txna ApplicationArgs 4
+intc_0 // 0
+getbyte
+frame_bury 3
+frame_dig 0
+frame_dig 1
+frame_dig 2
+frame_dig 3
+callsub receiveMessage_8
+retsub
+
+// un_bridge_caster
+unbridgecaster_23:
+proto 0 0
+intc_0 // 0
+dupn 2
+txna ApplicationArgs 1
+intc_0 // 0
+getbyte
+frame_bury 0
+txna ApplicationArgs 2
+intc_0 // 0
+getbyte
+frame_bury 1
+txna ApplicationArgs 3
+intc_0 // 0
+getbyte
+frame_bury 2
+frame_dig 0
+frame_dig 1
+frame_dig 2
+callsub unbridge_9
+retsub
+
+// borrow_of_caster
+borrowofcaster_24:
 proto 0 0
 bytec_0 // ""
 dup
 txna ApplicationArgs 1
 frame_bury 1
 frame_dig 1
-callsub portaltransfer_8
+callsub borrowof_10
 frame_bury 0
-bytec 7 // 0x151f7c75
+bytec 5 // 0x151f7c75
 frame_dig 0
 concat
 log
 retsub
 
-// un_bridge_caster
-unbridgecaster_19:
+// supply_of_caster
+supplyofcaster_25:
 proto 0 0
-intc_0 // 0
+bytec_0 // ""
+dup
 txna ApplicationArgs 1
-btoi
+frame_bury 1
+frame_dig 1
+callsub supplyof_11
 frame_bury 0
+bytec 5 // 0x151f7c75
 frame_dig 0
-callsub unbridge_10
+concat
+log
 retsub

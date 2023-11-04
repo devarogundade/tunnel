@@ -107,7 +107,8 @@
     },
     {
       "stateMutability": "payable",
-      "type": "receive"
+      "type": "receive",
+      "payable": true
     },
     {
       "inputs": [
@@ -133,7 +134,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -151,7 +153,8 @@
       "name": "bridge",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function"
+      "type": "function",
+      "payable": true
     },
     {
       "inputs": [
@@ -13926,12 +13929,13 @@
     "97": {
       "events": {},
       "links": {},
-      "address": "0x6E0b78DD604A39853e16C297008481251479b54C",
-      "transactionHash": "0x2a0ce6f42fde4dbdfd2a51c741bbacb758d75338de61799f01bcdca4ce8bf40a"
+      "address": "0x83ee2EF8f1c8b4669B94F018F6467A9cC736719B",
+      "transactionHash": "0x3bac9c33b9c97b533a7dee42352f2ba055a655ce03fe206974c768bec7d737e0"
     }
   },
   "schemaVersion": "3.4.11",
-  "updatedAt": "2023-11-02T14:27:00.948Z",
+  "updatedAt": "2023-11-02T15:07:58.010Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {

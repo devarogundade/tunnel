@@ -1,0 +1,28 @@
+{
+  "name": "relayer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "node dist/index.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@algorandfoundation/algokit-utils": "^4.1.0",
+    "@certusone/wormhole-sdk": "^0.10.5",
+    "@wormhole-foundation/relayer-engine": "^0.2.1",
+    "algosdk": "^2.7.0",
+    "web3": "^4.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "@types/web3": "^1.2.2",
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.1",
+    "typescript": "^5.2.2"
+  }
+}

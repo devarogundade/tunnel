@@ -8,12 +8,12 @@
 
             <div class="wallets">
                 <div class="wallet" @click="walletConnect">
-                    <img src="../public/images/wallet-connect.png" alt="">
+                    <img src="/images/wallet-connect.png" alt="">
                     <p>{{ $store.state.wallet0 ? $fineAddress($store.state.wallet0) : 'WalletConnect' }}</p>
                 </div>
 
                 <div class="wallet" @click="peraConnect">
-                    <img src="../public/images/pera.png" alt="">
+                    <img src="/images/pera.png" alt="">
                     <p>{{ $store.state.wallet1 ? $fineAddress($store.state.wallet1) : 'Pera Wallet' }}</p>
                 </div>
             </div>

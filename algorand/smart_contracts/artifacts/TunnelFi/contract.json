@@ -2,7 +2,7 @@
     "name": "TunnelFi",
     "methods": [
         {
-            "name": "opt_into_asset",
+            "name": "opt_in_asset",
             "args": [
                 {
                     "type": "asset",
@@ -14,47 +14,19 @@
             }
         },
         {
-            "name": "add_collateral",
+            "name": "set_collateral",
             "args": [
+                {
+                    "type": "byte",
+                    "name": "name"
+                },
+                {
+                    "type": "byte",
+                    "name": "symbol"
+                },
                 {
                     "type": "uint64",
-                    "name": "asset_id"
-                },
-                {
-                    "type": "(uint64,address)",
-                    "name": "collateral"
-                }
-            ],
-            "returns": {
-                "type": "void"
-            }
-        },
-        {
-            "name": "add_pair",
-            "args": [
-                {
-                    "type": "byte",
-                    "name": "pair0"
-                },
-                {
-                    "type": "byte",
-                    "name": "pair1"
-                }
-            ],
-            "returns": {
-                "type": "void"
-            }
-        },
-        {
-            "name": "set_target_id",
-            "args": [
-                {
-                    "type": "uint64",
-                    "name": "sourceChain"
-                },
-                {
-                    "type": "byte",
-                    "name": "address"
+                    "name": "supply"
                 }
             ],
             "returns": {
@@ -74,19 +46,31 @@
             }
         },
         {
-            "name": "supply_of",
+            "name": "weeeee",
             "args": [
                 {
-                    "type": "address",
-                    "name": "address"
+                    "type": "asset",
+                    "name": "asset"
                 }
             ],
             "returns": {
-                "type": "(uint64,uint64)"
+                "type": "uint64"
             }
         },
         {
             "name": "borrow",
+            "args": [
+                {
+                    "type": "asset",
+                    "name": "asset"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "repay",
             "args": [
                 {
                     "type": "pay",
@@ -98,27 +82,78 @@
             }
         },
         {
-            "name": "portal_transfer",
+            "name": "withdraw",
+            "args": [],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "receiveMessage",
             "args": [
                 {
-                    "type": "byte[]",
-                    "name": "vaa"
+                    "type": "uint64",
+                    "name": "nonce"
+                },
+                {
+                    "type": "asset",
+                    "name": "asset"
+                },
+                {
+                    "type": "uint64",
+                    "name": "amount"
+                },
+                {
+                    "type": "account",
+                    "name": "receiver"
                 }
             ],
             "returns": {
-                "type": "byte[]"
+                "type": "void"
             }
         },
         {
             "name": "un_bridge",
             "args": [
                 {
-                    "type": "uint64",
-                    "name": "sourceChain"
+                    "type": "asset",
+                    "name": "asset"
+                },
+                {
+                    "type": "application",
+                    "name": "wormhole"
+                },
+                {
+                    "type": "account",
+                    "name": "wormhole_account"
                 }
             ],
             "returns": {
                 "type": "void"
+            }
+        },
+        {
+            "name": "borrow_of",
+            "args": [
+                {
+                    "type": "address",
+                    "name": "address"
+                }
+            ],
+            "returns": {
+                "type": "(uint64,uint64,uint64)"
+            }
+        },
+        {
+            "name": "supply_of",
+            "args": [
+                {
+                    "type": "address",
+                    "name": "address"
+                }
+            ],
+            "returns": {
+                "type": "(uint64,uint64)"
             }
         }
     ],

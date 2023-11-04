@@ -8,7 +8,7 @@
                         <div class="box_item">
                             <p>Liquidity</p>
                             <div class="amount">
-                                <img src="../public/images/algo.png" alt="Algo">
+                                <img src="/images/algo.png" alt="Algo">
                                 <p>1,000,323 Algo</p>
                             </div>
                         </div>
@@ -16,7 +16,7 @@
                         <div class="box_item">
                             <p>APR</p>
                             <div class="amount">
-                                <img src="../public/images/algo.png" alt="Algo">
+                                <img src="/images/algo.png" alt="Algo">
                                 <p>8.31%</p>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                                     <div class="input_field_label">
                                         <p>Enter collateral amount</p>
                                         <div class="input_collateral">
-                                            <img src="../public/images/algo.png" alt="Wormhole Shares">
+                                            <img src="/images/algo.png" alt="Wormhole Shares">
                                         </div>
                                     </div>
                                     <input type="number" placeholder="0.00">
@@ -62,7 +62,7 @@
                                     <div class="input_field_label">
                                         <p>Principal (You will get)</p>
                                         <div class="input_collateral">
-                                            <img src="../public/images/algo.png" alt="Algo">
+                                            <img src="/images/algo.png" alt="Algo">
                                         </div>
                                     </div>
 
@@ -87,7 +87,7 @@
                                     <div class="input_field_label">
                                         <p>Enter principal amount</p>
                                         <div class="input_collateral">
-                                            <img src="../public/images/algo.png" alt="ALGO">
+                                            <img src="/images/algo.png" alt="ALGO">
                                         </div>
                                     </div>
                                     <input type="number" placeholder="0.00">
@@ -100,7 +100,7 @@
                                     <div class="input_field_label">
                                         <p>Collateral (You will get)</p>
                                         <div class="input_collateral">
-                                            <img src="../public/images/algo.png" alt="Algo">
+                                            <img src="/images/algo.png" alt="Algo">
                                         </div>
                                     </div>
 
@@ -143,7 +143,7 @@
                                                     <td>Supply</td>
                                                     <td>
                                                         <div>
-                                                            <img src="../public/images/algo.png" alt="">
+                                                            <img src="/images/algo.png" alt="">
                                                             <p>0.02</p>
                                                         </div>
                                                     </td>

@@ -14,34 +14,21 @@ class Supply(abi.NamedTuple):
 class Borrow(abi.NamedTuple):
     # Loan amount in Algo
     principal: abi.Field[abi.Uint64]
-    # Starting time of loan
-    start_at: abi.Field[abi.Uint64]
-    # Repaid time of loan
-    repaid_at: abi.Field[abi.Uint64]
     # Collateral amoount dropped
     collateral: abi.Field[abi.Uint64]
-    # Collateral asset type
-    collateral_asa: abi.Field[abi.Asset]
-    # Liquidation time
-    liquidate_at: abi.Field[abi.Uint8]
-
-
-class Collateral(abi.NamedTuple):
-    # Price in Algo: Should be an oracle instead
-    value: abi.Field[abi.Uint64]
-    # Address of the issuer
-    issuer: abi.Field[abi.Address]
+    # Starting time of loan
+    start_at: abi.Field[abi.Uint64]
 
 
 class TunnelState:
-    # ASA: IDs of the ASA being used as collateral
-    supported_collaterals = BoxMapping(key_type=abi.Uint64, value_type=Collateral)
+    # Accepted collateral:
+    collateral = GlobalStateValue(stack_type=TealType.uint64, default=Int(0))
 
-    # Supply apr:
-    supply_apr = GlobalStateValue(stack_type=TealType.uint64, default=Int(0))
+    # Supply apr: interest rate per seconds
+    supply_apr = GlobalStateValue(stack_type=TealType.uint64, default=Int(1_050_000))
 
-    # Borrow apr:
-    borrow_apr = GlobalStateValue(stack_type=TealType.uint64, default=Int(0))
+    # Borrow apr: interest rate per seconds
+    borrow_apr = GlobalStateValue(stack_type=TealType.uint64, default=Int(1_030_000))
 
     # Total supply:
     total_supply = GlobalStateValue(stack_type=TealType.uint64, default=Int(0))
@@ -49,26 +36,11 @@ class TunnelState:
     # Min supply: 1 Algo
     min_supply = GlobalStateValue(stack_type=TealType.uint64, default=Int(1_000_000))
 
-    # Loan to value: Default 80 percent
-    ltv = GlobalStateValue(stack_type=TealType.uint64, default=Int(8_000))
+    # Loan to value: Default 80 percent of collateral
+    ltv = GlobalStateValue(stack_type=TealType.uint64, default=Int(800_000))
 
     # Total borrow:
     total_borrow = GlobalStateValue(stack_type=TealType.uint64, default=Int(0))
-
-    # Wormhole: Core Id
-    wormhole_id = GlobalStateValue(stack_type=TealType.uint64, default=Int(86525623))
-
-    # Wormhole: Core Address
-    wormhole_address = GlobalStateValue(
-        stack_type=TealType.bytes,
-        default=Bytes("C2SZBD4ZFFDXANBCUTG5GBUEWMQ34JS5LFGDRTEVJBAXDRF6ZWB7Q4KHHM"),
-    )
-
-    # Address pairs from ETH CONTRACT -> ALGO CONTRACT
-    pairs = BoxMapping(key_type=abi.Byte, value_type=abi.Byte)
-
-    # Target contract pairs
-    sourceIds = BoxMapping(key_type=abi.Uint64, value_type=abi.Byte)
 
     # Address -> Borrow borrow
     borrows = BoxMapping(key_type=abi.Address, value_type=Borrow)
@@ -76,112 +48,19 @@ class TunnelState:
     # Address -> Borrow borrow
     supplies = BoxMapping(key_type=abi.Address, value_type=Supply)
 
+    # Rate divider
+    rate_divider = GlobalStateValue(stack_type=TealType.uint64, default=Int(1_000_000))
+
 
 def read_next(vaa: Expr, offset: int, t: abi.BaseType) -> tuple[int, Expr]:
     size = t.type_spec().byte_length_static()
     return offset + size, t.decode(vaa, start_index=Int(offset), length=Int(size))
 
 
-Bytes32 = abi.StaticBytes[Literal[32]]
-
-
-class ContractTransferVAA:
-    def __init__(self):
-        #: Version of VAA
-        self.version = abi.Uint8()
-        #: Which guardian set to be validated against
-        self.index = abi.Uint32()
-        #: How many signatures
-        self.siglen = abi.Uint8()
-        #: TS of message
-        self.timestamp = abi.Uint32()
-        #: Uniquifying
-        self.nonce = abi.Uint32()
-        #: The Id of the chain where the message originated
-        self.chain = abi.Uint16()
-        #: The address of the contract that emitted this message on the origin chain
-        self.emitter = abi.Address()
-        #: Unique integer representing the index, used for dedupe/ordering
-        self.sequence = abi.Uint64()
-
-        self.consistency = abi.Uint8()  # ?
-
-        #: Type of message
-        self.type = abi.Uint8()
-        #: amount of transfer
-        self.amount = abi.make(Bytes32)
-        #: asset transferred
-        self.contract = abi.make(Bytes32)
-        #: Id of the chain the token originated
-        self.from_chain = abi.Uint16()
-        #: Receiver of the token transfer
-        self.to_address = abi.Address()
-        #: Id of the chain where the token transfer should be redeemed
-        self.to_chain = abi.Uint16()
-        #: Amount to pay wormhole_id
-        self.fee = abi.make(Bytes32)
-        #: Address that sent the transfer
-        self.from_address = abi.Address()
-
-        #: Arbitrary byte payload
-        self.payload = abi.DynamicBytes()
-
-    def decode(self, vaa: Expr) -> Expr:
-        offset = 0
-        ops: list[Expr] = []
-
-        offset, e = read_next(vaa, offset, self.version)
-        ops.append(e)
-
-        offset, e = read_next(vaa, offset, self.index)
-        ops.append(e)
-
-        offset, e = read_next(vaa, offset, self.siglen)
-        ops.append(e)
-
-        # Increase offset to skip over sigs && digest
-        # since these should be checked by the wormhole core contract
-        ops.append(
-            (digest_vaa := ScratchVar()).store(
-                Suffix(vaa, Int(offset) + (self.siglen.get() * Int(66)))
-            )
-        )
-
-        # Reset the offset now that we have const length elements
-        offset = 0
-        offset, e = read_next(digest_vaa.load(), offset, self.timestamp)
-        ops.append(e)
-        offset, e = read_next(digest_vaa.load(), offset, self.nonce)
-        ops.append(e)
-        offset, e = read_next(digest_vaa.load(), offset, self.chain)
-        ops.append(e)
-        offset, e = read_next(digest_vaa.load(), offset, self.emitter)
-        ops.append(e)
-        offset, e = read_next(digest_vaa.load(), offset, self.sequence)
-        ops.append(e)
-        offset, e = read_next(digest_vaa.load(), offset, self.consistency)
-        ops.append(e)
-        offset, e = read_next(digest_vaa.load(), offset, self.type)
-        ops.append(e)
-        offset, e = read_next(digest_vaa.load(), offset, self.amount)
-        ops.append(e)
-        offset, e = read_next(digest_vaa.load(), offset, self.contract)
-        ops.append(e)
-        offset, e = read_next(digest_vaa.load(), offset, self.from_chain)
-        ops.append(e)
-        offset, e = read_next(digest_vaa.load(), offset, self.to_address)
-        ops.append(e)
-        offset, e = read_next(digest_vaa.load(), offset, self.to_chain)
-        ops.append(e)
-        offset, e = read_next(digest_vaa.load(), offset, self.from_address)
-        ops.append(e)
-        # Rest is payload
-        ops.append(self.payload.set(Suffix(digest_vaa.load(), Int(offset))))
-
-        return Seq(*ops)
-
-
 app = Application("TunnelFi", state=TunnelState)
+
+
+# STATEFUL FUNCTIONS
 
 
 # create method that initializes global state
@@ -192,8 +71,7 @@ def create() -> Expr:
 
 # opt_into_asset method that opts the contract account into an ASA
 @app.external(authorize=Authorize.only(Global.creator_address()))
-def opt_into_asset(asset: abi.Asset) -> Expr:
-    # On-chain logic that uses multiple expressions, always goes in the returned Seq
+def opt_in_asset(asset: abi.Asset) -> Expr:
     return Seq(
         # Send the transaction to opt in
         # Opt == transfer of 0 amount from/to the same account
@@ -210,28 +88,30 @@ def opt_into_asset(asset: abi.Asset) -> Expr:
                 TxnField.fee: Int(0),
             }
         ),
+        app.state.collateral.set(asset.asset_id()),
     )
 
 
+# create set tunnel collateral ASA
 @app.external(authorize=Authorize.only(Global.creator_address()))
-def add_collateral(
-    asset_id: abi.Uint64,
-    collateral: Collateral,
-) -> Expr:
+def set_collateral(name: abi.Byte, symbol: abi.Byte, supply: abi.Uint64) -> Expr:
     # On-chain logic that uses multiple expressions, always goes in the returned Seq
-    return app.state.supported_collaterals[asset_id].set(collateral)
-
-
-@app.external(authorize=Authorize.only(Global.creator_address()))
-def add_pair(pair0: abi.Byte, pair1: abi.Byte) -> Expr:
-    # On-chain logic that uses multiple expressions, always goes in the returned Seq
-    return Seq(app.state.pairs[pair0].set(pair1))
-
-
-@app.external(authorize=Authorize.only(Global.creator_address()))
-def set_target_id(sourceChain: abi.Uint64, address: abi.Byte) -> Expr:
-    # On-chain logic that uses multiple expressions, always goes in the returned Seq
-    return Seq(app.state.sourceIds[sourceChain].set(address))
+    return Seq(
+        InnerTxnBuilder.Execute(
+            {
+                TxnField.type_enum: TxnType.AssetConfig,
+                TxnField.config_asset_name: Bytes("Wormhole Shares"),
+                TxnField.config_asset_unit_name: Bytes("WSHARES"),
+                TxnField.config_asset_clawback: Global.current_application_address(),
+                TxnField.config_asset_reserve: Global.current_application_address(),
+                TxnField.config_asset_freeze: Global.current_application_address(),
+                TxnField.config_asset_manager: Global.current_application_address(),
+                TxnField.config_asset_default_frozen: Int(1),
+                TxnField.config_asset_total: supply.get(),
+                TxnField.config_asset_decimals: Int(0),
+            }
+        )
+    )
 
 
 @app.external
@@ -270,138 +150,246 @@ def supply(payment: abi.PaymentTransaction) -> Expr:
         supply.set(amount, start_at),
         # Update user position
         app.state.supplies[Txn.sender()].set(supply),
+        app.state.total_supply.set(
+            Add(app.state.total_supply.get(), payment.get().amount())
+        ),
     )
 
 
-# @app.external
-# def borrow_of(address: abi.Address, *, output: Borrow) -> Expr:
-#     return app.state.borrows[address.get()].store_into(output)
-
-
+# test func
 @app.external
-def supply_of(address: abi.Address, *, output: Supply) -> Expr:
-    return app.state.supplies[address.get()].store_into(output)
-
-
-@app.external
-def borrow(payment: abi.PaymentTransaction) -> Expr:
-    return Seq()
-
-
-# @app.external
-# def repay(payment: abi.PaymentTransaction) -> Expr:
-#     # Temporary variables
-#     borrow = app.state.borrows[Txn.sender()]
-#     principal = abi.Uint64()
-
-#     # On-chain logic that uses multiple expressions, always goes in the returned Seq
-#     return Seq(
-#         Assert(borrow.exists(), comment="You dont have a borrow position"),
-#         #
-#         Assert(payment.get().amount() >= principal.get()),
-#         borrow.delete(),
-#     )
-
-
-# @app.external
-# def withdraw() -> Expr:
-#     # Temporary variables
-#     supply = app.state.supplies[Txn.sender()]
-
-#     # On-chain logic that uses multiple expressions, always goes in the returned Seq
-#     return Seq(supply.delete())
-
-
-@app.external
-def portal_transfer(vaa: abi.DynamicBytes, *, output: abi.DynamicBytes) -> Expr:
-    # Temporary variables
-    (data := ContractTransferVAA()).decode(vaa.get())
-
-    # TODO
-
-    xfer = ScratchVar(TealType.uint64)
-    amount = ScratchVar(TealType.uint64)
-    receiver = ScratchVar(TealType.bytes)
-    freeze = ScratchVar(TealType.uint64)
-
-    # On-chain logic that uses multiple expressions, always goes in the returned Seq
+def weeeee(asset: abi.Asset, *, output: abi.Uint64) -> Expr:
     return Seq(
-        xfer.store(Int(1234)),
-        amount.store(Int(0)),
-        receiver.store(Bytes("test")),
-        freeze.store(Int(0)),
+        balance := AssetHolding.balance(Txn.sender(), asset.asset_id()),
+        Assert(balance.hasValue(), comment="Asset not frozen"),
+        output.set(balance.value()),
+        # output2.set(principalOf(balance.value(), Int(1))),
+    )
+
+
+@app.external
+def borrow(asset: abi.Asset) -> Expr:
+    # Temporary variables
+    borrow = Borrow()
+    start_at = abi.Uint64()
+
+    principal = abi.Uint64()
+    collateral = abi.Uint64()
+
+    return Seq(
+        # Check the asset is the collateral
+        Assert(
+            app.state.collateral.get() == asset.asset_id(),
+            comment="Wrong collateral",
+        ),
+        # Check asset is frozen
+        frozen := AssetHolding.frozen(Txn.sender(), asset.asset_id()),
+        Assert(frozen.hasValue(), frozen.value() == Int(1), comment="Asset not frozen"),
+        # Set start time
+        start_at.set(Global.latest_timestamp()),
+        # Get collateral
+        balance := AssetHolding.balance(Txn.sender(), asset.asset_id()),
+        Assert(balance.hasValue(), comment="Not balance found"),
+        collateral.set(balance.value()),
+        # Use collateral to calc principal
+        principal.set(principalOf(balance.value(), Int(1))),
+        # Transfer principal to address
         InnerTxnBuilder.Execute(
             {
-                TxnField.type_enum: TxnType.AssetTransfer,
-                TxnField.xfer_asset: xfer.load(),
-                TxnField.asset_amount: amount.load(),
-                TxnField.asset_receiver: receiver.load(),
+                TxnField.type_enum: TxnType.Payment,
+                TxnField.amount: principal.get(),
+                TxnField.receiver: Txn.sender(),
                 TxnField.sender: Global.current_application_address(),
-                TxnField.freeze_asset: freeze.load(),
                 TxnField.fee: Int(0),
             }
         ),
+        # Create their borrow position
+        borrow.set(principal, collateral, start_at),
+        app.state.borrows[Txn.sender()].set(borrow),
+        app.state.total_borrow.set(Add(app.state.total_borrow.get(), principal.get())),
     )
 
 
-@Subroutine(TealType.uint64)
-def getMessageFee() -> Expr:
-    maybe = App.globalGetEx(app.state.wormhole_id.get(), Bytes("MessageFee"))
-    return Seq(maybe, Assert(maybe.hasValue()), maybe.value())
-
-
 @app.external
-def un_bridge(sourceChain: abi.Uint64) -> Expr:
+def repay(payment: abi.PaymentTransaction) -> Expr:
     # Temporary variables
-    mfee = ScratchVar()
-    message = Bytes("Hello World")
-    payload = ScratchVar(TealType.bytes)
-    publish_signature = Bytes("publishMessage")
+    borrow = Borrow()
 
-    # borrow = app.state.borrows[Txn.sender()]
-    # sourceId = app.state.sourceIds[sourceChain]
+    interest = abi.Uint64()
+
+    start_at = abi.Uint64()
+    principal = abi.Uint64()
 
     # On-chain logic that uses multiple expressions, always goes in the returned Seq
     return Seq(
-        # Assert(borrow.exists() == Int(0), comment="You have a borrow position"),
-        # Assert(sourceId.exists(), comment="Target does not exists"),
-        mfee.store(getMessageFee()),
+        # Check if there is borrow position
+        Assert(
+            app.state.borrows[Txn.sender()].exists(),
+            comment="You dont have a borrow position",
+        ),
+        # Store the borrow position
+        app.state.borrows[Txn.sender()].store_into(borrow),
+        # Check the rapayment amount
+        borrow.principal.store_into(principal),
+        borrow.start_at.store_into(start_at),
+        # Earned interest
+        interest.set(
+            interestOf(principal.get(), start_at.get(), app.state.borrow_apr.get())
+        ),
+        # Check the repayment receiver
+        Assert(payment.get().receiver() == Global.current_application_address()),
+        # Check amount is sufficient
+        Assert(
+            payment.get().amount() >= Add(interest.get(), principal.get()),
+            comment="Insufficient amount",
+        ),
+        # Delete user borrow position
+        # app.state.borrows[Txn.sender()].delete(),
+        app.state.total_borrow.set(
+            Minus(app.state.total_borrow.get(), principal.get())
+        ),
+    )
+
+
+@app.external
+def withdraw() -> Expr:
+    # Temporary variables
+    supply = Supply()
+
+    interest = abi.Uint64()
+
+    start_at = abi.Uint64()
+    principal = abi.Uint64()
+
+    # On-chain logic that uses multiple expressions, always goes in the returned Seq
+    return Seq(
+        # Check if sender has supply position
+        Assert(
+            app.state.supplies[Txn.sender()].exists(),
+            comment="You have a supply position",
+        ),
+        # Store the position
+        app.state.supplies[Txn.sender()].store_into(supply),
+        # Store amount
+        supply.start_at.store_into(start_at),
+        supply.amount.store_into(principal),
+        # Accrued interest
+        interest.set(
+            interestOf(principal.get(), start_at.get(), app.state.supply_apr.get())
+        ),
+        # Transfer principal to address
+        InnerTxnBuilder.Execute(
+            {
+                TxnField.type_enum: TxnType.Payment,
+                TxnField.amount: Add(interest.get(), principal.get()),
+                TxnField.receiver: Txn.sender(),
+                TxnField.sender: Global.current_application_address(),
+                TxnField.fee: Int(0),
+            }
+        ),
+        # Delete their position
+        # app.state.supplies[Txn.sender()].delete(),
+        # Total supply
+        app.state.total_supply.set(
+            Minus(app.state.total_supply.get(), principal.get())
+        ),
+    )
+
+
+@app.external
+def receiveMessage(
+    nonce: abi.Uint64, asset: abi.Asset, amount: abi.Uint64, receiver: abi.Account
+) -> Expr:
+    # Temporary variables
+
+    # On-chain logic that uses multiple expressions, always goes in the returned Seq
+    return Seq(
+        # Send the asset to receiver
+        InnerTxnBuilder.Execute(
+            {
+                TxnField.type_enum: TxnType.AssetTransfer,
+                TxnField.xfer_asset: asset.asset_id(),
+                TxnField.asset_amount: amount.get(),
+                TxnField.asset_receiver: receiver.address(),
+                TxnField.asset_sender: Global.current_application_address(),
+                TxnField.fee: Int(0),
+            }
+        )
+    )
+
+
+@app.external
+def un_bridge(
+    asset: abi.Asset, wormhole: abi.Application, wormhole_account: abi.Account
+) -> Expr:
+    # Temporary variables
+    mfee = abi.Uint64()
+    payload = ScratchVar(TealType.bytes)
+    publish_signature = Bytes("publishMessage")
+
+    # On-chain logic that uses multiple expressions, always goes in the returned Seq
+    return Seq(
+        # Check the asset is the collateral
+        Assert(
+            app.state.collateral.get() == asset.asset_id(),
+            comment="Wrong collateral",
+        ),
+        # Check if the user has a borrow position
+        Assert(
+            app.state.borrows[Txn.sender()].exists() == Int(0),
+            comment="You have a borrow position",
+        ),
+        # Get the balance of the user
+        balance := AssetHolding.balance(Txn.sender(), asset.asset_id()),
+        Assert(balance.hasValue(), comment="Not balance found"),
+        # Set Message fee
+        mfee.set(getMessageFee(wormhole.application_id())),
+        # Payload
         payload.store(
             Concat(
-                # Type: its a payload3
-                Bytes("base16", "03"),
-                # Amount: 0 amount
-                BytesZero(Int(32)),
-                # AssetId: 0 for algos, even tho we're not sending anything
-                BytesZero(Int(32)),
-                # FromChain: (0008 is Algorand)
-                Bytes("base16", "0008"),
-                # ToAddress
-                # sourceId.get(),
-                BytesZero(Int(24)),
-                Global.current_application_address(),
-                # ToChain
-                Bytes("base16", "0001"),
-                # FromAddress
-                Global.current_application_address(),
-                # Payload
-                message,
+                Itob(app.state.collateral.get()), Itob(balance.value()), Txn.sender()
             )
         ),
+        # Start transaction
         InnerTxnBuilder.Begin(),
+        # Pay message fee
         InnerTxnBuilder.SetFields(
             {
                 TxnField.type_enum: TxnType.Payment,
-                TxnField.receiver: app.state.wormhole_address.get(),
-                TxnField.amount: mfee.load(),
+                TxnField.receiver: wormhole_account.address(),
+                TxnField.amount: mfee.get(),
                 TxnField.fee: Int(0),
             }
         ),
         InnerTxnBuilder.Next(),
+        # Then unfreeze the asset
+        InnerTxnBuilder.SetFields(
+            {
+                TxnField.type_enum: TxnType.AssetFreeze,
+                TxnField.freeze_asset: asset.asset_id(),
+                TxnField.freeze_asset_account: Txn.sender(),
+                TxnField.freeze_asset_frozen: Int(0),
+                TxnField.sender: Global.current_application_address(),
+                TxnField.fee: Int(0),
+            }
+        ),
+        # Send the asset to back to tunnel
+        InnerTxnBuilder.SetFields(
+            {
+                TxnField.type_enum: TxnType.AssetTransfer,
+                TxnField.xfer_asset: asset.asset_id(),
+                TxnField.asset_amount: balance.value(),
+                TxnField.asset_receiver: Global.current_application_address(),
+                TxnField.asset_sender: Txn.sender(),
+                TxnField.fee: Int(0),
+            }
+        ),
+        InnerTxnBuilder.Next(),
+        # Publish message
         InnerTxnBuilder.SetFields(
             {
                 TxnField.type_enum: TxnType.ApplicationCall,
-                TxnField.application_id: app.state.wormhole_id.get(),
+                TxnField.application_id: wormhole.application_id(),
                 TxnField.application_args: [
                     publish_signature,
                     payload.load(),
@@ -413,4 +401,45 @@ def un_bridge(sourceChain: abi.Uint64) -> Expr:
             }
         ),
         InnerTxnBuilder.Submit(),
+    )
+
+
+# VIEW
+
+
+@app.external
+def borrow_of(address: abi.Address, *, output: Borrow) -> Expr:
+    return app.state.borrows[address.get()].store_into(output)
+
+
+@app.external
+def supply_of(address: abi.Address, *, output: Supply) -> Expr:
+    return app.state.supplies[address.get()].store_into(output)
+
+
+# PRIVATE FUNCTIONS
+
+
+@Subroutine(TealType.uint64)
+def getMessageFee(wormhole_id: Expr) -> Expr:
+    return Seq(
+        mfee := App.globalGetEx(wormhole_id, Bytes("MessageFee")),
+        Assert(mfee.hasValue()),
+        mfee.value(),
+    )
+
+
+@Subroutine(TealType.uint64)
+def principalOf(collateral: Expr, collateral_value: Expr) -> Expr:
+    return Div(
+        Mul(Mul(collateral, collateral_value), app.state.ltv.get()),
+        app.state.rate_divider.get(),
+    )
+
+
+@Subroutine(TealType.uint64)
+def interestOf(amount: Expr, start_at: Expr, rate: Expr) -> Expr:
+    return Div(
+        Mul(Mul(amount, rate), Minus(Global.latest_timestamp(), start_at)),
+        app.state.rate_divider.get(),
     )
