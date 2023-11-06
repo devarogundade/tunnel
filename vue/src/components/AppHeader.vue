@@ -22,18 +22,26 @@
                     </RouterLink>
                 </div>
 
-                <button @click="connection = true" class="connect_wallets">
-                    <p>Connect Wallets</p>
-                </button>
+
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <button @click="connection = true" class="connect_wallets">
+                        <p>Connect Wallets</p>
+                    </button>
+                    <button @click="faucet = true" class="faucet_connect">
+                        <p>Faucet</p>
+                    </button>
+                </div>
             </header>
         </div>
 
+        <FaucetConnect @close="faucet = false" v-if="faucet" />
         <WalletConnect @close="connection = false" v-if="connection" />
     </section>
 </template>
 
 <script setup>
 import TunnelLogo from '../components/icons/TunnelLogo.vue'
+import FaucetConnect from '../components/FaucetConnect.vue'
 import WalletConnect from '../components/WalletConnect.vue'
 </script>
 
@@ -48,7 +56,8 @@ const projectId = import.meta.env.VITE_PROJECT_ID
 export default {
     data() {
         return {
-            connection: false
+            faucet: false,
+            connection: false,
         }
     },
     mounted() {
@@ -137,5 +146,15 @@ header {
     background: var(--pr);
     font-size: 16px;
     font-weight: 500;
+}
+
+.faucet_connect {
+    height: 50px;
+    font-size: 16px;
+    text-decoration: underline;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
 }
 </style>

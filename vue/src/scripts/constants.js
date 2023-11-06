@@ -4,7 +4,7 @@ export const bscTestnet = {
     wormholeId: "",
     name: "BSC",
     symbol: "BNB",
-    image: "//images/bnb.png",
+    image: "/images/bnb.png",
     rpc: ""
 }
 
@@ -14,7 +14,7 @@ export const algorandTestnet = {
     wormholeId: 8,
     name: "Algorand",
     symbol: "ALGO",
-    image: "//images/algo.png",
+    image: "/images/algo.png",
     rpc: ""
 }
 
@@ -23,7 +23,7 @@ export const wormholeSharesInBsc = {
     address: "",
     name: "Wormhole Shares",
     symbol: "WShares",
-    image: "//images/wormhole.png"
+    image: "/images/wormhole.png"
 }
 
 export const wormholeSharesInAlgo = {
@@ -31,7 +31,7 @@ export const wormholeSharesInAlgo = {
     address: "", // id
     name: "Wormhole Shares",
     symbol: "WShares",
-    image: "//images/wormhole.png"
+    image: "/images/wormhole.png"
 }
 
 export const tunnelBsc = {

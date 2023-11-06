@@ -1635,7 +1635,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.11",
-  "updatedAt": "2023-11-02T15:03:27.159Z",
+  "updatedAt": "2023-11-05T10:14:45.105Z",
   "devdoc": {
     "details": "interface of the ERC735 (Claim Holder) standard as defined in the EIP.",
     "events": {

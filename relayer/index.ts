@@ -4,9 +4,9 @@ import {
     StandardRelayerContext,
 } from "@wormhole-foundation/relayer-engine";
 import { CHAIN_ID_ALGORAND, CHAIN_ID_BSC } from "@certusone/wormhole-sdk";
-import { decodeOnEvm, signTransaction as signTransactionOnEvm } from "./signers/ethereum";
-import { signTransaction as signTransactionOnAlgorand } from "./signers/alogrand";
-import { platform } from "os";
+// import { decodeOnEvm, signTransaction as signTransactionOnEvm } from "./signers/ethereum";
+// import { signTransaction as signTransactionOnAlgorand } from "./signers/alogrand";
+// import { platform } from "os";
 
 (async function main() {
     // initialize relayer engine app, pass relevant config options
@@ -22,32 +22,35 @@ import { platform } from "os";
 
     app.multiple(
         {
-            // [CHAIN_ID_ALGORAND]: "",
+            [CHAIN_ID_ALGORAND]: "468699439",
             [CHAIN_ID_BSC]: "0x83ee2EF8f1c8b4669B94F018F6467A9cC736719B"
         },
         async (ctx, next) => {
             const vaa = ctx.vaa;
             const hash = ctx.sourceTxHash;
 
+            console.log('Got VAA', vaa?.payload);
+
+
             if (!vaa?.payload) return;
 
-            if (vaa?.emitterChain == CHAIN_ID_ALGORAND) {
-                const txId = await signTransactionOnEvm(
-                    vaa.nonce, vaa.payload
-                );
+            // if (vaa?.emitterChain == CHAIN_ID_ALGORAND) {
+            // const txId = await signTransactionOnEvm(
+            //     vaa.nonce, vaa.payload
+            // );
 
-                console.log('TxID: ', txId);
-            }
+            //     console.log('TxID: ', txId);
+            // }
 
-            if (vaa?.emitterChain == CHAIN_ID_BSC) {
-                const { assetId, amount, receiver } = decodeOnEvm(vaa.payload);
+            // if (vaa?.emitterChain == CHAIN_ID_BSC) {
+            // const { assetId, amount, receiver } = decodeOnEvm(vaa.payload);
 
-                const txId = await signTransactionOnAlgorand(
-                    vaa.nonce, assetId, amount, receiver
-                );
+            // const txId = await signTransactionOnAlgorand(
+            //     vaa.nonce, assetId, amount, receiver
+            // );
 
-                console.log('TxID: ', txId);
-            }
+            //     console.log('TxID: ', txId);
+            // }
 
         },
     );

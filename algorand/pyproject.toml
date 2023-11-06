@@ -12,7 +12,7 @@ algokit-utils = "^2.0.1"
 python-dotenv = "^1.0.0"
 
 [tool.poetry.group.dev.dependencies]
-black = {extras = ["d"], version = "*"}
+black = { extras = ["d"], version = "*" }
 pytest = "*"
 pytest-cov = "*"
 pip-audit = "*"

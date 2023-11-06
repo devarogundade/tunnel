@@ -31,42 +31,48 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.signTransaction = void 0;
+const algosdk_1 = __importDefault(require("algosdk"));
 const algokit = __importStar(require("@algorandfoundation/algokit-utils"));
-const TunnelFi_1 = require("../../algorand/smart_contracts/artifacts/TunnelFi");
+const application_json_1 = __importDefault(require("../../algorand/smart_contracts/artifacts/TunnelFi/application.json"));
+const tunnelId = 1;
+const tunnel = new algosdk_1.default.ABIContract(application_json_1.default.contract);
 // Signing Key and Address
-const handlerEvmKey = process.env.ALGO_PRIVATE_KEY;
-const handlerEvmAddress = process.env.ALGO_PUBLIC_KEY;
+const handlerAlgoKey = process.env.ALGO_PRIVATE_KEY;
+const handlerAlgoAddress = process.env.ALGO_PUBLIC_KEY;
+const algodClient = algokit.getAlgoClient({
+    server: 'https://testnet-api.algonode.cloud'
+});
 function signTransaction(nonce, assetId, ammout, receiver) {
     return __awaiter(this, void 0, void 0, function* () {
-        const algodConfig = getAlgodConfigFromViteEnvironment();
-        const algodClient = algokit.getAlgoClient({
-            server: algodConfig.server,
-            port: algodConfig.port,
-            token: algodConfig.token,
+        const account = algokit.mnemonicAccount(handlerAlgoKey);
+        const suggestedParams = yield algodClient.getTransactionParams().do();
+        const fee = suggestedParams.fee * 3;
+        const args = [new Uint8Array()];
+        const txn = algosdk_1.default.makeApplicationCallTxnFromObject({
+            appIndex: 0,
+            appArgs: args,
+            from: handlerAlgoAddress,
+            foreignAssets: [],
+            suggestedParams: Object.assign(Object.assign({}, suggestedParams), { fee: fee, flatFee: true }),
+            onComplete: algosdk_1.default.OnApplicationComplete.NoOpOC
         });
-        const sender = {
-            signer: '',
-            addr: ''
-        };
-        const appClient = new TunnelFi_1.TunnelClient({
-            resolveBy: 'id',
-            id: 1111111111111,
-            sender,
-        }, algodClient);
         try {
-            const { transactionHash } = yield tunnel.methods.receiveMessage(nonce, assetId, ammout, receiver).send({
-                from: handlerEvmAddress,
-                gasPrice: gasPrice.toString(),
-                gas: gas.toString()
-            });
-            return transactionHash;
+            const signedTxn = txn.signTxn(account.sk);
+            const { txId } = yield algodClient.sendRawTransaction(signedTxn).do();
+            console.log(txId);
+            return txId;
         }
         catch (error) {
-            console.error('Transaction: ', error);
+            console.error(error);
             return null;
         }
     });
 }
 exports.signTransaction = signTransaction;
+// export function decodeOnAlgo(payload: Buffer): { assetId: number, amount: string, receiver: string; } {
+// }

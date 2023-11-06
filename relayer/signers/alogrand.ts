@@ -15,27 +15,28 @@ const algodClient = algokit.getAlgoClient({
 
 export async function signTransaction(nonce: number, assetId: number, ammout: string, receiver: string): Promise<string | null> {
     const account = algokit.mnemonicAccount(handlerAlgoKey);
-    const signer = algosdk.makeBasicAccountTransactionSigner(account);
 
-    const atc = new algosdk.AtomicTransactionComposer();
     const suggestedParams = await algodClient.getTransactionParams().do();
+    const fee = suggestedParams.fee * 3;
 
-    console.log('Account: ', account);
-    console.log('suggestedParams: ', suggestedParams);
+    const args = [new Uint8Array()];
 
-    atc.addMethodCall({
-        method: tunnel.getMethodByName('receiveMessage'),
-        methodArgs: [nonce, assetId, receiver],
-        suggestedParams: { ...suggestedParams, fee: 3_000, flatFee: true },
-        sender: handlerAlgoAddress,
-        signer: signer,
-        appID: tunnelId
-    });
+    const txn = algosdk.makeApplicationCallTxnFromObject({
+        appIndex: 0,
+        appArgs: args,
+        from: handlerAlgoAddress,
+        foreignAssets: [],
+        suggestedParams: { ...suggestedParams, fee: fee, flatFee: true },
+        onComplete: algosdk.OnApplicationComplete.NoOpOC
+    })
 
     try {
-        const { txIDs } = await atc.execute(algodClient, 3);
-        console.log('txIDs: ', txIDs);
-        return txIDs[0];
+        const signedTxn =  txn.signTxn(account.sk);
+        const { txId } = await algodClient.sendRawTransaction(signedTxn).do();
+        
+        console.log(txId);
+        
+        return txId
     } catch (error) {
         console.error(error);
         return null;

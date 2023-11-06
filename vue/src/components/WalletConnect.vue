@@ -11,11 +11,17 @@
                     <img src="/images/wallet-connect.png" alt="">
                     <p>{{ $store.state.wallet0 ? $fineAddress($store.state.wallet0) : 'WalletConnect' }}</p>
                 </div>
-
                 <div class="wallet" @click="peraConnect">
                     <img src="/images/pera.png" alt="">
                     <p>{{ $store.state.wallet1 ? $fineAddress($store.state.wallet1) : 'Pera Wallet' }}</p>
                 </div>
+
+                <p v-if="aWallet && aWallet != $store.state.wallet1" style="color: red; font-size: 12px; margin-top: 4px;">
+                    You are connected to wrong Pera Wallet
+                </p>
+
+                <PrimaryButton v-if="!checking && !aWallet" :progress="syncing" @click="sync" style="margin-top: 20px;"
+                    :text="'Sync Wallets'" />
             </div>
         </div>
     </div>
@@ -23,6 +29,7 @@
 
 <script setup>
 import CloseIcon from '../components/icons/CloseIcon.vue'
+import PrimaryButton from '../components/PrimaryButton.vue'
 </script>
 
 <script>
@@ -30,16 +37,42 @@ import { PeraWalletConnect } from "@perawallet/connect"
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/vue'
 import { bscTestnet } from '@wagmi/core/chains'
 import { watchAccount } from '@wagmi/core'
+import { trySyncWallets, tryGetAlgoWallet } from '../scripts/token'
+import { notify } from '../reactives/notify'
 
 const projectId = import.meta.env.VITE_PROJECT_ID
+
+const peraWallet = new PeraWalletConnect({
+    chainId: 416002,
+});
 
 export default {
     data() {
         return {
-            modal: null
+            modal: null,
+            syncing: false,
+            aWallet: null,
+            checking: true
         }
     },
+    async mounted() {
+        this.algoWallet()
+
+        try {
+            const accounts = await peraWallet.reconnectSession()
+            this.$store.commit('setWallet1', accounts[0])
+        } catch (error) { }
+    },
     methods: {
+        algoWallet: async function () {
+            this.checking = true
+            if (this.$store.state.wallet0) {
+                this.aWallet = await tryGetAlgoWallet(
+                    this.$store.state.wallet0
+                )
+            }
+            this.checking = false
+        },
         walletConnect: async function () {
             const metadata = {
                 name: 'TunnelFi',
@@ -65,16 +98,49 @@ export default {
         peraConnect: async function () {
             if (this.$store.wallet1) return
 
-            const peraWallet = new PeraWalletConnect({
-                chainId: this.$algorandTestnet().id,
-            });
-
             try {
                 const accounts = await peraWallet.connect()
                 this.$store.commit('setWallet1', accounts[0])
             } catch (error) {
                 console.error(error);
             }
+        },
+        sync: async function () {
+            if (!this.$store.state.wallet0 || !this.$store.state.wallet1) {
+                notify.push({
+                    'title': 'Connect your wallets',
+                    'description': 'Please try again!',
+                    'category': 'error'
+                })
+                return
+            }
+
+            if (this.syncing) return
+            this.syncing = true
+
+            const transaction = await trySyncWallets(
+                this.$store.state.wallet1
+            )
+
+            if (transaction && transaction.transactionHash) {
+                notify.push({
+                    'title': 'Transaction sent',
+                    'description': 'You have synced your wallets!',
+                    'category': 'success',
+                    'linkTitle': 'View Trx',
+                    'linkUrl': `https://testnet.bscsacn.com/tx/${transaction.transactionHash}`
+                })
+
+                this.algoWallet()
+            } else {
+                notify.push({
+                    'title': 'Transaction failed',
+                    'description': 'Note: you can only sync once!',
+                    'category': 'error'
+                })
+            }
+
+            this.syncing = false
         }
     }
 }
@@ -83,6 +149,7 @@ export default {
 <style scoped>
 .container {
     display: flex;
+    gap: 40px;
     align-items: center;
     justify-content: center;
     position: fixed;
@@ -91,8 +158,8 @@ export default {
     width: 100%;
     height: 100%;
     z-index: 10;
+    background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(4px);
-    padding-bottom: 15%;
 }
 
 .wrapper {
@@ -103,6 +170,9 @@ export default {
 }
 
 
+.wrapper svg {
+    cursor: pointer;
+}
 
 .header {
     padding: 20px 20px 10px 20px;

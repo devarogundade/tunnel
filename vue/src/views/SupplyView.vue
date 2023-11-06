@@ -72,7 +72,7 @@
                                 </div>
                             </div>
 
-                            <div class="borrow_action">
+                            <div class="borrow_action" @click="supply">
                                 <PrimaryButton :text="'Supply'" />
                             </div>
                         </div>
@@ -167,13 +167,22 @@ import PrimaryButton from '../components/PrimaryButton.vue'
 </script>
 
 <script>
+import { trySupply } from '../scripts/bridge'
 export default {
     data() {
         return {
             tab: 1
         }
     },
-    methods: {}
+    methods: {
+        supply: async function () {
+            const txId = await trySupply(
+                1_000_000
+            )
+
+            console.log(txId);
+        }
+    }
 }
 </script>
 

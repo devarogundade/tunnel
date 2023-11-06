@@ -123,7 +123,7 @@
                     </div>
 
                     <div class="view_route">
-                        <PrimaryButton v-if="allowance < bridge.amount" :progress="approving"
+                        <PrimaryButton v-if="$fromWei(allowance) < bridge.amount" :progress="approving"
                             :text="'Approve ' + bridge.currency.symbol" @click="approve" />
                         <PrimaryButton v-else :progress="bridging || approving" :text="'Bridge'" @click="useBridge" />
                     </div>
@@ -159,17 +159,17 @@ import TimeIcon from '@/components/icons/TimeIcon.vue'
 
 <script>
 import { notify } from '../reactives/notify'
-import { } from '../scripts/bridge'
-import { getErcAllocation, ercApprove, ercBalance } from '../scripts/token'
+import { tryBridge, tryUnBridge } from '../scripts/bridge'
+import { tryErcBalance, tryErcAllocation, tryErcApprove } from '../scripts/token'
 export default {
     watch: {
-        // bridge: {
-        //     handler: function () {
-        //         this.refreshAllowance()
-        //         this.refreshBalance()
-        //     },
-        //     deep: true
-        // }
+        bridge: {
+            handler: function () {
+                this.refreshAllowance()
+                this.refreshBalance()
+            },
+            deep: true
+        },
         'bridge.amount': function () {
             this.refreshAllowance()
             this.refreshBalance()
@@ -212,34 +212,12 @@ export default {
         this.refreshBalance()
     },
     methods: {
-        auth1: async function () {
-            const result = await connectFuel()
-            if (result.status == 'error') {
-                notify.push({
-                    'title': 'Connection failed',
-                    'description': result.data,
-                    'category': 'error'
-                })
-                return
-            }
-            this.$store.commit('setAccount1', result.data)
-        },
         refreshBalance: async function () {
-            // if (this.$store.state.account0 != '') {
-            //     this.bridge.balance0 = await ercBalance(
-            //         this.bridge.from.chain,
-            //         this.bridge.currency,
-            //         this.$store.state.account0
-            //     )
-            // }
-
-            // if (this.$store.state.account1 != '') {
-            //     this.bridge.balance1 = await fuelBalances(
-            //         this.bridge.currency,
-            //         this.$store.state.account1
-            //     )
-            // }
-
+            if (this.$store.state.wallet0) {
+                this.bridge.balance0 = await tryErcBalance(
+                    this.$store.state.wallet0
+                )
+            }
         },
         refreshAllowance: async function () {
             if (this.interchange) {
@@ -247,23 +225,21 @@ export default {
                 return
             }
 
-            // this.allowance = await getErcAllocation(
-            //     this.bridge.from.chain,
-            //     this.bridge.currency,
-            //     this.$store.state.account0
-            // )
+            if (this.$store.state.wallet0) {
+                this.allowance = await tryErcAllocation(
+                    this.$store.state.wallet0
+                )
+            }
         },
         approve: async function () {
             if (this.approving) return
             this.approving = true
 
-            // await ercApprove(
-            //     this.bridge.from.chain,
-            //     this.bridge.currency,
-            //     this.$toWei(this.bridge.amount)
-            // )
+            await tryErcApprove(
+                this.$toWei(this.bridge.amount)
+            )
 
-            // this.refreshAllowance()
+            this.refreshAllowance()
 
             this.approving = false
         },
@@ -274,22 +250,6 @@ export default {
                 notify.push({
                     'title': 'Enter an amount!',
                     'description': 'Field is required!',
-                    'category': 'error'
-                })
-                return
-            }
-
-            if (this.bridge.currency.isNative && this.bridge.amount > '0.00005') {
-                notify.push({
-                    'title': 'Not much liquidity of ETH in the pools',
-                    'description': 'Use <= 0.00005 ETH Instead!',
-                    'category': 'error'
-                })
-                return
-            } else if (this.bridge.amount > '15') {
-                notify.push({
-                    'title': `Not much liquidity of ${this.bridge.currency.symbol} in the pools`,
-                    'description': `Use <= 15 ${this.bridge.currency.symbol} Instead!`,
                     'category': 'error'
                 })
                 return
@@ -307,87 +267,76 @@ export default {
             }
 
             let receiver
-            if (fromChainId.category == "EVM") {
+            if (fromChainId.id == 97) {
                 receiver = this.$store.state.wallet0
             } else {
                 receiver = this.$store.state.wallet1
             }
 
-            // if (fromChainId.category == "EVM") {
-            //     this.$store.commit('setActiveEvm', this.bridge.from.chain.id)
-            //     await this.auth0()
+            if (fromChainId.id == 97) {
+                if (receiver == '') {
+                    notify.push({
+                        'title': 'Receiving wallet not connected!',
+                        'description': 'Connect your Pera Wallet',
+                        'category': 'error'
+                    })
+                    this.bridging = false
+                    return
+                }
 
-            //     if (receiver == '') {
-            //         notify.push({
-            //             'title': 'Receiving wallet not connected!',
-            //             'description': 'Connect your Fuel Wallet',
-            //             'category': 'error'
-            //         })
-            //         this.bridging = false
-            //         return
-            //     }
+                const transaction = await tryBridge(
+                    this.$toWei(this.bridge.amount)
+                )
 
-            //     const transaction = await bridgeEVM(
-            //         fromChainId,
-            //         destChain,
-            //         this.bridge.currency,
-            //         this.$toWei(this.bridge.amount),
-            //         receiver
-            //     )
+                if (transaction && transaction.transactionHash) {
+                    notify.push({
+                        'title': 'Transaction sent',
+                        'description': 'View transaction at the transactions page!',
+                        'category': 'success',
+                        'linkTitle': 'View Trx',
+                        'linkUrl': `https://testnet.bscsacn.com/tx/${transaction.transactionHash}`
+                    })
+                } else {
+                    notify.push({
+                        'title': 'Transaction failed',
+                        'description': 'Try again!',
+                        'category': 'error'
+                    })
+                }
+            } else if (fromChainId.id == 416002) {
+                if (receiver == '') {
+                    notify.push({
+                        'title': 'Receiving wallet not connected!',
+                        'description': 'Connect your EVM Wallet',
+                        'category': 'error'
+                    })
+                    this.bridging = false
+                    return
+                }
 
-            //     if (transaction) {
-            //         notify.push({
-            //             'title': 'Transaction sent',
-            //             'description': 'View transaction at the transactions page!',
-            //             'category': 'success',
-            //             'linkTitle': 'View Trx',
-            //             'linkUrl': '/transactions'
-            //         })
-            //     } else {
-            //         notify.push({
-            //             'title': 'Transaction failed',
-            //             'description': 'Try again!',
-            //             'category': 'error'
-            //         })
-            //     }
-            // } else if (fromChainId.category == "FUELVM") {
-            //     if (receiver == '') {
-            //         notify.push({
-            //             'title': 'Receiving wallet not connected!',
-            //             'description': 'Connect your MetaMask Wallet',
-            //             'category': 'error'
-            //         })
-            //         this.bridging = false
-            //         return
-            //     }
+                const txId = await tryUnBridge(
 
-            //     const transaction = await bridgeFUELVM(
-            //         fromChainId,
-            //         destChain,
-            //         this.bridge.currency,
-            //         this.$toWei((Number(this.bridge.amount) / 1_000_000_000)),
-            //         receiver
-            //     )
+                )
 
-            //     if (transaction) {
-            //         notify.push({
-            //             'title': 'Transaction sent',
-            //             'description': 'View transaction at the transactions page!',
-            //             'category': 'success',
-            //             'linkTitle': 'View Trx',
-            //             'linkUrl': '/transactions'
-            //         })
-            //     } else {
-            //         notify.push({
-            //             'title': 'Transaction failed',
-            //             'description': 'Try again!',
-            //             'category': 'error'
-            //         })
-            //     }
-            // }
+                if (txId) {
+                    notify.push({
+                        'title': 'Transaction sent',
+                        'description': 'View transaction at the transactions page!',
+                        'category': 'success',
+                        'linkTitle': 'View Trx',
+                        'linkUrl': `https://testnet.bscsacn.com/tx/${transaction.transactionHash}`
+                    })
+                } else {
+                    notify.push({
+                        'title': 'Transaction failed',
+                        'description': 'Try again!',
+                        'category': 'error'
+                    })
+                }
+            }
 
-            // this.bridging = false
-            // this.refreshBalance()
+            this.bridging = false
+            this.refreshBalance()
         }
     }
 }

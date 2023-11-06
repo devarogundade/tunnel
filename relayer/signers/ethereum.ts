@@ -13,28 +13,28 @@ export async function signTransaction(nonce: number, payload: Buffer) {
     const signer = web3.eth.accounts.privateKeyToAccount(handlerEvmKey);
     web3.eth.accounts.wallet.add(signer);
 
-    try {
-        const gas = await tunnel.methods.receiveMessage(
-            nonce, payload
-        ).estimateGas({ from: handlerEvmAddress });
-        console.log('Gas: ', gas);
+    // try {
+    //     const gas = await tunnel.methods.receiveMessage(
+    //         nonce, payload
+    //     ).estimateGas({ from: handlerEvmAddress });
+    //     console.log('Gas: ', gas);
 
-        const gasPrice = await web3.eth.getGasPrice();
-        console.log('Gas Price: ', gasPrice);
+    //     const gasPrice = await web3.eth.getGasPrice();
+    //     console.log('Gas Price: ', gasPrice);
 
-        const { transactionHash } = await tunnel.methods.receiveMessage(
-            nonce, payload
-        ).send({
-            from: handlerEvmAddress,
-            gasPrice: gasPrice.toString(),
-            gas: gas.toString()
-        });
+    //     const { transactionHash } = await tunnel.methods.receiveMessage(
+    //         nonce, payload
+    //     ).send({
+    //         from: handlerEvmAddress,
+    //         gasPrice: gasPrice.toString(),
+    //         gas: gas.toString()
+    //     });
 
-        return transactionHash;
-    } catch (error) {
-        console.error('Transaction: ', error);
-        return null;
-    }
+    //     return transactionHash;
+    // } catch (error) {
+    //     console.error('Transaction: ', error);
+    //     return null;
+    // }
 }
 
 export function decodeOnEvm(payload: Buffer): { assetId: number, amount: string, receiver: string; } {

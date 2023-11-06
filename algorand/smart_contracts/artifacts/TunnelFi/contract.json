@@ -46,18 +46,6 @@
             }
         },
         {
-            "name": "weeeee",
-            "args": [
-                {
-                    "type": "asset",
-                    "name": "asset"
-                }
-            ],
-            "returns": {
-                "type": "uint64"
-            }
-        },
-        {
             "name": "borrow",
             "args": [
                 {
@@ -126,6 +114,10 @@
                 {
                     "type": "account",
                     "name": "wormhole_account"
+                },
+                {
+                    "type": "account",
+                    "name": "storage_account"
                 }
             ],
             "returns": {
@@ -157,5 +149,6 @@
             }
         }
     ],
-    "networks": {}
+    "networks": {},
+    "desc": "RWA Bridge and Lending Platform"
 }

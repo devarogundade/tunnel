@@ -1,12 +1,13 @@
 from beaker import *
 from pyteal import *
-from typing import Literal
 from beaker.lib.storage import BoxMapping
+
+# TUPLES
 
 
 class Supply(abi.NamedTuple):
     # Amount in Algo supplied
-    amount: abi.Field[abi.Uint64]
+    principal: abi.Field[abi.Uint64]
     # Starting time of supply
     start_at: abi.Field[abi.Uint64]
 
@@ -20,15 +21,18 @@ class Borrow(abi.NamedTuple):
     start_at: abi.Field[abi.Uint64]
 
 
+# STATE
+
+
 class TunnelState:
     # Accepted collateral:
     collateral = GlobalStateValue(stack_type=TealType.uint64, default=Int(0))
 
     # Supply apr: interest rate per seconds
-    supply_apr = GlobalStateValue(stack_type=TealType.uint64, default=Int(1_050_000))
+    supply_apr = GlobalStateValue(stack_type=TealType.uint64, default=Int(100))
 
     # Borrow apr: interest rate per seconds
-    borrow_apr = GlobalStateValue(stack_type=TealType.uint64, default=Int(1_030_000))
+    borrow_apr = GlobalStateValue(stack_type=TealType.uint64, default=Int(120))
 
     # Total supply:
     total_supply = GlobalStateValue(stack_type=TealType.uint64, default=Int(0))
@@ -52,12 +56,11 @@ class TunnelState:
     rate_divider = GlobalStateValue(stack_type=TealType.uint64, default=Int(1_000_000))
 
 
-def read_next(vaa: Expr, offset: int, t: abi.BaseType) -> tuple[int, Expr]:
-    size = t.type_spec().byte_length_static()
-    return offset + size, t.decode(vaa, start_index=Int(offset), length=Int(size))
+# APP
 
-
-app = Application("TunnelFi", state=TunnelState)
+app = Application(
+    name="TunnelFi", state=TunnelState, descr="RWA Bridge and Lending Platform"
+)
 
 
 # STATEFUL FUNCTIONS
@@ -108,7 +111,7 @@ def set_collateral(name: abi.Byte, symbol: abi.Byte, supply: abi.Uint64) -> Expr
                 TxnField.config_asset_manager: Global.current_application_address(),
                 TxnField.config_asset_default_frozen: Int(1),
                 TxnField.config_asset_total: supply.get(),
-                TxnField.config_asset_decimals: Int(0),
+                TxnField.config_asset_decimals: Int(6),
             }
         )
     )
@@ -119,7 +122,7 @@ def supply(payment: abi.PaymentTransaction) -> Expr:
     # Temporary variables
     supply = Supply()
 
-    amount = abi.Uint64()
+    principal = abi.Uint64()
     start_at = abi.Uint64()
 
     # On-chain logic that uses multiple expressions, always goes in the returned Seq
@@ -139,31 +142,17 @@ def supply(payment: abi.PaymentTransaction) -> Expr:
             payment.get().amount() >= app.state.min_supply.get(),
             comment="Amount not sufficient",
         ),
-        # Update total supply
-        app.state.total_supply.set(
-            app.state.total_supply.get() + payment.get().amount()
-        ),
         # Initialize user position
-        amount.set(payment.get().amount()),
+        principal.set(payment.get().amount()),
         start_at.set(Global.latest_timestamp()),
         # Set user position
-        supply.set(amount, start_at),
+        supply.set(principal, start_at),
         # Update user position
         app.state.supplies[Txn.sender()].set(supply),
+        # Update total supply
         app.state.total_supply.set(
             Add(app.state.total_supply.get(), payment.get().amount())
         ),
-    )
-
-
-# test func
-@app.external
-def weeeee(asset: abi.Asset, *, output: abi.Uint64) -> Expr:
-    return Seq(
-        balance := AssetHolding.balance(Txn.sender(), asset.asset_id()),
-        Assert(balance.hasValue(), comment="Asset not frozen"),
-        output.set(balance.value()),
-        # output2.set(principalOf(balance.value(), Int(1))),
     )
 
 
@@ -206,6 +195,7 @@ def borrow(asset: abi.Asset) -> Expr:
         # Create their borrow position
         borrow.set(principal, collateral, start_at),
         app.state.borrows[Txn.sender()].set(borrow),
+        # Update total borrow
         app.state.total_borrow.set(Add(app.state.total_borrow.get(), principal.get())),
     )
 
@@ -244,7 +234,8 @@ def repay(payment: abi.PaymentTransaction) -> Expr:
             comment="Insufficient amount",
         ),
         # Delete user borrow position
-        # app.state.borrows[Txn.sender()].delete(),
+        Pop(app.state.borrows[Txn.sender()].delete()),
+        # Update total borrow
         app.state.total_borrow.set(
             Minus(app.state.total_borrow.get(), principal.get())
         ),
@@ -266,13 +257,13 @@ def withdraw() -> Expr:
         # Check if sender has supply position
         Assert(
             app.state.supplies[Txn.sender()].exists(),
-            comment="You have a supply position",
+            comment="You dont have a supply position",
         ),
         # Store the position
         app.state.supplies[Txn.sender()].store_into(supply),
         # Store amount
         supply.start_at.store_into(start_at),
-        supply.amount.store_into(principal),
+        supply.principal.store_into(principal),
         # Accrued interest
         interest.set(
             interestOf(principal.get(), start_at.get(), app.state.supply_apr.get())
@@ -288,8 +279,8 @@ def withdraw() -> Expr:
             }
         ),
         # Delete their position
-        # app.state.supplies[Txn.sender()].delete(),
-        # Total supply
+        Pop(app.state.supplies[Txn.sender()].delete()),
+        # Update total supply
         app.state.total_supply.set(
             Minus(app.state.total_supply.get(), principal.get())
         ),
@@ -320,12 +311,14 @@ def receiveMessage(
 
 @app.external
 def un_bridge(
-    asset: abi.Asset, wormhole: abi.Application, wormhole_account: abi.Account
+    asset: abi.Asset,
+    wormhole: abi.Application,
+    wormhole_account: abi.Account,
+    storage_account: abi.Account,
 ) -> Expr:
     # Temporary variables
     mfee = abi.Uint64()
     payload = ScratchVar(TealType.bytes)
-    publish_signature = Bytes("publishMessage")
 
     # On-chain logic that uses multiple expressions, always goes in the returned Seq
     return Seq(
@@ -351,8 +344,8 @@ def un_bridge(
             )
         ),
         # Start transaction
-        InnerTxnBuilder.Begin(),
         # Pay message fee
+        InnerTxnBuilder.Begin(),
         InnerTxnBuilder.SetFields(
             {
                 TxnField.type_enum: TxnType.Payment,
@@ -369,10 +362,10 @@ def un_bridge(
                 TxnField.freeze_asset: asset.asset_id(),
                 TxnField.freeze_asset_account: Txn.sender(),
                 TxnField.freeze_asset_frozen: Int(0),
-                TxnField.sender: Global.current_application_address(),
                 TxnField.fee: Int(0),
             }
         ),
+        InnerTxnBuilder.Next(),
         # Send the asset to back to tunnel
         InnerTxnBuilder.SetFields(
             {
@@ -391,12 +384,12 @@ def un_bridge(
                 TxnField.type_enum: TxnType.ApplicationCall,
                 TxnField.application_id: wormhole.application_id(),
                 TxnField.application_args: [
-                    publish_signature,
+                    Bytes("publishMessage"),
                     payload.load(),
                     Itob(Int(0)),
                 ],
-                TxnField.accounts: [Txn.accounts[1]],
-                TxnField.note: publish_signature,
+                TxnField.accounts: [storage_account.address()],
+                TxnField.note: Bytes("publishMessage"),
                 TxnField.fee: Int(0),
             }
         ),

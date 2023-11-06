@@ -13,8 +13,8 @@ contract Tunnel is Context {
 
     mapping(uint32 => bool) private _delivered;
 
-    mapping(bytes32 => address) private _evmWallet;
-    mapping(address => bytes32) private _algoWallet;
+    mapping(string => address) private _evmWallet;
+    mapping(address => string) private _algoWallet;
 
     mapping(uint256 => address) private _evmAsset;
     mapping(address => uint256) private _algoAsset;
@@ -26,31 +26,42 @@ contract Tunnel is Context {
         address assetId,
         uint256 amount,
         address evmWallet,
-        bytes32 algoWallet,
+        string algoWallet,
         uint256 timestamp
     );
 
     event AssetReleased(
         address assetId,
         uint256 amount,
-        bytes32 algoWallet,
+        string algoWallet,
         address evmWallet,
         uint256 timestamp
     );
 
-    event WalletCreated(address evmWallet, bytes32 algoWallet);
+    event WalletCreated(address evmWallet, string algoWallet);
+
+    event FaucetDispensed(address evmWallet, uint256 amount);
 
     constructor(address wormhole_) {
         _wormhole = IWormhole(wormhole_);
     }
 
-    function createWallet(bytes32 algoWallet) external {
+    function faucet(address assetId, uint256 amount) external {
         address evmWallet = _msgSender();
 
-        require(
-            _algoWallet[evmWallet] == bytes32(0),
-            "Algo wallet already used"
-        );
+        IERC3643 asset = IERC3643(assetId);
+        asset.transfer(evmWallet, amount);
+
+        emit FaucetDispensed(evmWallet, amount);
+    }
+
+    function createWallet(string memory algoWallet) external {
+        address evmWallet = _msgSender();
+
+        // require(
+        //     _algoWallet[evmWallet] == bytes32(0),
+        //     "Algo wallet already used"
+        // );
 
         require(
             _evmWallet[algoWallet] == address(0),
@@ -63,6 +74,12 @@ contract Tunnel is Context {
         emit WalletCreated(evmWallet, algoWallet);
     }
 
+    function getAlgoWallet(
+        address evmWallet
+    ) external view returns (string memory) {
+        return _algoWallet[evmWallet];
+    }
+
     /// @dev For getting briging fee
     function messageFee() public view returns (uint256) {
         return _wormhole.messageFee();
@@ -71,15 +88,17 @@ contract Tunnel is Context {
     /// @dev This function locks the Original NFT
     /// and tell whirlExtension Contract to mint a new similar NFT
     function bridge(address assetId, uint256 amount) external payable {
-        address caller = _msgSender();
+        address evmWallet = _msgSender();
+
+        // require(_algoWallet[evmWallet] != bytes32(0), "Algo address not set");
 
         IERC3643 asset = IERC3643(assetId);
-        asset.transferFrom(caller, address(this), amount);
+        asset.transferFrom(evmWallet, address(this), amount);
 
         bytes memory payload = abi.encode(
             _algoAsset[assetId],
             _algoAmount(amount),
-            _algoWallet[caller]
+            _algoWallet[evmWallet]
         );
 
         _wormhole.publishMessage{value: messageFee()}(
@@ -93,8 +112,8 @@ contract Tunnel is Context {
         emit AssetLocked(
             assetId,
             amount,
-            caller,
-            _algoWallet[caller],
+            evmWallet,
+            _algoWallet[evmWallet],
             block.timestamp
         );
     }
@@ -106,10 +125,10 @@ contract Tunnel is Context {
         _delivered[nonce] = true;
 
         // Parse the payload and do the corresponding actions!
-        (uint256 assetId, uint256 amount, bytes32 algoWallet) = abi.decode(
-            payload,
-            (uint256, uint256, bytes32)
-        );
+        (uint256 assetId, uint256 amount, string memory algoWallet) = abi
+            .decode(payload, (uint256, uint256, string));
+
+        require(_evmWallet[algoWallet] != address(0), "Evm address not set");
 
         IERC3643 asset = IERC3643(_evmAsset[assetId]);
         asset.transfer(_evmWallet[algoWallet], _evmAmount(amount));
@@ -123,12 +142,12 @@ contract Tunnel is Context {
         );
     }
 
-    function _evmAmount(uint256 amount) private pure returns (uint256) {
-        return amount * 100_000;
+    function _evmAmount(uint256 algoAmmount) private pure returns (uint256) {
+        return algoAmmount * 1_000_000;
     }
 
-    function _algoAmount(uint256 amount) private pure returns (uint256) {
-        return amount / 100_000;
+    function _algoAmount(uint256 evmAmount) private pure returns (uint256) {
+        return evmAmount / 1_000_000;
     }
 
     receive() external payable {}

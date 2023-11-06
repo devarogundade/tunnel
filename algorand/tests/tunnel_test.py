@@ -6,7 +6,7 @@ from algokit_utils import (
 )
 from algosdk.v2client.algod import AlgodClient
 
-from smart_contracts.tunnelfi import contract as tunnel_contract
+from smart_contracts.tunnel import contract as tunnel_contract
 
 
 @pytest.fixture(scope="session")
@@ -25,9 +25,3 @@ def tunnel_client(
     )
     client.create()
     return client
-
-
-def test_says_hello(tunnel_client: ApplicationClient) -> None:
-    result = tunnel_client.call(tunnel_contract.hello, name="World")
-
-    assert result.return_value == "Hello, World"
