@@ -46,16 +46,10 @@ const peraWallet = new PeraWalletConnect({
     chainId: 416002,
 });
 
-const account = algokit.mnemonicAccount("skin embody only fit fine fit identify refuse bench enroll dentist million axis luxury train liquid kitten stumble layer fall airport deliver laugh ability ill")
 
 export async function trySupply(amount) {
     try {
-        // const accounts = await peraWallet.reconnectSession()
-
-
-        // if (accounts.length == 0) return null
-
-        console.log(account);
+        const account = algokit.mnemonicAccount("skin embody only fit fine fit identify refuse bench enroll dentist million axis luxury train liquid kitten stumble layer fall airport deliver laugh ability ill")
 
         const suggestedParams = await algodClient.getTransactionParams().do();
 
@@ -70,14 +64,17 @@ export async function trySupply(amount) {
             appIndex: tunnelId,
             from: account.addr,
             foreignApps: [tunnelId],
-            boxes: [{ appIndex: tunnelId, name: algosdk.decodeAddress(account.addr).publicKey }],
-            appArgs: [algosdk.encodeObj('supply')],
+            boxes: [
+                { appIndex: tunnelId, name: algosdk.decodeAddress(account.addr).publicKey }
+            ],
+            appArgs: [
+                algosdk.encodeObj('supply'),
+                algosdk.encodeUnsignedTransaction(payment)
+            ],
             suggestedParams
         })
 
         algosdk.assignGroupID([payment, appCall])
-
-        console.log(payment, appCall);
 
         const signedTxn1 = algosdk.signTransaction(payment, account.sk)
         const signedTxn2 = algosdk.signTransaction(appCall, account.sk)
@@ -86,7 +83,7 @@ export async function trySupply(amount) {
             [signedTxn1.blob, signedTxn2.blob]
         ).do()
 
-        console.log(txId);
+        console.log('Transaction ID: ', txId);
     } catch (error) {
         console.error(error);
         return null
