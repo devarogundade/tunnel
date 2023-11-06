@@ -64,9 +64,10 @@ export async function trySupply(amount) {
             appIndex: tunnelId,
             from: account.addr,
             foreignApps: [tunnelId],
-            boxes: [
-                { appIndex: tunnelId, name: algosdk.decodeAddress(account.addr).publicKey }
-            ],
+            boxes: [{
+                appIndex: tunnelId,
+                name: algosdk.decodeAddress(account.addr).publicKey
+            }],
             appArgs: [
                 algosdk.encodeObj('supply'),
                 algosdk.encodeUnsignedTransaction(payment)
