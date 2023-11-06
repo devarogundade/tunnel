@@ -43,7 +43,7 @@ Object.keys(rawUnits).map(function (unit) {
 Units.units = rawUnits
 
 function convert(value, from, to) {
-    let result =  new BigNumber(value, 10).mul(units[from]).round(0, BigNumber.ROUND_DOWN).div(units[to])
+    let result = new BigNumber(value, 10).mul(units[from]).round(0, BigNumber.ROUND_DOWN).div(units[to])
     return result.toString(10)
 }
 

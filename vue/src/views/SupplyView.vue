@@ -52,7 +52,7 @@
                                             <img src="/images/algo.png" alt="Wormhole Shares">
                                         </div>
                                     </div>
-                                    <input type="number" placeholder="0.00">
+                                    <input type="number" v-model="supply.amount" placeholder="0.00">
                                     <div class="input_text">Balance: <span>100.00 WORMHOLE SHARES</span></div>
                                 </div>
 
@@ -72,7 +72,7 @@
                                 </div>
                             </div>
 
-                            <div class="borrow_action" @click="supply">
+                            <div class="borrow_action" @click="useSupply">
                                 <PrimaryButton :text="'Supply'" />
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                             </div>
 
                             <div class="borrow_action">
-                                <PrimaryButton :text="'Withdraw'" />
+                                <PrimaryButton :progress="withdrawing" @click="useWithdraw" :text="'Withdraw'" />
                             </div>
                         </div>
                     </div>
@@ -167,20 +167,97 @@ import PrimaryButton from '../components/PrimaryButton.vue'
 </script>
 
 <script>
-import { trySupply } from '../scripts/bridge'
+import { notify } from '../reactives/notify';
+import { trySupply, tryWithdraw } from '../scripts/bridge'
 export default {
     data() {
         return {
-            tab: 1
+            tab: 1,
+            supplying: false,
+            withdrawing: false,
+            supply: {
+                amount: 0
+            }
         }
     },
     methods: {
-        supply: async function () {
+        useSupply: async function () {
+            if (!this.$store.state.wallet1) {
+                notify.push({
+                    'title': 'Pera wallet not connected!',
+                    'description': 'Connect your Pera Wallet',
+                    'category': 'error'
+                })
+                return
+            }
+
+            if (this.supply.amount < 1 || this.supply.amount == '') {
+                notify.push({
+                    'title': 'Amount be must be atleat 1 Algo!',
+                    'description': 'Enter a valid ammont',
+                    'category': 'error'
+                })
+                return
+            }
+
+            if (this.supplying) return
+            this.supplying = true
+
             const txId = await trySupply(
-                1_000_000
+                this.$toMicroAlgo(this.supply.amount)
             )
 
-            console.log(txId);
+            if (txId) {
+                notify.push({
+                    'title': 'Transaction sent',
+                    'description': 'You have supplied your Algos!',
+                    'category': 'success',
+                    'linkTitle': 'View Trx',
+                    'linkUrl': `https://testnet.algoexplorer.io/tx/${txId}`
+                })
+            } else {
+                notify.push({
+                    'title': 'Transaction failed',
+                    'description': 'Note: you can\'t supply multiple times!',
+                    'category': 'error'
+                })
+            }
+
+            this.supplying = false
+        },
+
+        useWithdraw: async function () {
+            if (!this.$store.state.wallet1) {
+                notify.push({
+                    'title': 'Pera wallet not connected!',
+                    'description': 'Connect your Pera Wallet',
+                    'category': 'error'
+                })
+                return
+            }
+
+            if (this.withdrawing) return
+            this.withdrawing = true
+
+            const txId = await tryWithdraw()
+
+            if (txId) {
+                notify.push({
+                    'title': 'Transaction sent',
+                    'description': 'You have withdraw your supplied Algos!',
+                    'category': 'success',
+                    'linkTitle': 'View Trx',
+                    'linkUrl': `https://testnet.algoexplorer.io/tx/${txId}`
+                })
+            } else {
+                notify.push({
+                    'title': 'Transaction failed',
+                    'description': 'Note: you can\'t withdraw multiple times!',
+                    'category': 'error'
+                })
+            }
+
+            this.withdrawing = false
         }
     }
 }

@@ -55,6 +55,10 @@ contract Tunnel is Context {
         emit FaucetDispensed(evmWallet, amount);
     }
 
+    function createAsset(address evmAssetId, uint256 algoAssetId) external {
+        _evmAsset[evmAssetId] = algoAssetId;
+    }
+
     function createWallet(string memory algoWallet) external {
         address evmWallet = _msgSender();
 
@@ -143,11 +147,11 @@ contract Tunnel is Context {
     }
 
     function _evmAmount(uint256 algoAmmount) private pure returns (uint256) {
-        return algoAmmount * 1_000_000;
+        return algoAmmount * 1_000_000_000_000;
     }
 
     function _algoAmount(uint256 evmAmount) private pure returns (uint256) {
-        return evmAmount / 1_000_000;
+        return evmAmount / 1_000_000_000_000;
     }
 
     receive() external payable {}

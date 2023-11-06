@@ -32,6 +32,12 @@ export default {
             app.config.globalProperties.$toWei = (value) => {
                 return Converter.toWei(value)
             },
+            app.config.globalProperties.$fromMicroAlgo = (value) => {
+                return Converter.fromMicroAlgo(value)
+            },
+            app.config.globalProperties.$toMicroAlgo = (value) => {
+                return Converter.toMicroAlgo(value)
+            },
             app.config.globalProperties.$toDate = (value) => {
                 return Countdown.toDate(value)
             }

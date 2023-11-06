@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -9,11 +32,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const dotenv = __importStar(require("dotenv"));
+dotenv.config();
 const relayer_engine_1 = require("@wormhole-foundation/relayer-engine");
 const wormhole_sdk_1 = require("@certusone/wormhole-sdk");
-// import { decodeOnEvm, signTransaction as signTransactionOnEvm } from "./signers/ethereum";
-// import { signTransaction as signTransactionOnAlgorand } from "./signers/alogrand";
-// import { platform } from "os";
+const alogrand_1 = require("./signers/alogrand");
+const ethereum_1 = require("./signers/ethereum");
+const ethereum_2 = require("./signers/ethereum");
+const alogrand_2 = require("./signers/alogrand");
 (function main() {
     return __awaiter(this, void 0, void 0, function* () {
         // initialize relayer engine app, pass relevant config options
@@ -23,27 +49,25 @@ const wormhole_sdk_1 = require("@certusone/wormhole-sdk");
         // add a filter with a callback that will be
         // invoked on finding a VAA that matches the filter
         app.multiple({
-            [wormhole_sdk_1.CHAIN_ID_ALGORAND]: "468699439",
-            [wormhole_sdk_1.CHAIN_ID_BSC]: "0x83ee2EF8f1c8b4669B94F018F6467A9cC736719B"
+            [wormhole_sdk_1.CHAIN_ID_ALGORAND]: `${alogrand_1.TunnelId}`,
+            [wormhole_sdk_1.CHAIN_ID_BSC]: `${ethereum_1.tunnelAddr}`
         }, (ctx, next) => __awaiter(this, void 0, void 0, function* () {
             const vaa = ctx.vaa;
             const hash = ctx.sourceTxHash;
-            console.log('Got VAA', vaa === null || vaa === void 0 ? void 0 : vaa.payload);
-            if (!(vaa === null || vaa === void 0 ? void 0 : vaa.payload))
-                return;
+            console.log('⚡ Got VAA', vaa === null || vaa === void 0 ? void 0 : vaa.payload.toString('hex'));
+            // if (!vaa?.payload) return;
             // if (vaa?.emitterChain == CHAIN_ID_ALGORAND) {
-            // const txId = await signTransactionOnEvm(
-            //     vaa.nonce, vaa.payload
-            // );
+            //     const txId = await signTransactionOnEvm(
+            //         vaa.nonce, vaa.payload
+            //     );
             //     console.log('TxID: ', txId);
             // }
-            // if (vaa?.emitterChain == CHAIN_ID_BSC) {
-            // const { assetId, amount, receiver } = decodeOnEvm(vaa.payload);
-            // const txId = await signTransactionOnAlgorand(
-            //     vaa.nonce, assetId, amount, receiver
-            // );
-            //     console.log('TxID: ', txId);
-            // }
+            if ((vaa === null || vaa === void 0 ? void 0 : vaa.emitterChain) == wormhole_sdk_1.CHAIN_ID_BSC) {
+                const { assetId, amount, receiver } = (0, ethereum_2.decodeOnEvm)(vaa === null || vaa === void 0 ? void 0 : vaa.payload.toString('hex'));
+                console.log(assetId, amount, receiver);
+                const txId = yield (0, alogrand_2.signTransaction)(vaa.nonce, 468701001, amount, receiver);
+                console.log('TxID: ', txId);
+            }
         }));
         // add and configure any other middleware ..
         // start app, blocks until unrecoverable error or process is stopped

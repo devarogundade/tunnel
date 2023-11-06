@@ -1,12 +1,16 @@
+import * as dotenv from "dotenv";
+dotenv.config();
+
 import {
     Environment,
     StandardRelayerApp,
     StandardRelayerContext,
 } from "@wormhole-foundation/relayer-engine";
-import { CHAIN_ID_ALGORAND, CHAIN_ID_BSC } from "@certusone/wormhole-sdk";
-// import { decodeOnEvm, signTransaction as signTransactionOnEvm } from "./signers/ethereum";
-// import { signTransaction as signTransactionOnAlgorand } from "./signers/alogrand";
-// import { platform } from "os";
+import { CHAIN_ID_ALGORAND, CHAIN_ID_BSC, parseVaa } from "@certusone/wormhole-sdk";
+import { TunnelId } from "./signers/alogrand";
+import { tunnelAddr } from "./signers/ethereum";
+import { decodeOnEvm, signTransaction as signTransactionOnEvm } from "./signers/ethereum";
+import { signTransaction as signTransactionOnAlgorand } from "./signers/alogrand";
 
 (async function main() {
     // initialize relayer engine app, pass relevant config options
@@ -22,36 +26,37 @@ import { CHAIN_ID_ALGORAND, CHAIN_ID_BSC } from "@certusone/wormhole-sdk";
 
     app.multiple(
         {
-            [CHAIN_ID_ALGORAND]: "468699439",
-            [CHAIN_ID_BSC]: "0x83ee2EF8f1c8b4669B94F018F6467A9cC736719B"
+            [CHAIN_ID_ALGORAND]: `${TunnelId}`,
+            [CHAIN_ID_BSC]: `${tunnelAddr}`
         },
         async (ctx, next) => {
             const vaa = ctx.vaa;
             const hash = ctx.sourceTxHash;
 
-            console.log('Got VAA', vaa?.payload);
+            console.log('⚡ Got VAA', vaa?.payload.toString('hex'));
 
 
-            if (!vaa?.payload) return;
+            // if (!vaa?.payload) return;
 
             // if (vaa?.emitterChain == CHAIN_ID_ALGORAND) {
-            // const txId = await signTransactionOnEvm(
-            //     vaa.nonce, vaa.payload
-            // );
+            //     const txId = await signTransactionOnEvm(
+            //         vaa.nonce, vaa.payload
+            //     );
 
             //     console.log('TxID: ', txId);
             // }
 
-            // if (vaa?.emitterChain == CHAIN_ID_BSC) {
-            // const { assetId, amount, receiver } = decodeOnEvm(vaa.payload);
+            if (vaa?.emitterChain == CHAIN_ID_BSC) {
+                const { assetId, amount, receiver } = decodeOnEvm(vaa?.payload.toString('hex'));
 
-            // const txId = await signTransactionOnAlgorand(
-            //     vaa.nonce, assetId, amount, receiver
-            // );
+                console.log(assetId, amount, receiver);
 
-            //     console.log('TxID: ', txId);
-            // }
+                const txId = await signTransactionOnAlgorand(
+                    vaa.nonce, 468701001, amount, receiver
+                );
 
+                console.log('TxID: ', txId);
+            }
         },
     );
 

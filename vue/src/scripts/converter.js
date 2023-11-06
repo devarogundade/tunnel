@@ -19,6 +19,24 @@ const Converter = {
             return '0'
         }
     },
+    fromMicroAlgo: function (microAlgo) {
+        try {
+            if (microAlgo == '' || microAlgo == 0) return '0'
+            return convert(microAlgo, 'szabo', 'ether')
+        } catch (error) {
+            console.error('szabo', error);
+            return '0'
+        }
+    },
+    toMicroAlgo: function (algo) {
+        try {
+            if (algo == '') return '0'
+            return convert(algo, 'ether', 'szabo')
+        } catch (error) {
+            console.error('szabo', error);
+            return '0'
+        }
+    },
     toMoney: function (amount, max = null) {
         let maxF = max ? max : 6
         if (amount > 1) {
