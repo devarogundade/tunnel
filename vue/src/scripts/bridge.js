@@ -46,8 +46,6 @@ const peraWallet = new PeraWalletConnect({
     chainId: 416002,
 });
 
-console.log(await algodClient.getApplicationByID(tunnelId).do());
-
 const account = algokit.mnemonicAccount("skin embody only fit fine fit identify refuse bench enroll dentist million axis luxury train liquid kitten stumble layer fall airport deliver laugh ability ill")
 
 export async function trySupply(amount) {
