@@ -4,7 +4,8 @@
         <div class="app_width">
             <footer>
                 <div class="status">
-                    <SemanticGreen v-if="status" />
+                    <SemanticYellow v-if="status == 'loading'" />
+                    <SemanticGreen v-else-if="status == 'good'" />
                     <SemanticRed v-else />
                     <p>Relayer Status</p>
                 </div>
@@ -20,6 +21,7 @@
 <script setup>
 import SemanticRed from './icons/SemanticRed.vue';
 import SemanticGreen from './icons/SemanticGreen.vue';
+import SemanticYellow from './icons/SemanticYellow.vue';
 import ArrowRightIcon from './icons/ArrowRightIcon.vue';
 import axios from 'axios'
 </script>
@@ -28,13 +30,13 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            status: false
+            status: 'loading'
         }
     },
     async mounted() {
         await axios.get('http://localhost:7073/').then(() => { })
             .catch((error) => {
-                this.status = error.code != 'ERR_NETWORK'
+                this.status = error.code != 'ERR_NETWORK' ? 'good' : 'bad'
             })
     }
 }
