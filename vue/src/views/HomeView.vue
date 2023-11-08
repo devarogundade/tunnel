@@ -56,7 +56,7 @@
                         <h3>Snipe</h3>
                         <p>Buy liquidated loan's collateral at cheaper rate to market value from Algorand to other networks.
                         </p>
-                        <RouterLink to="/bridge">
+                        <RouterLink to="/snipe">
                             <button>Snipe RWAs</button>
                         </RouterLink>
                     </div>
