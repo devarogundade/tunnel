@@ -133,7 +133,7 @@
                             <p>Est. time</p>
                             <div>
                                 <TimeIcon />
-                                <p>2 - 5 mins</p>
+                                <p>0.5 ~ 2 mins</p>
                             </div>
                         </div>
                     </div>

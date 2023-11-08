@@ -2,7 +2,7 @@
     <section>
         <div class="app_width">
             <header>
-                <RouterLink to="/">
+                <RouterLink to="/" style="width: 300px;">
                     <TunnelLogo />
                 </RouterLink>
 
@@ -22,10 +22,16 @@
                             <p>Supply</p>
                         </button>
                     </RouterLink>
+                    <RouterLink to="/liquidate">
+                        <button :class="$route.name == 'liquidate' ? 'tab tab_active' : 'tab'">
+                            <p>Snipe</p>
+                        </button>
+                    </RouterLink>
                 </div>
 
 
-                <div style="display: flex; align-items: center; gap: 20px;" v-show="$route.name != 'home'">
+                <div style="width: 300px; display: flex; justify-content: flex-end; align-items: center; gap: 20px;"
+                    v-show="$route.name != 'home'">
                     <button @click="connection = true" class="connect_wallets">
                         <p>Connect Wallets</p>
                     </button>
@@ -33,6 +39,7 @@
                         <p>Faucet</p>
                     </button>
                 </div>
+
                 <div style="display: flex; align-items: center; gap: 20px;" v-show="$route.name == 'home'">
                     <a href="https://dorahacks.io/buidl/7771" target="_blank" rel="noopener noreferrer">
                         <button style="text-decoration: none;" class="faucet_connect">
@@ -44,9 +51,11 @@
                             <p>Pitch Deck</p>
                         </button>
                     </a>
-                    <button class="connect_wallets">
-                        <p>Launch App</p>
-                    </button>
+                    <RouterLink to="/bridge">
+                        <button class="connect_wallets">
+                            <p>Launch App</p>
+                        </button>
+                    </RouterLink>
                 </div>
             </header>
         </div>
@@ -140,7 +149,6 @@ export default {
 section {
     position: sticky;
     top: 0;
-    backdrop-filter: blur(8px);
     z-index: 10;
 }
 

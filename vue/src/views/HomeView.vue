@@ -27,7 +27,7 @@
                             <h3>Bridge</h3>
                             <p>Transfer your RWAs between Algorand and other chains like BSC, Ethereum, ...</p>
                             <RouterLink to="/bridge">
-                                <button>Bridge RWAa</button>
+                                <button>Bridge RWAs</button>
                             </RouterLink>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                             <h3>Borrow</h3>
                             <p>Use your real world assets as collateral to secured crypto loans.</p>
                             <RouterLink to="/borrow">
-                                <button>Borrow ALGO</button>
+                                <button>Borrow ALGOs</button>
                             </RouterLink>
                         </div>
                     </div>
@@ -45,9 +45,19 @@
                             <h3>Supply</h3>
                             <p>Put your idle ALGO tokens to work and start earning passive yield.</p>
                             <RouterLink to="/supply">
-                                <button>Supply ALGO</button>
+                                <button>Supply ALGOs</button>
                             </RouterLink>
                         </div>
+                    </div>
+                </div>
+
+                <div class="feature snipe" style="background-image: url('/images/feature1.png');">
+                    <div class="feature_overlay">
+                        <h3>Snipe</h3>
+                        <p>Transfer your RWAs between Algorand and other chains like BSC, Ethereum, ...</p>
+                        <RouterLink to="/bridge">
+                            <button>Snipe RWAs</button>
+                        </RouterLink>
                     </div>
                 </div>
             </div>
@@ -110,7 +120,7 @@ section {
 
 
 .features_container {
-    padding: 160px 0;
+    padding: 100px 0;
 }
 
 .features {
@@ -135,8 +145,8 @@ section {
     position: absolute;
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(8px);
-    background-color: #171a1dd8;
+    backdrop-filter: blur(12px);
+    background-color: rgba(2, 3, 76, 0.6);
     padding: 30px;
     display: flex;
     justify-content: flex-end;
@@ -169,10 +179,28 @@ section {
     width: 200px;
     height: 50px;
     border: none;
-    background: var(--pr);
+    background: white;
     border-radius: 6px;
     font-size: 16px;
     font-weight: 600;
-    color: white;
+    color: var(--bg);
+}
+
+.snipe {
+    width: 100%;
+    margin-top: 40px;
+    height: 200px;
+}
+
+.snipe .feature_overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.snipe h3,
+.snipe p {
+    width: 100% !important;
 }
 </style>
