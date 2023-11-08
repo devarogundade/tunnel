@@ -14,15 +14,15 @@
             }
         },
         {
-            "name": "set_collateral",
+            "name": "create_collateral",
             "args": [
                 {
-                    "type": "byte",
+                    "type": "string",
                     "name": "name"
                 },
                 {
-                    "type": "byte",
-                    "name": "symbol"
+                    "type": "string",
+                    "name": "unit_name"
                 },
                 {
                     "type": "uint64",
@@ -112,11 +112,47 @@
                     "name": "wormhole"
                 },
                 {
-                    "type": "account",
+                    "type": "address",
                     "name": "wormhole_account"
                 },
                 {
-                    "type": "account",
+                    "type": "address",
+                    "name": "storage_account"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "liquidate",
+            "args": [
+                {
+                    "type": "address",
+                    "name": "borrower"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "snipe",
+            "args": [
+                {
+                    "type": "pay",
+                    "name": "payment"
+                },
+                {
+                    "type": "application",
+                    "name": "wormhole"
+                },
+                {
+                    "type": "address",
+                    "name": "wormhole_account"
+                },
+                {
+                    "type": "address",
                     "name": "storage_account"
                 }
             ],

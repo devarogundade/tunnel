@@ -1,75 +1,59 @@
 #pragma version 8
-intcblock 0 1 4 1000000
-bytecblock 0x 0x636f6c6c61746572616c 0x746f74616c5f626f72726f77 0x746f74616c5f737570706c79 0x726174655f64697669646572 0x626f72726f7765645f616d6f756e74 0x626f72726f7765645f73746172745f6174 0x737570706c6965645f616d6f756e74 0x737570706c65645f73746172745f6174 0x626f72726f775f617072 0x6c7476 0x6d696e5f737570706c79 0x737570706c795f617072 0x7075626c6973684d657373616765 0x151f7c75
+intcblock 0 1 4 6 1000000
+bytecblock 0x 0x636f6c6c61746572616c 0x746f74616c5f626f72726f77 0x746f74616c5f737570706c79 0x726174655f64697669646572 0x736e69706561626c655f616d6f756e74 0x626f72726f7765645f616d6f756e74 0x626f72726f7765645f73746172745f6174 0x7075626c6973684d657373616765 0x737570706c6965645f616d6f756e74 0x737570706c65645f73746172745f6174 0x626f72726f775f617072 0x6c7476 0x6d696e5f737570706c79 0x736e6970655f72617465 0x737570706c795f617072 0x151f7c75
 txn NumAppArgs
 intc_0 // 0
 ==
-bnz main_l22
+bnz main_l26
 txna ApplicationArgs 0
 pushbytes 0x7549cae4 // "opt_in_asset(asset)void"
 ==
-bnz main_l21
+bnz main_l25
 txna ApplicationArgs 0
-pushbytes 0x2d24230c // "set_collateral(byte,byte,uint64)void"
+pushbytes 0xb783605a // "create_collateral(string,string,uint64)void"
 ==
-bnz main_l20
+bnz main_l24
 txna ApplicationArgs 0
 pushbytes 0xd0a79409 // "supply(pay)void"
 ==
-bnz main_l19
+bnz main_l23
 txna ApplicationArgs 0
 pushbytes 0xab635af5 // "borrow(asset)void"
 ==
-bnz main_l18
+bnz main_l22
 txna ApplicationArgs 0
 pushbytes 0xf97e9f27 // "repay(pay)void"
 ==
-bnz main_l17
+bnz main_l21
 txna ApplicationArgs 0
 pushbytes 0xb7355fd1 // "withdraw()void"
 ==
-bnz main_l16
+bnz main_l20
 txna ApplicationArgs 0
 pushbytes 0x051323b5 // "receiveMessage(uint64,asset,uint64,address)void"
 ==
-bnz main_l15
+bnz main_l19
 txna ApplicationArgs 0
-pushbytes 0xacc2afeb // "un_bridge(asset,application,account,account)void"
+pushbytes 0x3029a01f // "un_bridge(asset,application,address,address)void"
 ==
-bnz main_l14
+bnz main_l18
+txna ApplicationArgs 0
+pushbytes 0xf4b15b57 // "liquidate(address)void"
+==
+bnz main_l17
+txna ApplicationArgs 0
+pushbytes 0xd1c16b39 // "snipe(pay,application,address,address)void"
+==
+bnz main_l16
 txna ApplicationArgs 0
 pushbytes 0xd01b7676 // "borrow_of(address)(uint64,uint64,uint64)"
 ==
-bnz main_l13
+bnz main_l15
 txna ApplicationArgs 0
 pushbytes 0xa5427f8a // "supply_of(address)(uint64,uint64)"
 ==
-bnz main_l12
+bnz main_l14
 err
-main_l12:
-txn OnCompletion
-intc_0 // NoOp
-==
-txn ApplicationID
-intc_0 // 0
-!=
-&&
-assert
-callsub supplyofcaster_24
-intc_1 // 1
-return
-main_l13:
-txn OnCompletion
-intc_0 // NoOp
-==
-txn ApplicationID
-intc_0 // 0
-!=
-&&
-assert
-callsub borrowofcaster_23
-intc_1 // 1
-return
 main_l14:
 txn OnCompletion
 intc_0 // NoOp
@@ -79,7 +63,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub unbridgecaster_22
+callsub supplyofcaster_29
 intc_1 // 1
 return
 main_l15:
@@ -91,7 +75,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub receiveMessagecaster_21
+callsub borrowofcaster_28
 intc_1 // 1
 return
 main_l16:
@@ -103,7 +87,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub withdrawcaster_20
+callsub snipecaster_27
 intc_1 // 1
 return
 main_l17:
@@ -115,7 +99,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub repaycaster_19
+callsub liquidatecaster_26
 intc_1 // 1
 return
 main_l18:
@@ -127,7 +111,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub borrowcaster_18
+callsub unbridgecaster_25
 intc_1 // 1
 return
 main_l19:
@@ -139,7 +123,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub supplycaster_17
+callsub receiveMessagecaster_24
 intc_1 // 1
 return
 main_l20:
@@ -151,7 +135,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub setcollateralcaster_16
+callsub withdrawcaster_23
 intc_1 // 1
 return
 main_l21:
@@ -163,20 +147,68 @@ intc_0 // 0
 !=
 &&
 assert
-callsub optinassetcaster_15
+callsub repaycaster_22
 intc_1 // 1
 return
 main_l22:
 txn OnCompletion
 intc_0 // NoOp
 ==
-bnz main_l26
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub borrowcaster_21
+intc_1 // 1
+return
+main_l23:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub supplycaster_20
+intc_1 // 1
+return
+main_l24:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub createcollateralcaster_19
+intc_1 // 1
+return
+main_l25:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub optinassetcaster_18
+intc_1 // 1
+return
+main_l26:
+txn OnCompletion
+intc_0 // NoOp
+==
+bnz main_l30
 txn OnCompletion
 intc_1 // OptIn
 ==
-bnz main_l25
+bnz main_l29
 err
-main_l25:
+main_l29:
 txn ApplicationID
 intc_0 // 0
 !=
@@ -184,7 +216,7 @@ assert
 callsub optin_1
 intc_1 // 1
 return
-main_l26:
+main_l30:
 txn ApplicationID
 intc_0 // 0
 ==
@@ -196,22 +228,28 @@ return
 // create
 create_0:
 proto 0 0
-bytec 9 // "borrow_apr"
+bytec 11 // "borrow_apr"
 pushint 120 // 120
 app_global_put
 bytec_1 // "collateral"
 intc_0 // 0
 app_global_put
-bytec 10 // "ltv"
+bytec 12 // "ltv"
 pushint 800000 // 800000
 app_global_put
-bytec 11 // "min_supply"
-intc_3 // 1000000
+bytec 13 // "min_supply"
+intc 4 // 1000000
 app_global_put
 bytec 4 // "rate_divider"
-intc_3 // 1000000
+intc 4 // 1000000
 app_global_put
-bytec 12 // "supply_apr"
+bytec 14 // "snipe_rate"
+pushint 1050000 // 1050000
+app_global_put
+bytec 5 // "snipeable_amount"
+intc_0 // 0
+app_global_put
+bytec 15 // "supply_apr"
 pushint 100 // 100
 app_global_put
 bytec_2 // "total_borrow"
@@ -226,19 +264,19 @@ retsub
 optin_1:
 proto 0 0
 txn Sender
-bytec 5 // "borrowed_amount"
+bytec 6 // "borrowed_amount"
 intc_0 // 0
 app_local_put
 txn Sender
-bytec 6 // "borrowed_start_at"
+bytec 7 // "borrowed_start_at"
 intc_0 // 0
 app_local_put
 txn Sender
-bytec 7 // "supplied_amount"
+bytec 9 // "supplied_amount"
 intc_0 // 0
 app_local_put
 txn Sender
-bytec 8 // "suppled_start_at"
+bytec 10 // "suppled_start_at"
 intc_0 // 0
 app_local_put
 retsub
@@ -270,8 +308,8 @@ txnas Assets
 app_global_put
 retsub
 
-// set_collateral
-setcollateral_3:
+// create_collateral
+createcollateral_3:
 proto 3 0
 txn Sender
 global CreatorAddress
@@ -281,9 +319,11 @@ assert
 itxn_begin
 pushint 3 // acfg
 itxn_field TypeEnum
-pushbytes 0x576f726d686f6c6520536861726573 // "Wormhole Shares"
+frame_dig -3
+extract 2 0
 itxn_field ConfigAssetName
-pushbytes 0x57534841524553 // "WSHARES"
+frame_dig -2
+extract 2 0
 itxn_field ConfigAssetUnitName
 global CurrentApplicationAddress
 itxn_field ConfigAssetClawback
@@ -297,7 +337,7 @@ intc_1 // 1
 itxn_field ConfigAssetDefaultFrozen
 frame_dig -1
 itxn_field ConfigAssetTotal
-pushint 6 // 6
+intc_3 // 6
 itxn_field ConfigAssetDecimals
 itxn_submit
 retsub
@@ -327,7 +367,7 @@ intc_0 // 0
 assert
 frame_dig -1
 gtxns Amount
-bytec 11 // "min_supply"
+bytec 13 // "min_supply"
 app_global_get
 >=
 // Amount not sufficient
@@ -338,11 +378,11 @@ frame_dig -1
 gtxns Amount
 frame_bury 1
 txn Sender
-bytec 7 // "supplied_amount"
+bytec 9 // "supplied_amount"
 frame_dig 1
 app_local_put
 txn Sender
-bytec 8 // "suppled_start_at"
+bytec 10 // "suppled_start_at"
 frame_dig 2
 app_local_put
 frame_dig 1
@@ -410,8 +450,33 @@ load 4
 frame_bury 3
 load 4
 intc_1 // 1
-callsub principalOf_13
+callsub principalOf_15
 frame_bury 2
+pushint 5 // afrz
+itxn_field TypeEnum
+frame_dig -1
+txnas Assets
+itxn_field FreezeAsset
+txn Sender
+itxn_field FreezeAssetAccount
+intc_0 // 0
+itxn_field FreezeAssetFrozen
+intc_0 // 0
+itxn_field Fee
+itxn_next
+intc_2 // axfer
+itxn_field TypeEnum
+frame_dig -1
+txnas Assets
+itxn_field XferAsset
+load 4
+itxn_field AssetAmount
+global CurrentApplicationAddress
+itxn_field AssetReceiver
+txn Sender
+itxn_field AssetSender
+intc_0 // 0
+itxn_field Fee
 itxn_begin
 intc_1 // pay
 itxn_field TypeEnum
@@ -425,11 +490,11 @@ intc_0 // 0
 itxn_field Fee
 itxn_submit
 txn Sender
-bytec 5 // "borrowed_amount"
+bytec 6 // "borrowed_amount"
 frame_dig 2
 app_local_put
 txn Sender
-bytec 6 // "borrowed_start_at"
+bytec 7 // "borrowed_start_at"
 frame_dig 1
 app_local_put
 frame_dig 2
@@ -486,9 +551,9 @@ extract_uint64
 frame_bury 2
 frame_dig 3
 frame_dig 2
-bytec 9 // "borrow_apr"
+bytec 11 // "borrow_apr"
 app_global_get
-callsub interestOf_14
+callsub interestOf_16
 frame_bury 1
 frame_dig -1
 gtxns Receiver
@@ -503,12 +568,27 @@ frame_dig 3
 >=
 // Insufficient amount
 assert
+itxn_begin
+intc_2 // axfer
+itxn_field TypeEnum
+frame_dig 3
+itxn_field AssetAmount
+bytec_1 // "collateral"
+app_global_get
+itxn_field XferAsset
 txn Sender
-bytec 5 // "borrowed_amount"
+itxn_field AssetReceiver
+global CurrentApplicationAddress
+itxn_field AssetSender
+intc_0 // 0
+itxn_field Fee
+itxn_submit
+txn Sender
+bytec 6 // "borrowed_amount"
 intc_0 // 0
 app_local_put
 txn Sender
-bytec 6 // "borrowed_start_at"
+bytec 7 // "borrowed_start_at"
 intc_0 // 0
 app_local_put
 txn Sender
@@ -553,9 +633,9 @@ extract_uint64
 frame_bury 3
 frame_dig 3
 frame_dig 2
-bytec 12 // "supply_apr"
+bytec 15 // "supply_apr"
 app_global_get
-callsub interestOf_14
+callsub interestOf_16
 frame_bury 1
 itxn_begin
 intc_1 // pay
@@ -572,11 +652,11 @@ intc_0 // 0
 itxn_field Fee
 itxn_submit
 txn Sender
-bytec 7 // "supplied_amount"
+bytec 9 // "supplied_amount"
 intc_0 // 0
 app_local_put
 txn Sender
-bytec 8 // "suppled_start_at"
+bytec 10 // "suppled_start_at"
 intc_0 // 0
 app_local_put
 txn Sender
@@ -653,7 +733,7 @@ load 18
 assert
 frame_dig -3
 txnas Applications
-callsub getMessageFee_12
+callsub getMessageFee_14
 frame_bury 0
 bytec_1 // "collateral"
 app_global_get
@@ -668,7 +748,6 @@ itxn_begin
 intc_1 // pay
 itxn_field TypeEnum
 frame_dig -2
-txnas Accounts
 itxn_field Receiver
 frame_dig 0
 itxn_field Amount
@@ -701,12 +780,12 @@ itxn_field AssetSender
 intc_0 // 0
 itxn_field Fee
 itxn_next
-pushint 6 // appl
+intc_3 // appl
 itxn_field TypeEnum
 frame_dig -3
 txnas Applications
 itxn_field ApplicationID
-bytec 13 // "publishMessage"
+bytec 8 // "publishMessage"
 itxn_field ApplicationArgs
 load 14
 itxn_field ApplicationArgs
@@ -714,33 +793,32 @@ intc_0 // 0
 itob
 itxn_field ApplicationArgs
 frame_dig -1
-txnas Accounts
 itxn_field Accounts
-bytec 13 // "publishMessage"
+bytec 8 // "publishMessage"
 itxn_field Note
 intc_0 // 0
 itxn_field Fee
 itxn_submit
 retsub
 
-// borrow_of
-borrowof_10:
-proto 1 1
+// liquidate
+liquidate_10:
+proto 1 0
 bytec_0 // ""
+intc_0 // 0
+dup
+txn Sender
+global CreatorAddress
+==
+// unauthorized
+assert
 frame_dig -1
-box_get
+box_len
 store 22
 store 21
 load 22
+// Address dont have a borrow position
 assert
-load 21
-frame_bury 0
-retsub
-
-// supply_of
-supplyof_11:
-proto 1 1
-bytec_0 // ""
 frame_dig -1
 box_get
 store 24
@@ -749,10 +827,143 @@ load 24
 assert
 load 23
 frame_bury 0
+frame_dig 0
+intc_0 // 0
+extract_uint64
+frame_bury 1
+frame_dig 0
+pushint 8 // 8
+extract_uint64
+frame_bury 2
+frame_dig -1
+bytec 6 // "borrowed_amount"
+intc_0 // 0
+app_local_put
+frame_dig -1
+bytec 7 // "borrowed_start_at"
+intc_0 // 0
+app_local_put
+frame_dig -1
+box_del
+pop
+bytec_2 // "total_borrow"
+bytec_2 // "total_borrow"
+app_global_get
+frame_dig 1
+-
+app_global_put
+bytec 5 // "snipeable_amount"
+bytec 5 // "snipeable_amount"
+app_global_get
+frame_dig 2
++
+app_global_put
+retsub
+
+// snipe
+snipe_11:
+proto 4 0
+intc_0 // 0
+dup
+frame_dig -4
+gtxns Receiver
+global CurrentApplicationAddress
+==
+// Receiver not valid
+assert
+frame_dig -4
+gtxns Amount
+callsub snipeOf_17
+frame_bury 1
+bytec 5 // "snipeable_amount"
+app_global_get
+frame_dig 1
+>=
+// Insufficient amount
+assert
+txn Sender
+box_len
+store 27
+store 26
+load 27
+intc_0 // 0
+==
+// You have a borrow position
+assert
+frame_dig -3
+txnas Applications
+callsub getMessageFee_14
+frame_bury 0
+bytec_1 // "collateral"
+app_global_get
+itob
+frame_dig 1
+itob
+concat
+txn Sender
+concat
+store 25
+itxn_begin
+intc_1 // pay
+itxn_field TypeEnum
+frame_dig -2
+itxn_field Receiver
+frame_dig 0
+itxn_field Amount
+intc_0 // 0
+itxn_field Fee
+itxn_next
+intc_3 // appl
+itxn_field TypeEnum
+frame_dig -3
+txnas Applications
+itxn_field ApplicationID
+bytec 8 // "publishMessage"
+itxn_field ApplicationArgs
+load 25
+itxn_field ApplicationArgs
+intc_0 // 0
+itob
+itxn_field ApplicationArgs
+frame_dig -1
+itxn_field Accounts
+bytec 8 // "publishMessage"
+itxn_field Note
+intc_0 // 0
+itxn_field Fee
+itxn_submit
+retsub
+
+// borrow_of
+borrowof_12:
+proto 1 1
+bytec_0 // ""
+frame_dig -1
+box_get
+store 29
+store 28
+load 29
+assert
+load 28
+frame_bury 0
+retsub
+
+// supply_of
+supplyof_13:
+proto 1 1
+bytec_0 // ""
+frame_dig -1
+box_get
+store 31
+store 30
+load 31
+assert
+load 30
+frame_bury 0
 retsub
 
 // getMessageFee
-getMessageFee_12:
+getMessageFee_14:
 proto 1 1
 frame_dig -1
 pushbytes 0x4d657373616765466565 // "MessageFee"
@@ -765,12 +976,12 @@ load 19
 retsub
 
 // principalOf
-principalOf_13:
+principalOf_15:
 proto 2 1
 frame_dig -2
 frame_dig -1
 *
-bytec 10 // "ltv"
+bytec 12 // "ltv"
 app_global_get
 *
 bytec 4 // "rate_divider"
@@ -779,7 +990,7 @@ app_global_get
 retsub
 
 // interestOf
-interestOf_14:
+interestOf_16:
 proto 3 1
 frame_dig -3
 frame_dig -1
@@ -793,8 +1004,20 @@ app_global_get
 /
 retsub
 
+// snipeOf
+snipeOf_17:
+proto 1 1
+frame_dig -1
+bytec 14 // "snipe_rate"
+app_global_get
+*
+bytec 4 // "rate_divider"
+app_global_get
+/
+retsub
+
 // opt_in_asset_caster
-optinassetcaster_15:
+optinassetcaster_18:
 proto 0 0
 intc_0 // 0
 txna ApplicationArgs 1
@@ -805,18 +1028,15 @@ frame_dig 0
 callsub optinasset_2
 retsub
 
-// set_collateral_caster
-setcollateralcaster_16:
+// create_collateral_caster
+createcollateralcaster_19:
 proto 0 0
+bytec_0 // ""
+dup
 intc_0 // 0
-dupn 2
 txna ApplicationArgs 1
-intc_0 // 0
-getbyte
 frame_bury 0
 txna ApplicationArgs 2
-intc_0 // 0
-getbyte
 frame_bury 1
 txna ApplicationArgs 3
 btoi
@@ -824,11 +1044,11 @@ frame_bury 2
 frame_dig 0
 frame_dig 1
 frame_dig 2
-callsub setcollateral_3
+callsub createcollateral_3
 retsub
 
 // supply_caster
-supplycaster_17:
+supplycaster_20:
 proto 0 0
 intc_0 // 0
 txn GroupIndex
@@ -845,7 +1065,7 @@ callsub supply_4
 retsub
 
 // borrow_caster
-borrowcaster_18:
+borrowcaster_21:
 proto 0 0
 intc_0 // 0
 txna ApplicationArgs 1
@@ -857,7 +1077,7 @@ callsub borrow_5
 retsub
 
 // repay_caster
-repaycaster_19:
+repaycaster_22:
 proto 0 0
 intc_0 // 0
 txn GroupIndex
@@ -874,13 +1094,13 @@ callsub repay_6
 retsub
 
 // withdraw_caster
-withdrawcaster_20:
+withdrawcaster_23:
 proto 0 0
 callsub withdraw_7
 retsub
 
 // receiveMessage_caster
-receiveMessagecaster_21:
+receiveMessagecaster_24:
 proto 0 0
 intc_0 // 0
 dupn 2
@@ -905,10 +1125,12 @@ callsub receiveMessage_8
 retsub
 
 // un_bridge_caster
-unbridgecaster_22:
+unbridgecaster_25:
 proto 0 0
 intc_0 // 0
-dupn 3
+dup
+bytec_0 // ""
+dup
 txna ApplicationArgs 1
 intc_0 // 0
 getbyte
@@ -918,12 +1140,8 @@ intc_0 // 0
 getbyte
 frame_bury 1
 txna ApplicationArgs 3
-intc_0 // 0
-getbyte
 frame_bury 2
 txna ApplicationArgs 4
-intc_0 // 0
-getbyte
 frame_bury 3
 frame_dig 0
 frame_dig 1
@@ -932,33 +1150,74 @@ frame_dig 3
 callsub unbridge_9
 retsub
 
+// liquidate_caster
+liquidatecaster_26:
+proto 0 0
+bytec_0 // ""
+txna ApplicationArgs 1
+frame_bury 0
+frame_dig 0
+callsub liquidate_10
+retsub
+
+// snipe_caster
+snipecaster_27:
+proto 0 0
+intc_0 // 0
+dup
+bytec_0 // ""
+dup
+txna ApplicationArgs 1
+intc_0 // 0
+getbyte
+frame_bury 1
+txna ApplicationArgs 2
+frame_bury 2
+txna ApplicationArgs 3
+frame_bury 3
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 0
+frame_dig 0
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 0
+frame_dig 1
+frame_dig 2
+frame_dig 3
+callsub snipe_11
+retsub
+
 // borrow_of_caster
-borrowofcaster_23:
+borrowofcaster_28:
 proto 0 0
 bytec_0 // ""
 dup
 txna ApplicationArgs 1
 frame_bury 1
 frame_dig 1
-callsub borrowof_10
+callsub borrowof_12
 frame_bury 0
-bytec 14 // 0x151f7c75
+bytec 16 // 0x151f7c75
 frame_dig 0
 concat
 log
 retsub
 
 // supply_of_caster
-supplyofcaster_24:
+supplyofcaster_29:
 proto 0 0
 bytec_0 // ""
 dup
 txna ApplicationArgs 1
 frame_bury 1
 frame_dig 1
-callsub supplyof_11
+callsub supplyof_13
 frame_bury 0
-bytec 14 // 0x151f7c75
+bytec 16 // 0x151f7c75
 frame_dig 0
 concat
 log
