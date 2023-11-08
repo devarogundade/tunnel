@@ -13,8 +13,8 @@
                             <p class="from_label0">{{ interchange ? 'Paying' : 'Getting' }}</p>
                             <div class="from_chain">
                                 <div class="active_from_chain" @click="froming = !froming">
-                                    <img :src="bridge.from.chain.image" alt="">
-                                    <p>{{ bridge.from.chain.name }}</p>
+                                    <img :src="snipe.from.chain.image" alt="">
+                                    <p>{{ snipe.from.chain.name }}</p>
                                     <ArrowDownIcon />
                                 </div>
 
@@ -22,12 +22,12 @@
                                 <div class="inactive_from_chains" v-show="froming" @click="froming = !froming"
                                     :style="{ top: interchange ? '-35px' : '205px' }">
                                     <div class="chain" v-for="chain, index in [$bscTestnet()]"
-                                        @click="bridge.from.chain = chain; bridge.currency = $wormholeSharesInBsc()"
+                                        @click="snipe.from.chain = chain; snipe.currency = $wormholeSharesInBsc()"
                                         :key="index">
                                         <img :src="chain.image" alt="">
                                         <p>{{ chain.name }}</p>
-                                        <SemanticGreen v-if="bridge.from.chain.id == chain.id" />
-                                        <SemanticGreen v-else-if="bridge.to.chain.id == chain.id" />
+                                        <SemanticGreen v-if="snipe.from.chain.id == chain.id" />
+                                        <SemanticGreen v-else-if="snipe.to.chain.id == chain.id" />
                                     </div>
                                 </div>
                             </div>
@@ -45,18 +45,18 @@
                             <div style="display: flex; gap: 16px;">
                                 <div class="est" v-if="interchange">Est.</div>
                                 <div class="max" v-else>Max</div>
-                                <input type="number" disabled :value="(bridge.amount) + (bridge.amount * 0.05)"
+                                <input type="number" disabled :value="(snipe.amount) + (snipe.amount * 0.05)"
                                     placeholder="0.00">
                             </div>
                             <div class="currency" @click="coining = !coining">
-                                <img :src="bridge.currency.image" alt="">
-                                <p>{{ bridge.currency.name }}</p>
+                                <img :src="snipe.currency.image" alt="">
+                                <p>{{ snipe.currency.name }}</p>
                                 <ArrowDownIcon />
 
                                 <!-- dropdown -->
                                 <div class="inactive_from_currencies" v-if="coining">
                                     <div class="currency" v-for="currency, index in [$wormholeSharesInBsc()]"
-                                        @click="bridge.currency = currency" :key="index">
+                                        @click="snipe.currency = currency" :key="index">
                                         <img :src="currency.image" alt="">
                                         <p>{{ currency.name }}</p>
                                     </div>
@@ -65,10 +65,10 @@
                         </div>
 
                         <div class="from_balance">
-                            <p>~${{ $toMoney((($store.state.prices[bridge.currency.symbol] * bridge.amount) +
-                                (($store.state.prices[bridge.currency.symbol] * bridge.amount)
+                            <p>~${{ $toMoney((($store.state.prices[snipe.currency.symbol] * snipe.amount) +
+                                (($store.state.prices[snipe.currency.symbol] * snipe.amount)
                                     * 0.05))) }}</p>
-                            <p>Aval: <span>{{ $toMoney($fromWei(bridge.balance0)) }}</span></p>
+                            <p>Aval: <span>{{ $toMoney($fromWei(snipe.balance0)) }}</span></p>
                         </div>
 
                     </div>
@@ -78,8 +78,8 @@
                             <p class="from_label0">{{ !interchange ? 'To' : 'From' }}</p>
                             <div class="to_chain">
                                 <div class="active_to_chain">
-                                    <img :src="bridge.to.chain.image" alt="">
-                                    <p>{{ bridge.to.chain.name }}</p>
+                                    <img :src="snipe.to.chain.image" alt="">
+                                    <p>{{ snipe.to.chain.name }}</p>
                                 </div>
                             </div>
                             <div class="to_connection" @click="connection = true" v-if="!$store.state.wallet1">
@@ -96,19 +96,19 @@
                             <div style="display: flex; gap: 16px;">
                                 <div class="est" v-if="!interchange">Est.</div>
                                 <div class="max" v-else>Max</div>
-                                <input type="number" v-model="bridge.amount" placeholder="0.00">
+                                <input type="number" v-model="snipe.amount" placeholder="0.00">
                             </div>
 
                         </div>
 
                         <div class="to_balance">
-                            <p>~${{ $toMoney(($store.state.prices[bridge.currency.symbol] * bridge.amount)) }}</p>
-                            <p>Bal: <span>{{ $toMoney($fromWei(bridge.balance1) * 1_000_000_000) }}</span></p>
+                            <p>~${{ $toMoney(($store.state.prices[snipe.currency.symbol] * snipe.amount)) }}</p>
+                            <p>Bal: <span>{{ $toMoney($fromWei(snipe.balance1) * 1_000_000_000) }}</span></p>
                         </div>
                     </div>
 
                     <div class="view_route">
-                        <PrimaryButton :progress="sniping || approving" :text="'Snipe'" @click="useBridge" />
+                        <PrimaryButton :progress="sniping || approving" :text="'Snipe'" @click="useSnipe" />
                     </div>
 
                     <div class="schedule">
@@ -144,19 +144,19 @@ import { trySnipe } from '../scripts/bridge'
 import { tryErcBalance, tryErcApprove } from '../scripts/token'
 export default {
     watch: {
-        bridge: {
+        snipe: {
             handler: function () {
                 this.refreshBalance()
             },
             deep: true
         },
-        'bridge.amount': function () {
+        'snipe.amount': function () {
             this.refreshBalance()
         },
-        'bridge.currency': function () {
+        'snipe.currency': function () {
             this.refreshBalance()
         },
-        'bridge.from.chain': function () {
+        'snipe.from.chain': function () {
             this.refreshBalance()
         }
     },
@@ -167,7 +167,7 @@ export default {
             coining: false,
             interchange: true,
             sniping: false,
-            bridge: {
+            snipe: {
                 balance0: '0',
                 balance1: '0',
                 currency: this.$wormholeSharesInBsc(),
@@ -188,7 +188,7 @@ export default {
     methods: {
         refreshBalance: async function () {
             if (this.$store.state.wallet0) {
-                this.bridge.balance0 = await tryErcBalance(
+                this.snipe.balance0 = await tryErcBalance(
                     this.$store.state.wallet0
                 )
             }
@@ -199,15 +199,16 @@ export default {
             this.approving = true
 
             await tryErcApprove(
-                this.$toWei(this.bridge.amount)
+                this.$toWei(this.snipe.amount)
             )
 
             this.approving = false
         },
-        useBridge: async function () {
+
+        useSnipe: async function () {
             if (this.sniping) return
 
-            if (this.bridge.amount == '') {
+            if (this.snipe.amount == '') {
                 notify.push({
                     'title': 'Enter an amount!',
                     'description': 'Field is required!',
@@ -229,7 +230,7 @@ export default {
             }
 
             const transactionId = await trySnipe(
-                this.$toMicroAlgo(this.bridge.amount)
+                this.$toMicroAlgo(this.snipe.amount)
             )
 
             if (txId) {
@@ -247,7 +248,6 @@ export default {
                     'category': 'error'
                 })
             }
-
 
             this.sniping = false
         }
