@@ -2,6 +2,7 @@ from beaker import *
 from pyteal import *
 from beaker.lib.storage import BoxMapping
 
+
 # TUPLES
 
 
