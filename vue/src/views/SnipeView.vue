@@ -108,7 +108,7 @@
                     </div>
 
                     <div class="view_route">
-                        <PrimaryButton :progress="bridging || approving" :text="'Snipe'" @click="useBridge" />
+                        <PrimaryButton :progress="sniping || approving" :text="'Snipe'" @click="useBridge" />
                     </div>
 
                     <div class="schedule">
@@ -166,7 +166,7 @@ export default {
             froming: false,
             coining: false,
             interchange: true,
-            bridging: false,
+            sniping: false,
             bridge: {
                 balance0: '0',
                 balance1: '0',
@@ -205,7 +205,7 @@ export default {
             this.approving = false
         },
         useBridge: async function () {
-            if (this.bridging) return
+            if (this.sniping) return
 
             if (this.bridge.amount == '') {
                 notify.push({
@@ -216,15 +216,15 @@ export default {
                 return
             }
 
-            this.bridging = true
+            this.sniping = true
 
-            if (receiver == '') {
+            if (!this.$store.state.wallet1) {
                 notify.push({
-                    'title': 'Receiving wallet not connected!',
-                    'description': 'Connect your EVM Wallet',
+                    'title': 'Pera wallet not connected!',
+                    'description': 'Connect your Pera Wallet',
                     'category': 'error'
                 })
-                this.bridging = false
+                this.sniping = false
                 return
             }
 
@@ -249,7 +249,7 @@ export default {
             }
 
 
-            this.bridging = false
+            this.sniping = false
         }
     }
 }
