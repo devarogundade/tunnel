@@ -276,7 +276,7 @@ bytec 9 // "supplied_amount"
 intc_0 // 0
 app_local_put
 txn Sender
-bytec 10 // "suppled_start_at"
+bytec 10 // "supplied_start_at"
 intc_0 // 0
 app_local_put
 retsub
@@ -382,7 +382,7 @@ bytec 9 // "supplied_amount"
 frame_dig 1
 app_local_put
 txn Sender
-bytec 10 // "suppled_start_at"
+bytec 10 // "supplied_start_at"
 frame_dig 2
 app_local_put
 frame_dig 1
@@ -656,7 +656,7 @@ bytec 9 // "supplied_amount"
 intc_0 // 0
 app_local_put
 txn Sender
-bytec 10 // "suppled_start_at"
+bytec 10 // "supplied_start_at"
 intc_0 // 0
 app_local_put
 txn Sender

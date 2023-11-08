@@ -32,7 +32,6 @@ const store = createStore({
                 borrowed_start_at: 0,
                 supplied_amount: 0,
                 supplied_start_at: 0,
-                suppled_start_at: 0,
             }
         }
     },

@@ -76,7 +76,7 @@ class TunnelState:
     supplied_amount = LocalStateValue(stack_type=TealType.uint64, default=Int(0))
 
     # Start time of supply
-    suppled_start_at = LocalStateValue(stack_type=TealType.uint64, default=Int(0))
+    supplied_start_at = LocalStateValue(stack_type=TealType.uint64, default=Int(0))
 
 
 # APP
@@ -102,7 +102,7 @@ def opt_in() -> Expr:
         app.state.borrowed_amount[Txn.sender()].set_default(),
         app.state.borrowed_start_at[Txn.sender()].set_default(),
         app.state.supplied_amount[Txn.sender()].set_default(),
-        app.state.suppled_start_at[Txn.sender()].set_default(),
+        app.state.supplied_start_at[Txn.sender()].set_default(),
     )
 
 
@@ -184,7 +184,7 @@ def supply(payment: abi.PaymentTransaction) -> Expr:
         principal.set(payment.get().amount()),
         # Update local position
         app.state.supplied_amount[Txn.sender()].set(principal.get()),
-        app.state.suppled_start_at[Txn.sender()].set(start_at.get()),
+        app.state.supplied_start_at[Txn.sender()].set(start_at.get()),
         # Update global position
         supply.set(principal, start_at),
         app.state.supplies[Txn.sender()].set(supply),
@@ -358,7 +358,7 @@ def withdraw() -> Expr:
         ),
         # Update local position
         app.state.supplied_amount[Txn.sender()].set(Int(0)),
-        app.state.suppled_start_at[Txn.sender()].set(Int(0)),
+        app.state.supplied_start_at[Txn.sender()].set(Int(0)),
         # Update global position
         Pop(app.state.supplies[Txn.sender()].delete()),
         # Update total supply

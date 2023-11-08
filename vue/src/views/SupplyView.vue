@@ -357,7 +357,7 @@ export default {
             this.interest = (
                 (
                     this.$store.state.localState.supplied_amount *
-                    ((Date.now() / 1000) - this.$store.state.localState.suppled_start_at) *
+                    ((Date.now() / 1000) - this.$store.state.localState.supplied_start_at) *
                     this.$store.state.state.supply_apr
                 ) /
                 this.$store.state.state.rate_divider

@@ -314,3 +314,52 @@ export async function tryWithdraw(estimate) {
         return null
     }
 }
+
+export async function trySnipe(amount) {
+    try {
+        const accounts = await peraWallet.reconnectSession()
+
+        const suggestedParams = await algodClient.getTransactionParams().do();
+
+        const payment = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+            from: accounts[0],
+            to: TUNNEL_ADDR,
+            amount: BigInt(amount.toFixed(0)),
+            suggestedParams
+        })
+
+        const appCall = algosdk.makeApplicationNoOpTxnFromObject({
+            appIndex: TUNNEL_ID,
+            from: accounts[0],
+            foreignApps: [WORMHOLE_ID],
+            boxes: [{
+                appIndex: TUNNEL_ID,
+                name: algosdk.decodeAddress(accounts[0]).publicKey
+            }],
+            appArgs: [
+                algosdk.getMethodByName(METHODS, 'snipe').getSelector(),
+                algosdk.encodeUnsignedTransaction(payment),
+                algosdk.encodeUint64(WORMHOLE_ID),
+                algosdk.decodeAddress(WORMHOLE_ADDR).publicKey,
+                algosdk.decodeAddress(STORAGE_ADDR).publicKey
+            ],
+            accounts: [WORMHOLE_ADDR, STORAGE_ADDR],
+            suggestedParams
+        })
+
+        algosdk.assignGroupID([payment, appCall])
+
+        const signedTxn = await peraWallet.signTransaction([[{ txn: payment }, { txn: appCall }]])
+
+        const { txId } = await algodClient.sendRawTransaction(signedTxn).do()
+
+        await algosdk.waitForConfirmation(algodClient, txId, 3)
+
+        historySet(txId, 'withdraw', estimate, 'a'.repeat(64), Date.now())
+
+        return txId
+    } catch (error) {
+        console.error(error);
+        return null
+    }
+}

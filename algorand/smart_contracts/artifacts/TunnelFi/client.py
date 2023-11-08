@@ -198,9 +198,9 @@ _APP_SPEC_JSON = r"""{
                     "key": "borrowed_start_at",
                     "descr": ""
                 },
-                "suppled_start_at": {
+                "supplied_start_at": {
                     "type": "uint64",
-                    "key": "suppled_start_at",
+                    "key": "supplied_start_at",
                     "descr": ""
                 },
                 "supplied_amount": {
@@ -628,7 +628,7 @@ class LocalState:
     def __init__(self, data: dict[bytes, bytes | int]):
         self.borrowed_amount = typing.cast(int, data.get(b"borrowed_amount"))
         self.borrowed_start_at = typing.cast(int, data.get(b"borrowed_start_at"))
-        self.suppled_start_at = typing.cast(int, data.get(b"suppled_start_at"))
+        self.supplied_start_at = typing.cast(int, data.get(b"supplied_start_at"))
         self.supplied_amount = typing.cast(int, data.get(b"supplied_amount"))
 
 

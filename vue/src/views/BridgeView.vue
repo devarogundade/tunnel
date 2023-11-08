@@ -314,17 +314,15 @@ export default {
                     return
                 }
 
-                const txId = await tryUnBridge(
-                    this.$store.state.wallet1
-                )
+                const transactionId = await tryUnBridge()
 
-                if (txId) {
+                if (transactionId) {
                     notify.push({
                         'title': 'Transaction sent',
                         'description': 'View transaction at the transactions page!',
                         'category': 'success',
                         'linkTitle': 'View Trx',
-                        'linkUrl': `https://testnet.bscsacn.com/tx/${transaction.transactionHash}`
+                        'linkUrl': `https://testnet.algoexplorer.io/tx/${transactionId}`
                     })
                 } else {
                     notify.push({

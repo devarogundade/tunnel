@@ -177,9 +177,9 @@
                     "key": "borrowed_start_at",
                     "descr": ""
                 },
-                "suppled_start_at": {
+                "supplied_start_at": {
                     "type": "uint64",
-                    "key": "suppled_start_at",
+                    "key": "supplied_start_at",
                     "descr": ""
                 },
                 "supplied_amount": {

@@ -140,7 +140,7 @@ import TimeIcon from '@/components/icons/TimeIcon.vue'
 
 <script>
 import { notify } from '../reactives/notify'
-import { tryBridge, tryUnBridge } from '../scripts/bridge'
+import { trySnipe } from '../scripts/bridge'
 import { tryErcBalance, tryErcApprove } from '../scripts/token'
 export default {
     watch: {
@@ -167,8 +167,6 @@ export default {
             coining: false,
             interchange: true,
             bridging: false,
-            approving: false,
-            allowance: 0,
             bridge: {
                 balance0: '0',
                 balance1: '0',
@@ -220,83 +218,36 @@ export default {
 
             this.bridging = true
 
-            let fromChainId = this.bridge.from.chain
-            let destChain = this.bridge.to.chain
-
-            if (this.interchange) {
-                let tempFrom = fromChainId
-                fromChainId = destChain
-                destChain = tempFrom
+            if (receiver == '') {
+                notify.push({
+                    'title': 'Receiving wallet not connected!',
+                    'description': 'Connect your EVM Wallet',
+                    'category': 'error'
+                })
+                this.bridging = false
+                return
             }
 
-            let receiver
-            if (fromChainId.id == 97) {
-                receiver = this.$store.state.wallet0
+            const transactionId = await trySnipe(
+                this.$toMicroAlgo(this.bridge.amount)
+            )
+
+            if (txId) {
+                notify.push({
+                    'title': 'Transaction sent',
+                    'description': 'View transaction at the transactions page!',
+                    'category': 'success',
+                    'linkTitle': 'View Trx',
+                    'linkUrl': `https://testnet.algoexplorer.io/tx/${transactionId}`
+                })
             } else {
-                receiver = this.$store.state.wallet1
+                notify.push({
+                    'title': 'Transaction failed',
+                    'description': 'Try again!',
+                    'category': 'error'
+                })
             }
 
-            if (fromChainId.id == 97) {
-                if (receiver == '') {
-                    notify.push({
-                        'title': 'Receiving wallet not connected!',
-                        'description': 'Connect your Pera Wallet',
-                        'category': 'error'
-                    })
-                    this.bridging = false
-                    return
-                }
-
-                const transaction = await tryBridge(
-                    this.$toWei(this.bridge.amount)
-                )
-
-                if (transaction && transaction.transactionHash) {
-                    notify.push({
-                        'title': 'Transaction sent',
-                        'description': 'View transaction at the transactions page!',
-                        'category': 'success',
-                        'linkTitle': 'View Trx',
-                        'linkUrl': `https://testnet.bscsacn.com/tx/${transaction.transactionHash}`
-                    })
-                } else {
-                    notify.push({
-                        'title': 'Transaction failed',
-                        'description': 'Try again!',
-                        'category': 'error'
-                    })
-                }
-            } else if (fromChainId.id == 416002) {
-                if (receiver == '') {
-                    notify.push({
-                        'title': 'Receiving wallet not connected!',
-                        'description': 'Connect your EVM Wallet',
-                        'category': 'error'
-                    })
-                    this.bridging = false
-                    return
-                }
-
-                const txId = await tryUnBridge(
-                    this.$store.state.wallet1
-                )
-
-                if (txId) {
-                    notify.push({
-                        'title': 'Transaction sent',
-                        'description': 'View transaction at the transactions page!',
-                        'category': 'success',
-                        'linkTitle': 'View Trx',
-                        'linkUrl': `https://testnet.bscsacn.com/tx/${transaction.transactionHash}`
-                    })
-                } else {
-                    notify.push({
-                        'title': 'Transaction failed',
-                        'description': 'Try again!',
-                        'category': 'error'
-                    })
-                }
-            }
 
             this.bridging = false
         }
