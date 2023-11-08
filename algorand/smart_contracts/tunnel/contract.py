@@ -479,7 +479,7 @@ def un_bridge(
     )
 
 
-# opt_into_asset method that opts the contract account into an ASA
+# Liquidate borrower position
 @app.external(authorize=Authorize.only(Global.creator_address()))
 def liquidate(borrower: abi.Address) -> Expr:
     # Temporary variables
@@ -516,6 +516,7 @@ def liquidate(borrower: abi.Address) -> Expr:
     )
 
 
+# Snipe liquidated position
 @app.external
 def snipe(
     payment: abi.PaymentTransaction,
