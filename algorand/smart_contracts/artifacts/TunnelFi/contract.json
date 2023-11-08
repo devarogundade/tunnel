@@ -92,7 +92,7 @@
                     "name": "amount"
                 },
                 {
-                    "type": "account",
+                    "type": "address",
                     "name": "receiver"
                 }
             ],

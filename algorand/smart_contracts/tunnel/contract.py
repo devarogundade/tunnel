@@ -55,6 +55,16 @@ class TunnelState:
     # Rate divider
     rate_divider = GlobalStateValue(stack_type=TealType.uint64, default=Int(1_000_000))
 
+    # User Position
+    # Amount of borrow
+    borrowed_amount = LocalStateValue(stack_type=TealType.uint64, default=Int(0))
+    # Start time of borrow
+    borrowed_start_at = LocalStateValue(stack_type=TealType.uint64, default=Int(0))
+    # Amount of supply
+    supplied_amount = LocalStateValue(stack_type=TealType.uint64, default=Int(0))
+    # Start time of supply
+    suppled_start_at = LocalStateValue(stack_type=TealType.uint64, default=Int(0))
+
 
 # APP
 
@@ -70,6 +80,17 @@ app = Application(
 @app.create(bare=True)
 def create() -> Expr:
     return app.initialize_global_state()
+
+
+# opt_into_app method that allows accounts to opt in to local state
+@app.opt_in(bare=True)
+def opt_in() -> Expr:
+    return Seq(
+        app.state.borrowed_amount[Txn.sender()].set_default(),
+        app.state.borrowed_start_at[Txn.sender()].set_default(),
+        app.state.supplied_amount[Txn.sender()].set_default(),
+        app.state.suppled_start_at[Txn.sender()].set_default(),
+    )
 
 
 # opt_into_asset method that opts the contract account into an ASA
@@ -142,12 +163,15 @@ def supply(payment: abi.PaymentTransaction) -> Expr:
             payment.get().amount() >= app.state.min_supply.get(),
             comment="Amount not sufficient",
         ),
-        # Initialize user position
-        principal.set(payment.get().amount()),
+        # Set start time
         start_at.set(Global.latest_timestamp()),
-        # Set user position
+        # Set principal
+        principal.set(payment.get().amount()),
+        # Update local position
+        app.state.supplied_amount[Txn.sender()].set(principal.get()),
+        app.state.suppled_start_at[Txn.sender()].set(start_at.get()),
+        # Update global position
         supply.set(principal, start_at),
-        # Update user position
         app.state.supplies[Txn.sender()].set(supply),
         # Update total supply
         app.state.total_supply.set(
@@ -176,7 +200,7 @@ def borrow(asset: abi.Asset) -> Expr:
         Assert(frozen.hasValue(), frozen.value() == Int(1), comment="Asset not frozen"),
         # Set start time
         start_at.set(Global.latest_timestamp()),
-        # Get collateral
+        # Set collateral
         balance := AssetHolding.balance(Txn.sender(), asset.asset_id()),
         Assert(balance.hasValue(), comment="Not balance found"),
         collateral.set(balance.value()),
@@ -192,7 +216,10 @@ def borrow(asset: abi.Asset) -> Expr:
                 TxnField.fee: Int(0),
             }
         ),
-        # Create their borrow position
+        # Update local position
+        app.state.borrowed_amount[Txn.sender()].set(principal.get()),
+        app.state.borrowed_start_at[Txn.sender()].set(start_at.get()),
+        # Update global position
         borrow.set(principal, collateral, start_at),
         app.state.borrows[Txn.sender()].set(borrow),
         # Update total borrow
@@ -233,7 +260,10 @@ def repay(payment: abi.PaymentTransaction) -> Expr:
             payment.get().amount() >= Add(interest.get(), principal.get()),
             comment="Insufficient amount",
         ),
-        # Delete user borrow position
+        # Update local position
+        app.state.borrowed_amount[Txn.sender()].set(Int(0)),
+        app.state.borrowed_start_at[Txn.sender()].set(Int(0)),
+        # Update global position
         Pop(app.state.borrows[Txn.sender()].delete()),
         # Update total borrow
         app.state.total_borrow.set(
@@ -278,7 +308,10 @@ def withdraw() -> Expr:
                 TxnField.fee: Int(0),
             }
         ),
-        # Delete their position
+        # Update local position
+        app.state.supplied_amount[Txn.sender()].set(Int(0)),
+        app.state.suppled_start_at[Txn.sender()].set(Int(0)),
+        # Update global position
         Pop(app.state.supplies[Txn.sender()].delete()),
         # Update total supply
         app.state.total_supply.set(
@@ -289,23 +322,25 @@ def withdraw() -> Expr:
 
 @app.external
 def receiveMessage(
-    nonce: abi.Uint64, asset: abi.Asset, amount: abi.Uint64, receiver: abi.Account
+    nonce: abi.Uint64, asset: abi.Asset, amount: abi.Uint64, receiver: abi.Address
 ) -> Expr:
-    # Temporary variables
-
     # On-chain logic that uses multiple expressions, always goes in the returned Seq
     return Seq(
+        # Validate nonce
+        Assert(nonce.get() >= Int(0), comment="Invalid nonce"),
+        # Check asset id
+        Assert(asset.asset_id() == app.state.collateral.get(), comment="Invalid asset"),
         # Send the asset to receiver
         InnerTxnBuilder.Execute(
             {
                 TxnField.type_enum: TxnType.AssetTransfer,
-                TxnField.xfer_asset: asset.asset_id(),
                 TxnField.asset_amount: amount.get(),
-                TxnField.asset_receiver: receiver.address(),
+                TxnField.xfer_asset: asset.asset_id(),
+                TxnField.asset_receiver: receiver.get(),
                 TxnField.asset_sender: Global.current_application_address(),
                 TxnField.fee: Int(0),
             }
-        )
+        ),
     )
 
 

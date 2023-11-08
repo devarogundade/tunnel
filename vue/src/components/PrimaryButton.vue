@@ -47,7 +47,7 @@ p {
 
 .disable {
     cursor: not-allowed;
-    background: var(--primarydimmed);
+    background: grey;
 }
 
 .disable:hover {

@@ -49,24 +49,24 @@ const alogrand_2 = require("./signers/alogrand");
         // add a filter with a callback that will be
         // invoked on finding a VAA that matches the filter
         app.multiple({
-            [wormhole_sdk_1.CHAIN_ID_ALGORAND]: `${alogrand_1.TunnelId}`,
-            [wormhole_sdk_1.CHAIN_ID_BSC]: `${ethereum_1.tunnelAddr}`
+            [wormhole_sdk_1.CHAIN_ID_ALGORAND]: `${alogrand_1.TUNNEL_ID}`,
+            [wormhole_sdk_1.CHAIN_ID_BSC]: `${ethereum_1.TUNNEL_ADDRESS}`
         }, (ctx, next) => __awaiter(this, void 0, void 0, function* () {
             const vaa = ctx.vaa;
             const hash = ctx.sourceTxHash;
-            console.log('⚡ Got VAA', vaa === null || vaa === void 0 ? void 0 : vaa.payload.toString('hex'));
             // if (!vaa?.payload) return;
+            console.log('⚡ Got VAA: ', vaa === null || vaa === void 0 ? void 0 : vaa.payload.toString('hex'));
             // if (vaa?.emitterChain == CHAIN_ID_ALGORAND) {
             //     const txId = await signTransactionOnEvm(
             //         vaa.nonce, vaa.payload
             //     );
-            //     console.log('TxID: ', txId);
+            //     console.log('⚡TxID: ', txId);
             // }
             if ((vaa === null || vaa === void 0 ? void 0 : vaa.emitterChain) == wormhole_sdk_1.CHAIN_ID_BSC) {
                 const { assetId, amount, receiver } = (0, ethereum_2.decodeOnEvm)(vaa === null || vaa === void 0 ? void 0 : vaa.payload.toString('hex'));
-                console.log(assetId, amount, receiver);
-                const txId = yield (0, alogrand_2.signTransaction)(vaa.nonce, 468701001, amount, receiver);
-                console.log('TxID: ', txId);
+                const txId = yield (0, alogrand_2.signTransaction)(vaa.nonce, assetId, amount, receiver);
+                console.log('⚡From TxID: ', hash);
+                console.log('⚡To TxID: ', txId);
             }
         }));
         // add and configure any other middleware ..

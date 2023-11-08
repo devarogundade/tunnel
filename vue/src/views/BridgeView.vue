@@ -315,7 +315,7 @@ export default {
                 }
 
                 const txId = await tryUnBridge(
-
+                    this.$store.state.wallet1
                 )
 
                 if (txId) {
@@ -359,6 +359,7 @@ export default {
     border-radius: 8px;
     border: 2px solid var(--bg-lighter);
     padding: 24px;
+    background: var(--bg);
 }
 
 .bridge_rect_toolbar {

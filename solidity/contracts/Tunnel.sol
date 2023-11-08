@@ -40,6 +40,8 @@ contract Tunnel is Context {
 
     event WalletCreated(address evmWallet, string algoWallet);
 
+    event AssetCreated(address evmAssetId, uint256 algoAssetId);
+
     event FaucetDispensed(address evmWallet, uint256 amount);
 
     constructor(address wormhole_) {
@@ -56,16 +58,19 @@ contract Tunnel is Context {
     }
 
     function createAsset(address evmAssetId, uint256 algoAssetId) external {
-        _evmAsset[evmAssetId] = algoAssetId;
+        _evmAsset[algoAssetId] = evmAssetId;
+        _algoAsset[evmAssetId] = algoAssetId;
+
+        emit AssetCreated(evmAssetId, algoAssetId);
     }
 
     function createWallet(string memory algoWallet) external {
         address evmWallet = _msgSender();
 
-        // require(
-        //     _algoWallet[evmWallet] == bytes32(0),
-        //     "Algo wallet already used"
-        // );
+        require(
+            bytes(_algoWallet[evmWallet]).length == 0,
+            "Algo address already used"
+        );
 
         require(
             _evmWallet[algoWallet] == address(0),
@@ -78,10 +83,18 @@ contract Tunnel is Context {
         emit WalletCreated(evmWallet, algoWallet);
     }
 
+    /// @dev For corresponding algo wallet
     function getAlgoWallet(
         address evmWallet
     ) external view returns (string memory) {
         return _algoWallet[evmWallet];
+    }
+
+    /// @dev For corresponding evm wallet
+    function getEVMWallet(
+        string memory algoWallet
+    ) external view returns (address) {
+        return _evmWallet[algoWallet];
     }
 
     /// @dev For getting briging fee
@@ -94,7 +107,11 @@ contract Tunnel is Context {
     function bridge(address assetId, uint256 amount) external payable {
         address evmWallet = _msgSender();
 
-        // require(_algoWallet[evmWallet] != bytes32(0), "Algo address not set");
+        require(_algoAsset[assetId] != uint256(0), "Algo asset not set");
+        require(
+            bytes(_algoWallet[evmWallet]).length != 0,
+            "Algo address not set"
+        );
 
         IERC3643 asset = IERC3643(assetId);
         asset.transferFrom(evmWallet, address(this), amount);
@@ -123,22 +140,23 @@ contract Tunnel is Context {
     }
 
     // @dev This function unlocks the Original asset to the
-    function receiveMessage(uint32 nonce, bytes memory payload) external {
+    function receiveMessage(
+        uint32 nonce,
+        uint256 algoAssetId,
+        uint256 amount, // in micro-algo format
+        string memory algoWallet
+    ) external {
         // Ensure no duplicate deliveries
         require(!_delivered[nonce], "Message already processed");
         _delivered[nonce] = true;
 
-        // Parse the payload and do the corresponding actions!
-        (uint256 assetId, uint256 amount, string memory algoWallet) = abi
-            .decode(payload, (uint256, uint256, string));
-
         require(_evmWallet[algoWallet] != address(0), "Evm address not set");
 
-        IERC3643 asset = IERC3643(_evmAsset[assetId]);
+        IERC3643 asset = IERC3643(_evmAsset[algoAssetId]);
         asset.transfer(_evmWallet[algoWallet], _evmAmount(amount));
 
         emit AssetReleased(
-            _evmAsset[assetId],
+            _evmAsset[algoAssetId],
             _evmAmount(amount),
             algoWallet,
             _evmWallet[algoWallet],

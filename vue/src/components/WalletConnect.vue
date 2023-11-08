@@ -16,14 +16,17 @@
                     <p>{{ $store.state.wallet1 ? $fineAddress($store.state.wallet1) : 'Pera Wallet' }}</p>
                 </div>
 
-                <p v-if="aWallet && aWallet != $store.state.wallet1" style="color: red; font-size: 12px; margin-top: 4px;">
-                    You are connected to wrong Pera Wallet
+                <p v-if="$store.state.wallet1 && aWallet && aWallet != $store.state.wallet1"
+                    style="color: red; font-size: 12px; margin-top: 4px;">
+                    Please Switch to {{ $fineAddress(aWallet) }}
                 </p>
 
                 <PrimaryButton v-if="!checking && !aWallet" :progress="syncing" @click="sync" style="margin-top: 20px;"
                     :text="'Sync Wallets'" />
             </div>
         </div>
+
+        <PrimaryButton :text="'OptIn to TunnelFi'" :progress="optingIn" @click="optIn" :width="'330px'" />
     </div>
 </template>
 
@@ -38,6 +41,7 @@ import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/vue'
 import { bscTestnet } from '@wagmi/core/chains'
 import { watchAccount } from '@wagmi/core'
 import { trySyncWallets, tryGetAlgoWallet } from '../scripts/token'
+import { tryOptIn, readOptIn } from '../scripts/bridge'
 import { notify } from '../reactives/notify'
 
 const projectId = import.meta.env.VITE_PROJECT_ID
@@ -52,7 +56,8 @@ export default {
             modal: null,
             syncing: false,
             aWallet: null,
-            checking: true
+            checking: true,
+            optingIn: false
         }
     },
     async mounted() {
@@ -61,9 +66,62 @@ export default {
         try {
             const accounts = await peraWallet.reconnectSession()
             this.$store.commit('setWallet1', accounts[0])
+
+            if (accounts.length > 0) {
+                const appInfo = await readOptIn(accounts[0]);
+
+                if (!appInfo) return
+
+                const localStates = appInfo['app-local-state']['key-value'];
+
+                const state = {}
+
+                for (let index = 0; index < localStates.length; index++) {
+
+                    const key = Buffer.from(localStates[index].key, 'base64').toString();
+                    const value = Number(localStates[index].value.uint);
+
+                    state[key] = value
+                }
+
+                this.$store.commit('setLocalState', state)
+            }
         } catch (error) { }
     },
     methods: {
+        optIn: async function () {
+            if (!this.$store.state.wallet1) {
+                notify.push({
+                    'title': 'Pera wallet not connected!',
+                    'description': 'Connect your Pera Wallet',
+                    'category': 'error'
+                })
+                return
+            }
+
+            if (this.optingIn) return
+            this.optingIn = true
+
+            const transactionId = await tryOptIn()
+
+            if (transactionId) {
+                notify.push({
+                    'title': 'Transaction sent',
+                    'description': 'You have supplied your Algos!',
+                    'category': 'success',
+                    'linkTitle': 'View Trx',
+                    'linkUrl': `https://testnet.algoexplorer.io/tx/${transactionId}`
+                })
+            } else {
+                notify.push({
+                    'title': 'Transaction failed',
+                    'description': 'Note: you can\'t supply multiple times!',
+                    'category': 'error'
+                })
+            }
+
+            this.optingIn = false
+        },
         algoWallet: async function () {
             this.checking = true
             if (this.$store.state.wallet0) {
@@ -149,8 +207,9 @@ export default {
 <style scoped>
 .container {
     display: flex;
-    gap: 40px;
+    gap: 20px;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
     position: fixed;
     top: 0;

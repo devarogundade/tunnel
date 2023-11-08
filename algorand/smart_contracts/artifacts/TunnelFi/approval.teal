@@ -1,6 +1,6 @@
 #pragma version 8
 intcblock 0 1 4 1000000
-bytecblock 0x 0x636f6c6c61746572616c 0x746f74616c5f626f72726f77 0x746f74616c5f737570706c79 0x726174655f64697669646572 0x626f72726f775f617072 0x6c7476 0x6d696e5f737570706c79 0x737570706c795f617072 0x7075626c6973684d657373616765 0x151f7c75
+bytecblock 0x 0x636f6c6c61746572616c 0x746f74616c5f626f72726f77 0x746f74616c5f737570706c79 0x726174655f64697669646572 0x626f72726f7765645f616d6f756e74 0x626f72726f7765645f73746172745f6174 0x737570706c6965645f616d6f756e74 0x737570706c65645f73746172745f6174 0x626f72726f775f617072 0x6c7476 0x6d696e5f737570706c79 0x737570706c795f617072 0x7075626c6973684d657373616765 0x151f7c75
 txn NumAppArgs
 intc_0 // 0
 ==
@@ -30,7 +30,7 @@ pushbytes 0xb7355fd1 // "withdraw()void"
 ==
 bnz main_l16
 txna ApplicationArgs 0
-pushbytes 0x38281b87 // "receiveMessage(uint64,asset,uint64,account)void"
+pushbytes 0x051323b5 // "receiveMessage(uint64,asset,uint64,address)void"
 ==
 bnz main_l15
 txna ApplicationArgs 0
@@ -55,7 +55,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub supplyofcaster_23
+callsub supplyofcaster_24
 intc_1 // 1
 return
 main_l13:
@@ -67,7 +67,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub borrowofcaster_22
+callsub borrowofcaster_23
 intc_1 // 1
 return
 main_l14:
@@ -79,7 +79,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub unbridgecaster_21
+callsub unbridgecaster_22
 intc_1 // 1
 return
 main_l15:
@@ -91,7 +91,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub receiveMessagecaster_20
+callsub receiveMessagecaster_21
 intc_1 // 1
 return
 main_l16:
@@ -103,7 +103,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub withdrawcaster_19
+callsub withdrawcaster_20
 intc_1 // 1
 return
 main_l17:
@@ -115,7 +115,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub repaycaster_18
+callsub repaycaster_19
 intc_1 // 1
 return
 main_l18:
@@ -127,7 +127,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub borrowcaster_17
+callsub borrowcaster_18
 intc_1 // 1
 return
 main_l19:
@@ -139,7 +139,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub supplycaster_16
+callsub supplycaster_17
 intc_1 // 1
 return
 main_l20:
@@ -151,7 +151,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub setcollateralcaster_15
+callsub setcollateralcaster_16
 intc_1 // 1
 return
 main_l21:
@@ -163,16 +163,28 @@ intc_0 // 0
 !=
 &&
 assert
-callsub optinassetcaster_14
+callsub optinassetcaster_15
 intc_1 // 1
 return
 main_l22:
 txn OnCompletion
 intc_0 // NoOp
 ==
-bnz main_l24
+bnz main_l26
+txn OnCompletion
+intc_1 // OptIn
+==
+bnz main_l25
 err
-main_l24:
+main_l25:
+txn ApplicationID
+intc_0 // 0
+!=
+assert
+callsub optin_1
+intc_1 // 1
+return
+main_l26:
 txn ApplicationID
 intc_0 // 0
 ==
@@ -184,22 +196,22 @@ return
 // create
 create_0:
 proto 0 0
-bytec 5 // "borrow_apr"
+bytec 9 // "borrow_apr"
 pushint 120 // 120
 app_global_put
 bytec_1 // "collateral"
 intc_0 // 0
 app_global_put
-bytec 6 // "ltv"
+bytec 10 // "ltv"
 pushint 800000 // 800000
 app_global_put
-bytec 7 // "min_supply"
+bytec 11 // "min_supply"
 intc_3 // 1000000
 app_global_put
 bytec 4 // "rate_divider"
 intc_3 // 1000000
 app_global_put
-bytec 8 // "supply_apr"
+bytec 12 // "supply_apr"
 pushint 100 // 100
 app_global_put
 bytec_2 // "total_borrow"
@@ -210,8 +222,29 @@ intc_0 // 0
 app_global_put
 retsub
 
+// opt_in
+optin_1:
+proto 0 0
+txn Sender
+bytec 5 // "borrowed_amount"
+intc_0 // 0
+app_local_put
+txn Sender
+bytec 6 // "borrowed_start_at"
+intc_0 // 0
+app_local_put
+txn Sender
+bytec 7 // "supplied_amount"
+intc_0 // 0
+app_local_put
+txn Sender
+bytec 8 // "suppled_start_at"
+intc_0 // 0
+app_local_put
+retsub
+
 // opt_in_asset
-optinasset_1:
+optinasset_2:
 proto 1 0
 txn Sender
 global CreatorAddress
@@ -238,7 +271,7 @@ app_global_put
 retsub
 
 // set_collateral
-setcollateral_2:
+setcollateral_3:
 proto 3 0
 txn Sender
 global CreatorAddress
@@ -270,7 +303,7 @@ itxn_submit
 retsub
 
 // supply
-supply_3:
+supply_4:
 proto 1 0
 bytec_0 // ""
 intc_0 // 0
@@ -294,16 +327,24 @@ intc_0 // 0
 assert
 frame_dig -1
 gtxns Amount
-bytec 7 // "min_supply"
+bytec 11 // "min_supply"
 app_global_get
 >=
 // Amount not sufficient
 assert
+global LatestTimestamp
+frame_bury 2
 frame_dig -1
 gtxns Amount
 frame_bury 1
-global LatestTimestamp
-frame_bury 2
+txn Sender
+bytec 7 // "supplied_amount"
+frame_dig 1
+app_local_put
+txn Sender
+bytec 8 // "suppled_start_at"
+frame_dig 2
+app_local_put
 frame_dig 1
 itob
 frame_dig 2
@@ -326,7 +367,7 @@ app_global_put
 retsub
 
 // borrow
-borrow_4:
+borrow_5:
 proto 1 0
 bytec_0 // ""
 intc_0 // 0
@@ -369,7 +410,7 @@ load 4
 frame_bury 3
 load 4
 intc_1 // 1
-callsub principalOf_12
+callsub principalOf_13
 frame_bury 2
 itxn_begin
 intc_1 // pay
@@ -383,6 +424,14 @@ itxn_field Sender
 intc_0 // 0
 itxn_field Fee
 itxn_submit
+txn Sender
+bytec 5 // "borrowed_amount"
+frame_dig 2
+app_local_put
+txn Sender
+bytec 6 // "borrowed_start_at"
+frame_dig 1
+app_local_put
 frame_dig 2
 itob
 frame_dig 3
@@ -407,7 +456,7 @@ app_global_put
 retsub
 
 // repay
-repay_5:
+repay_6:
 proto 1 0
 bytec_0 // ""
 intc_0 // 0
@@ -437,9 +486,9 @@ extract_uint64
 frame_bury 2
 frame_dig 3
 frame_dig 2
-bytec 5 // "borrow_apr"
+bytec 9 // "borrow_apr"
 app_global_get
-callsub interestOf_13
+callsub interestOf_14
 frame_bury 1
 frame_dig -1
 gtxns Receiver
@@ -455,6 +504,14 @@ frame_dig 3
 // Insufficient amount
 assert
 txn Sender
+bytec 5 // "borrowed_amount"
+intc_0 // 0
+app_local_put
+txn Sender
+bytec 6 // "borrowed_start_at"
+intc_0 // 0
+app_local_put
+txn Sender
 box_del
 pop
 bytec_2 // "total_borrow"
@@ -466,7 +523,7 @@ app_global_put
 retsub
 
 // withdraw
-withdraw_6:
+withdraw_7:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -496,9 +553,9 @@ extract_uint64
 frame_bury 3
 frame_dig 3
 frame_dig 2
-bytec 8 // "supply_apr"
+bytec 12 // "supply_apr"
 app_global_get
-callsub interestOf_13
+callsub interestOf_14
 frame_bury 1
 itxn_begin
 intc_1 // pay
@@ -515,6 +572,14 @@ intc_0 // 0
 itxn_field Fee
 itxn_submit
 txn Sender
+bytec 7 // "supplied_amount"
+intc_0 // 0
+app_local_put
+txn Sender
+bytec 8 // "suppled_start_at"
+intc_0 // 0
+app_local_put
+txn Sender
 box_del
 pop
 bytec_3 // "total_supply"
@@ -526,18 +591,29 @@ app_global_put
 retsub
 
 // receiveMessage
-receiveMessage_7:
+receiveMessage_8:
 proto 4 0
+frame_dig -4
+intc_0 // 0
+>=
+// Invalid nonce
+assert
+frame_dig -3
+txnas Assets
+bytec_1 // "collateral"
+app_global_get
+==
+// Invalid asset
+assert
 itxn_begin
 intc_2 // axfer
 itxn_field TypeEnum
+frame_dig -2
+itxn_field AssetAmount
 frame_dig -3
 txnas Assets
 itxn_field XferAsset
-frame_dig -2
-itxn_field AssetAmount
 frame_dig -1
-txnas Accounts
 itxn_field AssetReceiver
 global CurrentApplicationAddress
 itxn_field AssetSender
@@ -547,7 +623,7 @@ itxn_submit
 retsub
 
 // un_bridge
-unbridge_8:
+unbridge_9:
 proto 4 0
 intc_0 // 0
 bytec_1 // "collateral"
@@ -577,7 +653,7 @@ load 18
 assert
 frame_dig -3
 txnas Applications
-callsub getMessageFee_11
+callsub getMessageFee_12
 frame_bury 0
 bytec_1 // "collateral"
 app_global_get
@@ -630,7 +706,7 @@ itxn_field TypeEnum
 frame_dig -3
 txnas Applications
 itxn_field ApplicationID
-bytec 9 // "publishMessage"
+bytec 13 // "publishMessage"
 itxn_field ApplicationArgs
 load 14
 itxn_field ApplicationArgs
@@ -640,7 +716,7 @@ itxn_field ApplicationArgs
 frame_dig -1
 txnas Accounts
 itxn_field Accounts
-bytec 9 // "publishMessage"
+bytec 13 // "publishMessage"
 itxn_field Note
 intc_0 // 0
 itxn_field Fee
@@ -648,7 +724,7 @@ itxn_submit
 retsub
 
 // borrow_of
-borrowof_9:
+borrowof_10:
 proto 1 1
 bytec_0 // ""
 frame_dig -1
@@ -662,7 +738,7 @@ frame_bury 0
 retsub
 
 // supply_of
-supplyof_10:
+supplyof_11:
 proto 1 1
 bytec_0 // ""
 frame_dig -1
@@ -676,7 +752,7 @@ frame_bury 0
 retsub
 
 // getMessageFee
-getMessageFee_11:
+getMessageFee_12:
 proto 1 1
 frame_dig -1
 pushbytes 0x4d657373616765466565 // "MessageFee"
@@ -689,12 +765,12 @@ load 19
 retsub
 
 // principalOf
-principalOf_12:
+principalOf_13:
 proto 2 1
 frame_dig -2
 frame_dig -1
 *
-bytec 6 // "ltv"
+bytec 10 // "ltv"
 app_global_get
 *
 bytec 4 // "rate_divider"
@@ -703,7 +779,7 @@ app_global_get
 retsub
 
 // interestOf
-interestOf_13:
+interestOf_14:
 proto 3 1
 frame_dig -3
 frame_dig -1
@@ -718,7 +794,7 @@ app_global_get
 retsub
 
 // opt_in_asset_caster
-optinassetcaster_14:
+optinassetcaster_15:
 proto 0 0
 intc_0 // 0
 txna ApplicationArgs 1
@@ -726,11 +802,11 @@ intc_0 // 0
 getbyte
 frame_bury 0
 frame_dig 0
-callsub optinasset_1
+callsub optinasset_2
 retsub
 
 // set_collateral_caster
-setcollateralcaster_15:
+setcollateralcaster_16:
 proto 0 0
 intc_0 // 0
 dupn 2
@@ -748,11 +824,11 @@ frame_bury 2
 frame_dig 0
 frame_dig 1
 frame_dig 2
-callsub setcollateral_2
+callsub setcollateral_3
 retsub
 
 // supply_caster
-supplycaster_16:
+supplycaster_17:
 proto 0 0
 intc_0 // 0
 txn GroupIndex
@@ -765,11 +841,11 @@ intc_1 // pay
 ==
 assert
 frame_dig 0
-callsub supply_3
+callsub supply_4
 retsub
 
 // borrow_caster
-borrowcaster_17:
+borrowcaster_18:
 proto 0 0
 intc_0 // 0
 txna ApplicationArgs 1
@@ -777,11 +853,11 @@ intc_0 // 0
 getbyte
 frame_bury 0
 frame_dig 0
-callsub borrow_4
+callsub borrow_5
 retsub
 
 // repay_caster
-repaycaster_18:
+repaycaster_19:
 proto 0 0
 intc_0 // 0
 txn GroupIndex
@@ -794,20 +870,21 @@ intc_1 // pay
 ==
 assert
 frame_dig 0
-callsub repay_5
+callsub repay_6
 retsub
 
 // withdraw_caster
-withdrawcaster_19:
+withdrawcaster_20:
 proto 0 0
-callsub withdraw_6
+callsub withdraw_7
 retsub
 
 // receiveMessage_caster
-receiveMessagecaster_20:
+receiveMessagecaster_21:
 proto 0 0
 intc_0 // 0
-dupn 3
+dupn 2
+bytec_0 // ""
 txna ApplicationArgs 1
 btoi
 frame_bury 0
@@ -819,18 +896,16 @@ txna ApplicationArgs 3
 btoi
 frame_bury 2
 txna ApplicationArgs 4
-intc_0 // 0
-getbyte
 frame_bury 3
 frame_dig 0
 frame_dig 1
 frame_dig 2
 frame_dig 3
-callsub receiveMessage_7
+callsub receiveMessage_8
 retsub
 
 // un_bridge_caster
-unbridgecaster_21:
+unbridgecaster_22:
 proto 0 0
 intc_0 // 0
 dupn 3
@@ -854,36 +929,36 @@ frame_dig 0
 frame_dig 1
 frame_dig 2
 frame_dig 3
-callsub unbridge_8
+callsub unbridge_9
 retsub
 
 // borrow_of_caster
-borrowofcaster_22:
+borrowofcaster_23:
 proto 0 0
 bytec_0 // ""
 dup
 txna ApplicationArgs 1
 frame_bury 1
 frame_dig 1
-callsub borrowof_9
+callsub borrowof_10
 frame_bury 0
-bytec 10 // 0x151f7c75
+bytec 14 // 0x151f7c75
 frame_dig 0
 concat
 log
 retsub
 
 // supply_of_caster
-supplyofcaster_23:
+supplyofcaster_24:
 proto 0 0
 bytec_0 // ""
 dup
 txna ApplicationArgs 1
 frame_bury 1
 frame_dig 1
-callsub supplyof_10
+callsub supplyof_11
 frame_bury 0
-bytec 10 // 0x151f7c75
+bytec 14 // 0x151f7c75
 frame_dig 0
 concat
 log

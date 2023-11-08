@@ -1,5 +1,5 @@
 export function historySet(hash, action, amount, token, timestamp) {
-    const data = JSON.stringify({ hash, action, amount, token, timestamp })
+    const data = { hash, action, amount, token, timestamp }
 
     const history = historyAll()
     history.push(data)
@@ -9,7 +9,7 @@ export function historySet(hash, action, amount, token, timestamp) {
 
 export function historyAll() {
     const history = localStorage.getItem('history')
-    if (!data) return []
+    if (!history) return []
 
-    return JSON.parse(history)
+    return JSON.parse(history).reverse()
 }

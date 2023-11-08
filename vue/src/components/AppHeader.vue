@@ -2,10 +2,12 @@
     <section>
         <div class="app_width">
             <header>
-                <TunnelLogo />
+                <RouterLink to="/">
+                    <TunnelLogo />
+                </RouterLink>
 
-                <div class="tabs">
-                    <RouterLink to="/">
+                <div class="tabs" v-show="$route.name != 'home'">
+                    <RouterLink to="/bridge">
                         <button :class="$route.name == 'bridge' ? 'tab tab_active' : 'tab'">
                             <p>Bridge</p>
                         </button>
@@ -23,12 +25,27 @@
                 </div>
 
 
-                <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="display: flex; align-items: center; gap: 20px;" v-show="$route.name != 'home'">
                     <button @click="connection = true" class="connect_wallets">
                         <p>Connect Wallets</p>
                     </button>
                     <button @click="faucet = true" class="faucet_connect">
                         <p>Faucet</p>
+                    </button>
+                </div>
+                <div style="display: flex; align-items: center; gap: 20px;" v-show="$route.name == 'home'">
+                    <a href="https://dorahacks.io/buidl/7771" target="_blank" rel="noopener noreferrer">
+                        <button style="text-decoration: none;" class="faucet_connect">
+                            <p>Dora Hacks</p>
+                        </button>
+                    </a>
+                    <a href="https://dorahacks.io/buidl/7771" target="_blank" rel="noopener noreferrer">
+                        <button style="text-decoration: none;" class="faucet_connect">
+                            <p>Pitch Deck</p>
+                        </button>
+                    </a>
+                    <button class="connect_wallets">
+                        <p>Launch App</p>
                     </button>
                 </div>
             </header>
@@ -50,6 +67,8 @@ import { PeraWalletConnect } from "@perawallet/connect"
 import { defaultWagmiConfig } from '@web3modal/wagmi/vue'
 import { bscTestnet } from '@wagmi/core/chains'
 import { watchAccount } from '@wagmi/core'
+import { readOptIn } from '../scripts/bridge'
+import { RouterLink } from 'vue-router'
 
 const projectId = import.meta.env.VITE_PROJECT_ID
 
@@ -79,11 +98,29 @@ export default {
             chainId: this.$algorandTestnet().id,
         });
 
-        peraWallet.reconnectSession().then((accounts) => {
+        peraWallet.reconnectSession().then(async (accounts) => {
             peraWallet.connector?.on("disconnect", this.peraDisconnect(peraWallet))
 
-            if (peraWallet.isConnected && accounts.length) {
+            if (peraWallet.isConnected && accounts.length > 0) {
                 this.$store.commit('setWallet1', accounts[0])
+
+                const appInfo = await readOptIn(accounts[0]);
+
+                if (!appInfo) return
+
+                const localStates = appInfo['app-local-state']['key-value'];
+
+                const state = {}
+
+                for (let index = 0; index < localStates.length; index++) {
+
+                    const key = Buffer.from(localStates[index].key, 'base64').toString();
+                    const value = Number(localStates[index].value.uint);
+
+                    state[key] = value
+                }
+
+                this.$store.commit('setLocalState', state)
             }
         }).catch((error) => {
             console.error(error)
@@ -100,6 +137,13 @@ export default {
 
 
 <style scoped>
+section {
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(8px);
+    z-index: 10;
+}
+
 header {
     height: 100px;
     display: flex;

@@ -35,20 +35,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signTransaction = exports.TunnelId = void 0;
+exports.signTransaction = exports.TUNNEL_ADDR = exports.TUNNEL_ID = exports.ASSET_ID = void 0;
 const algosdk_1 = __importDefault(require("algosdk"));
 const algokit = __importStar(require("@algorandfoundation/algokit-utils"));
-// App ID
-exports.TunnelId = 468699439;
-const TunnelAcct = 'MYW7T3Q6RJAMMQBEDDZNPDLNCJITEJ22KTMKD4NNW363BZN374TCCE6G3Q';
+exports.ASSET_ID = 472701447;
+exports.TUNNEL_ID = 472699436;
+exports.TUNNEL_ADDR = 'XBZAZIWPBJHO76DEUFKW55EIVKAL7EUZVN55R64ZVV4NDUFWPZIKBILEKY';
 // Signing Key
 const handlerAlgoKey = process.env.ALGO_PRIVATE_KEY;
 const algodClient = algokit.getAlgoClient({
     server: 'https://testnet-api.algonode.cloud'
 });
-signTransaction(0, 468701001, '', 'NKVYROUJZXKSVMAB6IXWZZFRBYMLTO3FQESGEHBRWNOFSDP3KZDY3BCE5I');
-const methods = [
-    new algosdk_1.default.ABIMethod({ name: "receiveMessage", desc: "", args: [{ type: "uint64", name: "nonce", desc: "" }, { type: "asset", name: "asset", desc: "" }, { type: "uint64", name: "amount", desc: "" }, { type: "account", name: "receiver", desc: "" }], returns: { type: "void", desc: "" } }),
+const METHODS = [
+    new algosdk_1.default.ABIMethod({ name: "receiveMessage", desc: "", args: [{ type: "uint64", name: "nonce", desc: "" }, { type: "asset", name: "asset", desc: "" }, { type: "uint64", name: "amount", desc: "" }, { type: "address", name: "receiver", desc: "" }], returns: { type: "void", desc: "" } }),
 ];
 function signTransaction(nonce, assetId, ammout, receiver) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -56,21 +55,22 @@ function signTransaction(nonce, assetId, ammout, receiver) {
             const account = algokit.mnemonicAccount(handlerAlgoKey);
             const suggestedParams = yield algodClient.getTransactionParams().do();
             const appCall = algosdk_1.default.makeApplicationNoOpTxnFromObject({
-                appIndex: exports.TunnelId,
+                appIndex: exports.TUNNEL_ID,
                 from: account.addr,
                 appArgs: [
-                    algosdk_1.default.getMethodByName(methods, 'receiveMessage').getSelector(),
+                    algosdk_1.default.getMethodByName(METHODS, 'receiveMessage').getSelector(),
                     algosdk_1.default.encodeUint64(nonce),
-                    algosdk_1.default.encodeUint64(assetId),
-                    algosdk_1.default.encodeUint64(1000000),
+                    algosdk_1.default.encodeUint64(exports.ASSET_ID),
+                    algosdk_1.default.encodeUint64(BigInt(ammout)),
                     algosdk_1.default.decodeAddress(receiver).publicKey
                 ],
                 accounts: [receiver],
-                foreignAssets: [assetId],
-                suggestedParams: Object.assign(Object.assign({}, suggestedParams), { fee: algokit.algos(0.0015).microAlgos })
+                foreignAssets: [exports.ASSET_ID],
+                suggestedParams: Object.assign(Object.assign({}, suggestedParams), { fee: algokit.algos(0.0015).microAlgos }),
             });
             const signedTxn = algosdk_1.default.signTransaction(appCall, account.sk);
             const { txId } = yield algodClient.sendRawTransaction(signedTxn.blob).do();
+            yield algosdk_1.default.waitForConfirmation(algodClient, txId, 3);
             console.log(txId);
             return txId;
         }

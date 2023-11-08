@@ -6,9 +6,9 @@ import {
     StandardRelayerApp,
     StandardRelayerContext,
 } from "@wormhole-foundation/relayer-engine";
-import { CHAIN_ID_ALGORAND, CHAIN_ID_BSC, parseVaa } from "@certusone/wormhole-sdk";
-import { TunnelId } from "./signers/alogrand";
-import { tunnelAddr } from "./signers/ethereum";
+import { CHAIN_ID_ALGORAND, CHAIN_ID_BSC } from "@certusone/wormhole-sdk";
+import { TUNNEL_ID } from "./signers/alogrand";
+import { TUNNEL_ADDRESS } from "./signers/ethereum";
 import { decodeOnEvm, signTransaction as signTransactionOnEvm } from "./signers/ethereum";
 import { signTransaction as signTransactionOnAlgorand } from "./signers/alogrand";
 
@@ -26,36 +26,34 @@ import { signTransaction as signTransactionOnAlgorand } from "./signers/alogrand
 
     app.multiple(
         {
-            [CHAIN_ID_ALGORAND]: `${TunnelId}`,
-            [CHAIN_ID_BSC]: `${tunnelAddr}`
+            [CHAIN_ID_ALGORAND]: `${TUNNEL_ID}`,
+            [CHAIN_ID_BSC]: `${TUNNEL_ADDRESS}`
         },
         async (ctx, next) => {
             const vaa = ctx.vaa;
             const hash = ctx.sourceTxHash;
 
-            console.log('⚡ Got VAA', vaa?.payload.toString('hex'));
-
-
             // if (!vaa?.payload) return;
+
+            console.log('⚡ Got VAA: ', vaa?.payload.toString('hex'));
 
             // if (vaa?.emitterChain == CHAIN_ID_ALGORAND) {
             //     const txId = await signTransactionOnEvm(
             //         vaa.nonce, vaa.payload
             //     );
 
-            //     console.log('TxID: ', txId);
+            //     console.log('⚡TxID: ', txId);
             // }
 
             if (vaa?.emitterChain == CHAIN_ID_BSC) {
                 const { assetId, amount, receiver } = decodeOnEvm(vaa?.payload.toString('hex'));
 
-                console.log(assetId, amount, receiver);
-
                 const txId = await signTransactionOnAlgorand(
-                    vaa.nonce, 468701001, amount, receiver
+                    vaa.nonce, assetId, amount, receiver
                 );
 
-                console.log('TxID: ', txId);
+                console.log('⚡From TxID: ', hash);
+                console.log('⚡To TxID: ', txId);
             }
         },
     );

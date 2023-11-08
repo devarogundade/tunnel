@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import HomeView from '../views/HomeView.vue'
 import BridgeView from '../views/BridgeView.vue'
 import BorrowView from '../views/BorrowView.vue'
 import SupplyView from '../views/SupplyView.vue'
@@ -9,6 +10,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'home',
+      component: HomeView
+    },
+    {
+      path: '/bridge',
       name: 'bridge',
       component: BridgeView
     },

@@ -6,10 +6,10 @@ const handlerEvmKey = process.env.EVM_PRIVATE_KEY!!;
 
 const web3 = new Web3('https://bsc-testnet.public.blastapi.io');
 
-export const tunnelAddr = Tunnel.networks[97].address;
+export const TUNNEL_ADDRESS = Tunnel.networks[97].address;
 
 export async function signTransaction(nonce: number, payload: Buffer) {
-    const tunnel = new Contract(Tunnel.abi, tunnelAddr, web3);
+    const tunnel = new Contract(Tunnel.abi, TUNNEL_ADDRESS, web3);
 
     const signer = web3.eth.accounts.privateKeyToAccount(handlerEvmKey);
     web3.eth.accounts.wallet.add(signer);

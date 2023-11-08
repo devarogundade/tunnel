@@ -6,26 +6,24 @@
                     <p class="borrrow_hero_title">Take crypto loans with your real world assets.</p>
                     <div class="borrow_hero_box">
                         <div class="box_item">
-                            <p>Liquidity</p>
+                            <p>Total Borrowed</p>
                             <div class="amount">
                                 <img src="/images/algo.png" alt="Algo">
-                                <p>1,000,323 Algo</p>
+                                <p>{{ $toMoney($fromMicroAlgo($store.state.state.total_borrow)) }} Algo</p>
                             </div>
                         </div>
 
                         <div class="box_item">
                             <p>LTV Ratio</p>
                             <div class="amount">
-                                <img src="/images/algo.png" alt="Algo">
-                                <p>120%</p>
+                                <p>{{ $fromMicroAlgo($store.state.state.ltv) * 100 }}%</p>
                             </div>
                         </div>
 
                         <div class="box_item">
                             <p>APR</p>
                             <div class="amount">
-                                <img src="/images/algo.png" alt="Algo">
-                                <p>12.43%</p>
+                                <p>{{ $fromMicroAlgo(calcApr()) }}%</p>
                             </div>
                         </div>
                     </div>
@@ -60,8 +58,8 @@
                                             <img src="/images/wormhole.png" alt="Wormhole Shares">
                                         </div>
                                     </div>
-                                    <input type="number" placeholder="0.00">
-                                    <div class="input_text">Balance: <span>100.00 WORMHOLE SHARES</span></div>
+                                    <input type="number" v-model="borrow.amount" placeholder="0.00">
+                                    <div class="input_text">Bal: <span>100.00 Wormhole Shares</span></div>
                                 </div>
 
                                 <div class="principal"></div>
@@ -75,13 +73,15 @@
                                     </div>
 
                                     <div class="principal_amount">
-                                        <h3>100 ALGO</h3>
+                                        <h3>100 ALGOs</h3>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="borrow_action">
-                                <PrimaryButton :text="'Borrow'" />
+                                <PrimaryButton :state="$store.state.localState.borrowed_amount > 0 ? 'disable' : ''"
+                                    @click="useBorrow" :progress="borrowing"
+                                    :text="$store.state.localState.borrowed_amount > 0 ? 'Already has a position' : 'Borrow'" />
                             </div>
                         </div>
 
@@ -93,45 +93,49 @@
                             <div class="fields">
                                 <div class="input_field">
                                     <div class="input_field_label">
-                                        <p>Enter principal amount</p>
+                                        <p>Borrowed principal</p>
                                         <div class="input_collateral">
                                             <img src="/images/algo.png" alt="ALGO">
                                         </div>
                                     </div>
-                                    <input type="number" placeholder="0.00">
-                                    <div class="input_text">Balance: <span>100.00 ALGO</span></div>
+                                    <input type="number"
+                                        :value="$toMoney($fromMicroAlgo($store.state.localState.borrowed_amount))" disabled
+                                        placeholder="0.00">
                                 </div>
 
                                 <div class="principal"></div>
 
                                 <div class="input_field">
                                     <div class="input_field_label">
-                                        <p>Collateral (You will get)</p>
+                                        <p>Interests you will pay</p>
                                         <div class="input_collateral">
                                             <img src="/images/algo.png" alt="Algo">
                                         </div>
                                     </div>
 
                                     <div class="principal_amount">
-                                        <h3>50 W SHARES</h3>
+                                        <h3>{{ $toMoney($fromMicroAlgo(interest)) }} ALGOs</h3>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="borrow_action">
-                                <PrimaryButton :text="'Repay'" />
+                                <PrimaryButton :progress="repaying"
+                                    :state="$store.state.localState.borrowed_amount == 0 ? 'disable' : ''"
+                                    :text="$store.state.localState.borrowed_amount == 0 ? 'You don\'t have a position' : 'Repay'"
+                                    @click="useRepay" />
                             </div>
                         </div>
                     </div>
                     <div class="history">
                         <div class="context">
-                            <div class="tabs" style="justify-content: flex-end;">
+                            <div class="tabs">
                                 <button class="tab tab_active">
                                     <p>Activities</p>
                                 </button>
                             </div>
 
-                            <div style="display: flex; justify-content: flex-end;">
+                            <div>
                                 <div class="activities">
                                     <table>
                                         <div class="thead">
@@ -144,18 +148,26 @@
                                                 </tr>
                                             </thead>
                                         </div>
-                                        <div class="tbody" v-for="index in 6">
+                                        <div v-for="history, index in activities.filter(h => h.action == 'borrow' || h.action == 'repay')"
+                                            :key="index">
                                             <tbody>
                                                 <tr>
-                                                    <td>Ox1234...56</td>
-                                                    <td>Borrow</td>
+                                                    <td>
+                                                        <a target="_blank" style="color: var(--text-normal);"
+                                                            :href="`https://testnet.algoexplorer.io/tx/${history.hash}`">
+                                                            {{ $fineAddress(history.hash) }}
+                                                        </a>
+                                                    </td>
+                                                    <td>{{ history.action }}</td>
                                                     <td>
                                                         <div>
                                                             <img src="/images/algo.png" alt="">
-                                                            <p>0.02</p>
+                                                            <p>{{ $toMoney($fromMicroAlgo(history.amount)) }}</p>
                                                         </div>
                                                     </td>
-                                                    <td>12:30, Saturday 23</td>
+                                                    <td>
+                                                        {{ $toDate(history.timestamp) }}
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </div>
@@ -175,13 +187,188 @@ import PrimaryButton from '../components/PrimaryButton.vue'
 </script>
 
 <script>
+import { notify } from '../reactives/notify';
+import { tryBorrow, readOptIn, readApp, tryRepay } from '../scripts/bridge'
+import { historyAll } from '../scripts/history';
 export default {
     data() {
         return {
-            tab: 1
+            tab: 1,
+            borrowing: false,
+            repaying: false,
+            interest: 0,
+            activities: [],
+            borrow: {
+                amount: 0
+            }
         }
     },
-    methods: {}
+    mounted() {
+        this.activities = historyAll()
+
+        this.refreshLocalState()
+        this.refreshGlobalState()
+
+        setInterval(() => { this.calcEarnedInterest() }, 5 * 1000);
+    },
+    methods: {
+        calcApr: function () {
+            return (
+                (
+                    this.$store.state.state.borrow_apr *
+                    365 * 24 * 60 * 60
+                ) /
+                100
+            )
+        },
+
+        refreshGlobalState: async function () {
+            const appInfo = await readApp()
+
+            if (!appInfo) return
+
+            const globalStates = appInfo.params['global-state'];
+
+            const state = {}
+
+            for (let index = 0; index < globalStates.length; index++) {
+
+                const globalKey = Buffer.from(globalStates[index].key, 'base64').toString();
+                const globalValue = Number(globalStates[index].value.uint);
+
+                state[globalKey] = globalValue
+            }
+
+            this.$store.commit('setState', state)
+
+        },
+
+        refreshLocalState: async function () {
+            if (!this.$store.state.wallet1) return
+
+            const appInfo = await readOptIn(this.$store.state.wallet1);
+
+            if (!appInfo) return
+
+            const localStates = appInfo['app-local-state']['key-value'];
+
+            const state = {}
+
+            for (let index = 0; index < localStates.length; index++) {
+
+                const key = Buffer.from(localStates[index].key, 'base64').toString();
+                const value = Number(localStates[index].value.uint);
+
+                state[key] = value
+            }
+
+            this.$store.commit('setLocalState', state)
+        },
+
+        useBorrow: async function () {
+            if (!this.$store.state.wallet1) {
+                notify.push({
+                    'title': 'Pera wallet not connected!',
+                    'description': 'Connect your Pera Wallet',
+                    'category': 'error'
+                })
+                return
+            }
+
+            if (this.borrow.amount < 1 || this.borrow.amount == '') {
+                notify.push({
+                    'title': 'Amount be must be atleat 1 WSHARES!',
+                    'description': 'Enter a valid ammont',
+                    'category': 'error'
+                })
+                return
+            }
+
+            if (this.borrowing) return
+            this.borrowing = true
+
+            const transactionId = await tryBorrow(
+                this.$toMicroAlgo(this.borrow.amount)
+            )
+
+            if (transactionId) {
+                notify.push({
+                    'title': 'Transaction sent',
+                    'description': 'You have borrowed some Algos!',
+                    'category': 'success',
+                    'linkTitle': 'View Trx',
+                    'linkUrl': `https://testnet.algoexplorer.io/tx/${transactionId}`
+                })
+
+                this.refreshLocalState()
+                this.refreshGlobalState()
+            } else {
+                notify.push({
+                    'title': 'Transaction failed',
+                    'description': 'Note: you can\'t borrow multiple times!',
+                    'category': 'error'
+                })
+            }
+
+            this.borrow.amount = ''
+            this.borrowing = false
+        },
+
+        useRepay: async function () {
+            if (!this.$store.state.wallet1) {
+                notify.push({
+                    'title': 'Pera wallet not connected!',
+                    'description': 'Connect your Pera Wallet',
+                    'category': 'error'
+                })
+                return
+            }
+
+            if (this.repaying) return
+            this.repaying = true
+
+            const transactionId = await tryRepay(
+                this.$store.state.localState.borrowed_amount +
+                this.interest + 50_000
+            )
+
+            if (transactionId) {
+                notify.push({
+                    'title': 'Transaction sent',
+                    'description': 'You have reapid your loans!',
+                    'category': 'success',
+                    'linkTitle': 'View Trx',
+                    'linkUrl': `https://testnet.algoexplorer.io/tx/${transactionId}`
+                })
+
+                this.refreshLocalState()
+                this.refreshGlobalState()
+            } else {
+                notify.push({
+                    'title': 'Transaction failed',
+                    'description': 'Note: you can\'t borrow multiple times!',
+                    'category': 'error'
+                })
+            }
+
+            this.repaying = false
+        },
+
+        calcEarnedInterest: function () {
+            this.interest = (
+                (
+                    this.$store.state.localState.borrowed_amount *
+                    ((Date.now() / 1000) - this.$store.state.localState.borrowed_start_at) *
+                    this.$store.state.state.borrow_apr
+                ) /
+                this.$store.state.state.rate_divider
+            )
+        },
+
+        amountOut: function () {
+
+        }
+    }
 }
 </script>
 
@@ -190,21 +377,23 @@ export default {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 160px;
     margin-top: 60px;
 }
 
 .borrrow_hero_title {
     font-size: 50px;
     line-height: 60px;
-    width: 400px;
+    width: 430px;
     color: white;
 }
 
 .borrow_hero_box {
-    border: white solid 1px;
     width: 600px;
     border-radius: 6px;
+    background: var(--bg);
+    border: var(--bg-lighter) solid 2px;
 }
 
 .box_item {
@@ -213,8 +402,9 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: white solid 1px;
+    border-bottom: var(--bg-lighter) solid 2px;
 }
+
 
 .box_item .amount {
     display: flex;
@@ -268,8 +458,10 @@ export default {
 }
 
 .borrow_app {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 60px;
 }
 
 .borrow {
@@ -277,6 +469,7 @@ export default {
     width: 450px;
     border-radius: 6px;
     overflow: hidden;
+    background: var(--bg);
 }
 
 .borrow_action {
@@ -359,6 +552,7 @@ export default {
     border: 2px solid var(--bg-lighter);
     border-radius: 6px;
     overflow: hidden;
+    background: var(--bg);
 }
 
 .thead {
@@ -386,7 +580,7 @@ thead td {
 }
 
 tbody {
-    height: 60px;
+    height: 80px;
 }
 
 tbody img {

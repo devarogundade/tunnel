@@ -37,22 +37,25 @@ const Converter = {
             return '0'
         }
     },
-    toMoney: function (amount, max = null) {
-        let maxF = max ? max : 6
+    toMoney: function (amount, min = null) {
+        let minF = min ? min : 6
+        if (amount < 1) {
+            minF = 3
+        }
         if (amount > 1) {
-            maxF = 3
+            minF = 2
         }
         if (amount > 10) {
-            maxF = 2
+            minF = 1
         }
         if (amount > 200) {
-            maxF = 0
+            minF = 0
         }
         const formatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: maxF
+            minimumFractionDigits: minF,
+            maximumFractionDigits: minF
         });
         return formatter.format(amount).replace('$', '')
     },
