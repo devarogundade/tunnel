@@ -10,6 +10,10 @@
   transition: .2s;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--bg);
 }
