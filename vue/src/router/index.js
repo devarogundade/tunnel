@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import BridgeView from '../views/BridgeView.vue'
 import BorrowView from '../views/BorrowView.vue'
 import SupplyView from '../views/SupplyView.vue'
+import SnipeView from '../views/SnipeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +28,11 @@ const router = createRouter({
       path: '/supply',
       name: 'supply',
       component: SupplyView
+    },
+    {
+      path: '/snipe',
+      name: 'snipe',
+      component: SnipeView
     }
   ]
 })

@@ -22,8 +22,8 @@
                             <p>Supply</p>
                         </button>
                     </RouterLink>
-                    <RouterLink to="/liquidate">
-                        <button :class="$route.name == 'liquidate' ? 'tab tab_active' : 'tab'">
+                    <RouterLink to="/snipe">
+                        <button :class="$route.name == 'snipe' ? 'tab tab_active' : 'tab'">
                             <p>Snipe</p>
                         </button>
                     </RouterLink>

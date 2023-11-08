@@ -4,13 +4,13 @@
             <div class="container">
                 <div class="bridge_rect">
                     <div class="bridge_rect_toolbar">
-                        <p>Bridge RWAs</p>
-                        <RefreshIcon @click="refreshAllowance(); refreshBalance()" />
+                        <p>Snipe RWAs</p>
+                        <RefreshIcon @click="refreshBalance()" />
                     </div>
 
-                    <div class="form_rect" :style="{ transform: interchange ? 'translateY(275px)' : '' }">
+                    <div class="form_rect" :style="{ transform: interchange ? 'translateY(200px)' : '' }">
                         <div class="from_toolbar">
-                            <p class="from_label0">{{ interchange ? 'To' : 'From' }}</p>
+                            <p class="from_label0">{{ interchange ? 'Paying' : 'Getting' }}</p>
                             <div class="from_chain">
                                 <div class="active_from_chain" @click="froming = !froming">
                                     <img :src="bridge.from.chain.image" alt="">
@@ -45,15 +45,16 @@
                             <div style="display: flex; gap: 16px;">
                                 <div class="est" v-if="interchange">Est.</div>
                                 <div class="max" v-else>Max</div>
-                                <input type="number" v-model="bridge.amount" placeholder="0.00">
+                                <input type="number" disabled :value="(bridge.amount) + (bridge.amount * 0.05)"
+                                    placeholder="0.00">
                             </div>
                             <div class="currency" @click="coining = !coining">
                                 <img :src="bridge.currency.image" alt="">
                                 <p>{{ bridge.currency.name }}</p>
-                                <ArrowDownIcon v-if="!interchange" />
+                                <ArrowDownIcon />
 
                                 <!-- dropdown -->
-                                <div class="inactive_from_currencies" v-if="coining && !interchange">
+                                <div class="inactive_from_currencies" v-if="coining">
                                     <div class="currency" v-for="currency, index in [$wormholeSharesInBsc()]"
                                         @click="bridge.currency = currency" :key="index">
                                         <img :src="currency.image" alt="">
@@ -64,18 +65,15 @@
                         </div>
 
                         <div class="from_balance">
-                            <p>~${{ $toMoney(($store.state.prices[bridge.currency.symbol] * bridge.amount)) }}</p>
-                            <p>Bal: <span>{{ $toMoney($fromWei(bridge.balance0)) }}</span></p>
+                            <p>~${{ $toMoney((($store.state.prices[bridge.currency.symbol] * bridge.amount) +
+                                (($store.state.prices[bridge.currency.symbol] * bridge.amount)
+                                    * 0.05))) }}</p>
+                            <p>Aval: <span>{{ $toMoney($fromWei(bridge.balance0)) }}</span></p>
                         </div>
 
                     </div>
 
-                    <div class="inter_change" @click="interchange = !interchange">
-                        <InterChangeIcon :style="{ transform: interchange ? 'rotate(180deg)' : '' }" />
-                        <SwapIcon :style="{ transform: interchange ? 'rotate(180deg)' : '' }" />
-                    </div>
-
-                    <div class="to_rect" :style="{ transform: interchange ? 'translateY(-280px)' : '' }">
+                    <div class="to_rect" :style="{ transform: interchange ? 'translateY(-195px)' : '' }">
                         <div class="to_toolbar">
                             <p class="from_label0">{{ !interchange ? 'To' : 'From' }}</p>
                             <div class="to_chain">
@@ -100,20 +98,7 @@
                                 <div class="max" v-else>Max</div>
                                 <input type="number" v-model="bridge.amount" placeholder="0.00">
                             </div>
-                            <div class="currency" @click="coining = !coining">
-                                <img :src="bridge.currency.image" alt="">
-                                <p>{{ bridge.currency.name }}</p>
-                                <ArrowDownIcon v-if="interchange" />
 
-                                <!-- dropdown -->
-                                <div class="inactive_from_currencies" v-if="coining && interchange">
-                                    <div class="currency" v-for="currency, index in [$wormholeSharesInAlgo()]"
-                                        @click="bridge.currency = currency" :key="index">
-                                        <img :src="currency.image" alt="">
-                                        <p>{{ currency.name }}</p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                         <div class="to_balance">
@@ -123,9 +108,7 @@
                     </div>
 
                     <div class="view_route">
-                        <PrimaryButton v-if="$fromWei(allowance) < bridge.amount" :progress="approving"
-                            :text="'Approve ' + bridge.currency.symbol" @click="approve" />
-                        <PrimaryButton v-else :progress="bridging || approving" :text="'Bridge'" @click="useBridge" />
+                        <PrimaryButton :progress="bridging || approving" :text="'Snipe'" @click="useBridge" />
                     </div>
 
                     <div class="schedule">
@@ -152,34 +135,28 @@ import RefreshIcon from '@/components/icons/RefreshIcon.vue'
 import PrimaryButton from '@/components/PrimaryButton.vue'
 import SemanticGreen from '@/components/icons/SemanticGreen.vue'
 import SemanticRed from '@/components/icons/SemanticRed.vue'
-import InterChangeIcon from '@/components/icons/InterChangeIcon.vue'
-import SwapIcon from '@/components/icons/SwapIcon.vue'
 import TimeIcon from '@/components/icons/TimeIcon.vue'
 </script>
 
 <script>
 import { notify } from '../reactives/notify'
 import { tryBridge, tryUnBridge } from '../scripts/bridge'
-import { tryErcBalance, tryErcAllocation, tryErcApprove } from '../scripts/token'
+import { tryErcBalance, tryErcApprove } from '../scripts/token'
 export default {
     watch: {
         bridge: {
             handler: function () {
-                this.refreshAllowance()
                 this.refreshBalance()
             },
             deep: true
         },
         'bridge.amount': function () {
-            this.refreshAllowance()
             this.refreshBalance()
         },
         'bridge.currency': function () {
-            this.refreshAllowance()
             this.refreshBalance()
         },
         'bridge.from.chain': function () {
-            this.refreshAllowance()
             this.refreshBalance()
         }
     },
@@ -188,7 +165,7 @@ export default {
             connection: false,
             froming: false,
             coining: false,
-            interchange: false,
+            interchange: true,
             bridging: false,
             approving: false,
             allowance: 0,
@@ -208,7 +185,6 @@ export default {
         }
     },
     mounted() {
-        this.refreshAllowance()
         this.refreshBalance()
     },
     methods: {
@@ -219,18 +195,7 @@ export default {
                 )
             }
         },
-        refreshAllowance: async function () {
-            if (this.interchange) {
-                this.allowance = '100000000000000000000000000'
-                return
-            }
 
-            if (this.$store.state.wallet0) {
-                this.allowance = await tryErcAllocation(
-                    this.$store.state.wallet0
-                )
-            }
-        },
         approve: async function () {
             if (this.approving) return
             this.approving = true
@@ -238,8 +203,6 @@ export default {
             await tryErcApprove(
                 this.$toWei(this.bridge.amount)
             )
-
-            this.refreshAllowance()
 
             this.approving = false
         },
@@ -336,7 +299,6 @@ export default {
             }
 
             this.bridging = false
-            this.refreshBalance()
         }
     }
 }
