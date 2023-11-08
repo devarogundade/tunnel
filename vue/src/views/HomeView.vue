@@ -54,7 +54,8 @@
                 <div class="feature snipe" style="background-image: url('/images/feature1.png');">
                     <div class="feature_overlay">
                         <h3>Snipe</h3>
-                        <p>Transfer your RWAs between Algorand and other chains like BSC, Ethereum, ...</p>
+                        <p>Buy liquidated loan's collateral at cheaper rate to market value from Algorand to other networks.
+                        </p>
                         <RouterLink to="/bridge">
                             <button>Snipe RWAs</button>
                         </RouterLink>
