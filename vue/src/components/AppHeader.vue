@@ -43,7 +43,7 @@
                 <div style="display: flex; align-items: center; gap: 20px;" v-show="$route.name == 'home'">
                     <a href="https://dorahacks.io/buidl/7771" target="_blank" rel="noopener noreferrer">
                         <button style="text-decoration: none;" class="faucet_connect">
-                            <p>Dora Hacks</p>
+                            <p>DoraHacks</p>
                         </button>
                     </a>
                     <a href="https://dorahacks.io/buidl/7771" target="_blank" rel="noopener noreferrer">

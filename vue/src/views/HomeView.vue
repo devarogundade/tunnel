@@ -4,7 +4,7 @@
             <div class="hero">
                 <div class="hero_text">
                     <h3>
-                        Leveraging Real World Asssets to unlock more liquidity on Algorand.
+                        Leveraging Real World Assets to unlock more liquidity on Algorand.
                     </h3>
 
                     <p>Unlock the full potential of your real world assets in a secure, transparent, and inclusive
@@ -34,7 +34,7 @@
                     <div class="feature" style="background-image: url('/images/feature2.png');">
                         <div class="feature_overlay">
                             <h3>Borrow</h3>
-                            <p>Use your real world assets as collateral to secured crypto loans.</p>
+                            <p>Use your real world assets as collateral to secure crypto loans.</p>
                             <RouterLink to="/borrow">
                                 <button>Borrow ALGOs</button>
                             </RouterLink>
@@ -61,6 +61,11 @@
                         </RouterLink>
                     </div>
                 </div>
+            </div>
+
+            <div class="arch">
+                <p>Architectural Image</p>
+                <img src="/images/arch.png" alt="">
             </div>
         </div>
     </section>
@@ -203,5 +208,22 @@ section {
 .snipe h3,
 .snipe p {
     width: 100% !important;
+}
+
+.arch p {
+    font-size: 36px;
+    text-align: center;
+    color: var(--text-normal);
+    font-weight: 500;
+}
+
+.arch {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.arch img {
+    width: 100%;
 }
 </style>
