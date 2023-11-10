@@ -1,6 +1,8 @@
 import { readContract, prepareWriteContract, writeContract, waitForTransaction, fetchBalance, erc20ABI } from '@wagmi/core'
 import WormholeSharesJson from '../contracts/WormholeShares.json'
 import TunnelJson from '../contracts/Tunnel.json'
+import axios from 'axios'
+import { ASSET_ID } from './bridge';
 
 export async function trySyncWallets(algoWallet) {
     try {
@@ -33,8 +35,6 @@ export async function tryGetAlgoWallet(evmWallet) {
         return null;
     }
 }
-
-
 
 export async function tryAllow() {
     try {
@@ -78,6 +78,24 @@ export async function tryErcBalance(owner) {
             address: owner
         })
         return value
+    } catch (error) {
+        return 0
+    }
+}
+
+export async function tryAlgoBalance(owner) {
+    try {
+        const response = await axios.get(`https://testnet-idx.algonode.cloud/v2/accounts/${owner}`)
+        return response.data.account.amount
+    } catch (error) {
+        return 0
+    }
+}
+
+export async function tryAsaBalance(owner) {
+    try {
+        const response = await axios.get(`https://testnet-idx.algonode.cloud/v2/accounts/${owner}/assets?asset-id=${ASSET_ID}`)
+        return response.data.assets[0].amount
     } catch (error) {
         return 0
     }

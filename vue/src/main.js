@@ -19,10 +19,12 @@ const store = createStore({
             },
             state: {
                 borrow_apr: 120,
-                collateral: 468701001,
+                collateral: 474950341,
                 ltv: 800000,
                 min_supply: 1000000,
                 rate_divider: 1000000,
+                snipe_rate: 1050000,
+                snipeable_amount: 0,
                 supply_apr: 100,
                 total_borrow: 0,
                 total_supply: 0
@@ -46,6 +48,10 @@ const store = createStore({
             state.state = value;
         },
         setLocalState(state, value) {
+            if (value.suppled_start_at) {
+                value.supplied_start_at = value.suppled_start_at
+                delete value.suppled_start_at
+            }
             state.localState = value;
         }
     }

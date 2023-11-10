@@ -108,25 +108,8 @@ def opt_in() -> Expr:
 
 # opt_into_asset method that opts the contract account into an ASA
 @app.external(authorize=Authorize.only(Global.creator_address()))
-def opt_in_asset(asset: abi.Asset) -> Expr:
-    return Seq(
-        # Send the transaction to opt in
-        # Opt == transfer of 0 amount from/to the same account
-        # Send a 0 asset transfer, of asset, from contract to contract
-        InnerTxnBuilder.Execute(
-            {
-                TxnField.type_enum: TxnType.AssetTransfer,
-                TxnField.asset_receiver: Global.current_application_address(),
-                TxnField.xfer_asset: asset.asset_id(),
-                TxnField.asset_amount: Int(0),
-                # Nomrally fees are 0.0001 ALGO
-                # An inner transaction is 0.0001 ALGO
-                # Setting inner transaction fee to 0, means outer fee must be 0.0002 ALGO
-                TxnField.fee: Int(0),
-            }
-        ),
-        app.state.collateral.set(asset.asset_id()),
-    )
+def set_collateral(asset_id: abi.Uint64) -> Expr:
+    return app.state.collateral.set(asset_id.get())
 
 
 # create set tunnel collateral ASA
@@ -143,8 +126,9 @@ def create_collateral(
                 TxnField.config_asset_unit_name: unit_name.get(),
                 TxnField.config_asset_clawback: Global.current_application_address(),
                 TxnField.config_asset_reserve: Global.current_application_address(),
-                TxnField.config_asset_freeze: Global.current_application_address(),
                 TxnField.config_asset_manager: Global.current_application_address(),
+                TxnField.config_asset_freeze: Global.current_application_address(),
+                # Default asset frozen
                 TxnField.config_asset_default_frozen: Int(1),
                 TxnField.config_asset_total: supply.get(),
                 TxnField.config_asset_decimals: Int(6),
@@ -196,7 +180,7 @@ def supply(payment: abi.PaymentTransaction) -> Expr:
 
 
 @app.external
-def borrow(asset: abi.Asset) -> Expr:
+def borrow(asset: abi.Asset, amount: abi.Uint64) -> Expr:
     # Temporary variables
     borrow = Borrow()
     start_at = abi.Uint64()
@@ -210,17 +194,19 @@ def borrow(asset: abi.Asset) -> Expr:
             app.state.collateral.get() == asset.asset_id(),
             comment="Wrong collateral",
         ),
-        # Check asset is frozen
-        frozen := AssetHolding.frozen(Txn.sender(), asset.asset_id()),
-        Assert(frozen.hasValue(), frozen.value() == Int(1), comment="Asset not frozen"),
         # Set start time
         start_at.set(Global.latest_timestamp()),
         # Set collateral
         balance := AssetHolding.balance(Txn.sender(), asset.asset_id()),
         Assert(balance.hasValue(), comment="Not balance found"),
-        collateral.set(balance.value()),
+        # Check balance is sufficient
+        Assert(balance.value() >= amount.get(), comment="Insufficient balance"),
+        # Set collateral
+        collateral.set(amount.get()),
         # Use collateral to calc principal
-        principal.set(principalOf(balance.value(), Int(1))),
+        principal.set(principalOf(collateral.get(), Int(1))),
+        # Begin inner transaction
+        InnerTxnBuilder.Begin(),
         # Then unfreeze the asset
         InnerTxnBuilder.SetFields(
             {
@@ -237,14 +223,26 @@ def borrow(asset: abi.Asset) -> Expr:
             {
                 TxnField.type_enum: TxnType.AssetTransfer,
                 TxnField.xfer_asset: asset.asset_id(),
-                TxnField.asset_amount: balance.value(),
+                TxnField.asset_amount: collateral.get(),
                 TxnField.asset_receiver: Global.current_application_address(),
                 TxnField.asset_sender: Txn.sender(),
                 TxnField.fee: Int(0),
             }
         ),
+        InnerTxnBuilder.Next(),
+        # Then freeze the asset
+        InnerTxnBuilder.SetFields(
+            {
+                TxnField.type_enum: TxnType.AssetFreeze,
+                TxnField.freeze_asset: asset.asset_id(),
+                TxnField.freeze_asset_account: Txn.sender(),
+                TxnField.freeze_asset_frozen: Int(1),
+                TxnField.fee: Int(0),
+            }
+        ),
+        InnerTxnBuilder.Next(),
         # Transfer principal to address
-        InnerTxnBuilder.Execute(
+        InnerTxnBuilder.SetFields(
             {
                 TxnField.type_enum: TxnType.Payment,
                 TxnField.amount: principal.get(),
@@ -253,6 +251,8 @@ def borrow(asset: abi.Asset) -> Expr:
                 TxnField.fee: Int(0),
             }
         ),
+        # Submit inner transaction
+        InnerTxnBuilder.Submit(),
         # Update local position
         app.state.borrowed_amount[Txn.sender()].set(principal.get()),
         app.state.borrowed_start_at[Txn.sender()].set(start_at.get()),
@@ -273,6 +273,7 @@ def repay(payment: abi.PaymentTransaction) -> Expr:
 
     start_at = abi.Uint64()
     principal = abi.Uint64()
+    collateral = abi.Uint64()
 
     # On-chain logic that uses multiple expressions, always goes in the returned Seq
     return Seq(
@@ -284,9 +285,10 @@ def repay(payment: abi.PaymentTransaction) -> Expr:
         # Store the borrow position
         app.state.borrows[Txn.sender()].store_into(borrow),
         # Check the rapayment amount
+        borrow.collateral.store_into(collateral),
         borrow.principal.store_into(principal),
         borrow.start_at.store_into(start_at),
-        # Earned interest
+        # Accrued interest
         interest.set(
             interestOf(principal.get(), start_at.get(), app.state.borrow_apr.get())
         ),
@@ -301,7 +303,7 @@ def repay(payment: abi.PaymentTransaction) -> Expr:
         InnerTxnBuilder.Execute(
             {
                 TxnField.type_enum: TxnType.AssetTransfer,
-                TxnField.asset_amount: principal.get(),
+                TxnField.asset_amount: collateral.get(),
                 TxnField.xfer_asset: app.state.collateral.get(),
                 TxnField.asset_receiver: Txn.sender(),
                 TxnField.asset_sender: Global.current_application_address(),
@@ -342,7 +344,7 @@ def withdraw() -> Expr:
         # Store amount
         supply.start_at.store_into(start_at),
         supply.principal.store_into(principal),
-        # Accrued interest
+        # Earned interest
         interest.set(
             interestOf(principal.get(), start_at.get(), app.state.supply_apr.get())
         ),
@@ -395,9 +397,10 @@ def receiveMessage(
 @app.external
 def un_bridge(
     asset: abi.Asset,
+    amount: abi.Uint64,
     wormhole: abi.Application,
-    wormhole_account: abi.Address,
-    storage_account: abi.Address,
+    wormhole_addr: abi.Address,
+    storage_addr: abi.Address,
 ) -> Expr:
     # Temporary variables
     mfee = abi.Uint64()
@@ -410,29 +413,24 @@ def un_bridge(
             app.state.collateral.get() == asset.asset_id(),
             comment="Wrong collateral",
         ),
-        # Check if the user has a borrow position
-        Assert(
-            app.state.borrows[Txn.sender()].exists() == Int(0),
-            comment="You have a borrow position",
-        ),
         # Get the balance of the user
         balance := AssetHolding.balance(Txn.sender(), asset.asset_id()),
         Assert(balance.hasValue(), comment="Not balance found"),
+        # Check balance is sufficient
+        Assert(balance.value() >= amount.get(), comment="Insufficient balance"),
         # Set Message fee
-        mfee.set(getMessageFee(wormhole.application_id())),
+        mfee.set(getMessageFee()),
         # Payload
         payload.store(
-            Concat(
-                Itob(app.state.collateral.get()), Itob(balance.value()), Txn.sender()
-            )
+            Concat(Itob(app.state.collateral.get()), Itob(amount.get()), Txn.sender())
         ),
-        # Start transaction
+        # Begin inner transaction
         InnerTxnBuilder.Begin(),
         # Pay message fee
         InnerTxnBuilder.SetFields(
             {
                 TxnField.type_enum: TxnType.Payment,
-                TxnField.receiver: wormhole_account.get(),
+                TxnField.receiver: wormhole_addr.get(),
                 TxnField.amount: mfee.get(),
                 TxnField.fee: Int(0),
             }
@@ -454,9 +452,20 @@ def un_bridge(
             {
                 TxnField.type_enum: TxnType.AssetTransfer,
                 TxnField.xfer_asset: asset.asset_id(),
-                TxnField.asset_amount: balance.value(),
+                TxnField.asset_amount: amount.get(),
                 TxnField.asset_receiver: Global.current_application_address(),
                 TxnField.asset_sender: Txn.sender(),
+                TxnField.fee: Int(0),
+            }
+        ),
+        InnerTxnBuilder.Next(),
+        # Then freeze the asset
+        InnerTxnBuilder.SetFields(
+            {
+                TxnField.type_enum: TxnType.AssetFreeze,
+                TxnField.freeze_asset: asset.asset_id(),
+                TxnField.freeze_asset_account: Txn.sender(),
+                TxnField.freeze_asset_frozen: Int(1),
                 TxnField.fee: Int(0),
             }
         ),
@@ -471,11 +480,12 @@ def un_bridge(
                     payload.load(),
                     Itob(Int(0)),
                 ],
-                TxnField.accounts: [storage_account.get()],
+                TxnField.accounts: [storage_addr.get()],  # storage account
                 TxnField.note: Bytes("publishMessage"),
                 TxnField.fee: Int(0),
             }
         ),
+        # Submit inner transaction
         InnerTxnBuilder.Submit(),
     )
 
@@ -522,8 +532,8 @@ def liquidate(borrower: abi.Address) -> Expr:
 def snipe(
     payment: abi.PaymentTransaction,
     wormhole: abi.Application,
-    wormhole_account: abi.Address,
-    storage_account: abi.Address,
+    wormhole_addr: abi.Address,
+    storage_addr: abi.Address,
 ) -> Expr:
     # Temporary variables
     mfee = abi.Uint64()
@@ -545,13 +555,17 @@ def snipe(
             app.state.snipeable_amount.get() >= snipe_amount.get(),
             comment="Insufficient amount",
         ),
+        # Update snipeable_amount
+        app.state.snipeable_amount.set(
+            Minus(app.state.snipeable_amount.get(), snipe_amount.get())
+        ),
         # Check if the user has a borrow position
         Assert(
             app.state.borrows[Txn.sender()].exists() == Int(0),
             comment="You have a borrow position",
         ),
         # Set Message fee
-        mfee.set(getMessageFee(wormhole.application_id())),
+        mfee.set(getMessageFee()),
         # Payload
         payload.store(
             Concat(
@@ -564,7 +578,7 @@ def snipe(
         InnerTxnBuilder.SetFields(
             {
                 TxnField.type_enum: TxnType.Payment,
-                TxnField.receiver: wormhole_account.get(),
+                TxnField.receiver: wormhole_addr.get(),
                 TxnField.amount: mfee.get(),
                 TxnField.fee: Int(0),
             }
@@ -580,11 +594,12 @@ def snipe(
                     payload.load(),
                     Itob(Int(0)),
                 ],
-                TxnField.accounts: [storage_account.get()],
+                TxnField.accounts: [storage_addr.get()],
                 TxnField.note: Bytes("publishMessage"),
                 TxnField.fee: Int(0),
             }
         ),
+        # Submit inner transaction
         InnerTxnBuilder.Submit(),
     )
 
@@ -606,12 +621,13 @@ def supply_of(address: abi.Address, *, output: Supply) -> Expr:
 
 
 @Subroutine(TealType.uint64)
-def getMessageFee(wormhole_id: Expr) -> Expr:
-    return Seq(
-        mfee := App.globalGetEx(wormhole_id, Bytes("MessageFee")),
-        Assert(mfee.hasValue()),
-        mfee.value(),
-    )
+def getMessageFee() -> Expr:
+    return Int(0)
+    # return Seq(
+    #     mfee := App.globalGetEx(wormhole_id.get(), Bytes("MessageFee")),
+    #     Assert(mfee.hasValue(), comment="No value"),
+    #     mfee.value(),
+    # )
 
 
 @Subroutine(TealType.uint64)

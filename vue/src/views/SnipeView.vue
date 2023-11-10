@@ -68,7 +68,7 @@
                             <p>~${{ $toMoney((($store.state.prices[snipe.currency.symbol] * snipe.amount) +
                                 (($store.state.prices[snipe.currency.symbol] * snipe.amount)
                                     * 0.05))) }}</p>
-                            <p>Aval: <span>{{ $toMoney($fromWei(snipe.balance0)) }}</span></p>
+                            <p>Aval: <span>{{ $toMoney($fromMicroAlgo($store.state.snipeable_amount)) }}</span></p>
                         </div>
 
                     </div>
@@ -103,7 +103,7 @@
 
                         <div class="to_balance">
                             <p>~${{ $toMoney(($store.state.prices[snipe.currency.symbol] * snipe.amount)) }}</p>
-                            <p>Bal: <span>{{ $toMoney($fromWei(snipe.balance1) * 1_000_000_000) }}</span></p>
+                            <p>Bal: <span>{{ $toMoney($fromMicroAlgo(snipe.balance1)) }}</span></p>
                         </div>
                     </div>
 
@@ -141,7 +141,7 @@ import TimeIcon from '@/components/icons/TimeIcon.vue'
 <script>
 import { notify } from '../reactives/notify'
 import { trySnipe } from '../scripts/bridge'
-import { tryErcBalance, tryErcApprove } from '../scripts/token'
+import { tryAlgoBalance } from '../scripts/token'
 export default {
     watch: {
         snipe: {
@@ -187,22 +187,11 @@ export default {
     },
     methods: {
         refreshBalance: async function () {
-            if (this.$store.state.wallet0) {
-                this.snipe.balance0 = await tryErcBalance(
-                    this.$store.state.wallet0
+            if (this.$store.state.wallet1) {
+                this.snipe.balance1 = await tryAlgoBalance(
+                    this.$store.state.wallet1
                 )
             }
-        },
-
-        approve: async function () {
-            if (this.approving) return
-            this.approving = true
-
-            await tryErcApprove(
-                this.$toWei(this.snipe.amount)
-            )
-
-            this.approving = false
         },
 
         useSnipe: async function () {
@@ -212,6 +201,15 @@ export default {
                 notify.push({
                     'title': 'Enter an amount!',
                     'description': 'Field is required!',
+                    'category': 'error'
+                })
+                return
+            }
+
+            if (this.snipe.amount > this.$fromMicroAlgo(this.$store.state.snipeable_amount)) {
+                notify.push({
+                    'title': 'Not enough liquidity!',
+                    'description': `Enter an amount not larger than ${this.$fromMicroAlgo(this.$store.state.snipeable_amount)}!`,
                     'category': 'error'
                 })
                 return

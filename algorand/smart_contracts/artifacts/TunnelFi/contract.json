@@ -2,11 +2,11 @@
     "name": "TunnelFi",
     "methods": [
         {
-            "name": "opt_in_asset",
+            "name": "set_collateral",
             "args": [
                 {
-                    "type": "asset",
-                    "name": "asset"
+                    "type": "uint64",
+                    "name": "asset_id"
                 }
             ],
             "returns": {
@@ -51,6 +51,10 @@
                 {
                     "type": "asset",
                     "name": "asset"
+                },
+                {
+                    "type": "uint64",
+                    "name": "amount"
                 }
             ],
             "returns": {
@@ -108,16 +112,20 @@
                     "name": "asset"
                 },
                 {
+                    "type": "uint64",
+                    "name": "amount"
+                },
+                {
                     "type": "application",
                     "name": "wormhole"
                 },
                 {
                     "type": "address",
-                    "name": "wormhole_account"
+                    "name": "wormhole_addr"
                 },
                 {
                     "type": "address",
-                    "name": "storage_account"
+                    "name": "storage_addr"
                 }
             ],
             "returns": {
@@ -149,11 +157,11 @@
                 },
                 {
                     "type": "address",
-                    "name": "wormhole_account"
+                    "name": "wormhole_addr"
                 },
                 {
                     "type": "address",
-                    "name": "storage_account"
+                    "name": "storage_addr"
                 }
             ],
             "returns": {

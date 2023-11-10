@@ -31,12 +31,12 @@ export async function tryBridge(amount) {
 
 ////////////// ALGORAND //////////////
 
-const ASSET_ID = 472701447
-const TUNNEL_ID = 472699436
+const TUNNEL_ID = 476149092
 const WORMHOLE_ID = 86525623
-const TUNNEL_ADDR = 'XBZAZIWPBJHO76DEUFKW55EIVKAL7EUZVN55R64ZVV4NDUFWPZIKBILEKY'
+export const ASSET_ID = 476149896
+const TUNNEL_ADDR = 'TX6UGOKRNEMT66RM4MIFOR44BIOZ4L7FQIGDI4JQZTTQS6WM3LHOQZEALQ'
 const WORMHOLE_ADDR = 'C2SZBD4ZFFDXANBCUTG5GBUEWMQ34JS5LFGDRTEVJBAXDRF6ZWB7Q4KHHM'
-const STORAGE_ADDR = 'LYTIPKEMGDSHNBUOWDOZIWD7525NX346LXOYQXBY3D7YBW3VIYGMB5V36M'
+const STORAGE_ADDR = 'VDTLCYYY6272SJMDWO5EBWHCYN3E7DIOO47MWJHSAHL66QORUR7DHSYMUA'
 
 const algodClient = algokit.getAlgoClient({
     server: 'https://testnet-api.algonode.cloud',
@@ -47,13 +47,15 @@ const peraWallet = new PeraWalletConnect({
 });
 
 const METHODS = [
-    new algosdk.ABIMethod({ name: "opt_in_asset", desc: "", args: [{ type: "asset", name: "asset", desc: "" }], returns: { type: "void", desc: "" } }),
-    new algosdk.ABIMethod({ name: "set_collateral", desc: "", args: [{ type: "byte", name: "name", desc: "" }, { type: "byte", name: "symbol", desc: "" }, { type: "uint64", name: "supply", desc: "" }], returns: { type: "void", desc: "" } }),
+    new algosdk.ABIMethod({ name: "set_collateral", desc: "", args: [{ type: "uint64", name: "asset_id", desc: "" }], returns: { type: "void", desc: "" } }),
+    new algosdk.ABIMethod({ name: "create_collateral", desc: "", args: [{ type: "string", name: "name", desc: "" }, { type: "string", name: "unit_name", desc: "" }, { type: "uint64", name: "supply", desc: "" }], returns: { type: "void", desc: "" } }),
     new algosdk.ABIMethod({ name: "supply", desc: "", args: [{ type: "pay", name: "payment", desc: "" }], returns: { type: "void", desc: "" } }),
-    new algosdk.ABIMethod({ name: "borrow", desc: "", args: [{ type: "asset", name: "asset", desc: "" }], returns: { type: "void", desc: "" } }),
+    new algosdk.ABIMethod({ name: "borrow", desc: "", args: [{ type: "asset", name: "asset", desc: "" }, { type: "uint64", name: "amount", desc: "" }], returns: { type: "void", desc: "" } }),
     new algosdk.ABIMethod({ name: "repay", desc: "", args: [{ type: "pay", name: "payment", desc: "" }], returns: { type: "void", desc: "" } }),
     new algosdk.ABIMethod({ name: "withdraw", desc: "", args: [], returns: { type: "void", desc: "" } }),
-    new algosdk.ABIMethod({ name: "un_bridge", desc: "", args: [{ type: "asset", name: "asset", desc: "" }, { type: "application", name: "wormhole", desc: "" }, { type: "account", name: "wormhole_account", desc: "" }, { type: "account", name: "storage_account", desc: "" }], returns: { type: "void", desc: "" } }),
+    new algosdk.ABIMethod({ name: "un_bridge", desc: "", args: [{ type: "asset", name: "asset", desc: "" }, { type: "uint64", name: "amount", desc: "" }, { type: "application", name: "wormhole", desc: "" }], returns: { type: "void", desc: "" } }),
+    new algosdk.ABIMethod({ name: "liquidate", desc: "", args: [{ type: "address", name: "borrower", desc: "" }], returns: { type: "void", desc: "" } }),
+    new algosdk.ABIMethod({ name: "snipe", desc: "", args: [{ type: "pay", name: "payment", desc: "" }, { type: "application", name: "wormhole", desc: "" }, { type: "address", name: "wormhole_account", desc: "" }, { type: "address", name: "storage_account", desc: "" }], returns: { type: "void", desc: "" } }),
     new algosdk.ABIMethod({ name: "borrow_of", desc: "", args: [{ type: "address", name: "address", desc: "" }], returns: { type: "(uint64,uint64,uint64)", desc: "" } }),
     new algosdk.ABIMethod({ name: "supply_of", desc: "", args: [{ type: "address", name: "address", desc: "" }], returns: { type: "(uint64,uint64)", desc: "" } })
 ];
@@ -158,7 +160,7 @@ export async function trySupply(amount) {
     }
 }
 
-export async function tryUnBridge() {
+export async function tryUnBridge(amount) {
     try {
         const accounts = await peraWallet.reconnectSession()
 
@@ -167,20 +169,19 @@ export async function tryUnBridge() {
         const appCall = algosdk.makeApplicationCallTxnFromObject({
             appIndex: TUNNEL_ID,
             from: accounts[0],
+            foreignAssets: [ASSET_ID],
+            foreignApps: [WORMHOLE_ID],
             appArgs: [
                 algosdk.getMethodByName(METHODS, 'un_bridge').getSelector(),
                 algosdk.encodeUint64(ASSET_ID),
-                algosdk.encodeUint64(WORMHOLE_ID),
-                algosdk.decodeAddress(WORMHOLE_ADDR).publicKey,
-                algosdk.decodeAddress(STORAGE_ADDR).publicKey
+                algosdk.encodeUint64(Number(amount)),
+                algosdk.encodeUint64(WORMHOLE_ID)
             ],
             boxes: [{
                 appIndex: TUNNEL_ID,
                 name: algosdk.decodeAddress(accounts[0]).publicKey
             }],
-            foreignAssets: [ASSET_ID],
-            foreignApps: [WORMHOLE_ID],
-            accounts: [STORAGE_ADDR, WORMHOLE_ADDR],
+            accounts: [accounts[0], WORMHOLE_ADDR, STORAGE_ADDR],
             suggestedParams: { ...suggestedParams, fee: algokit.algos(0.0015).microAlgos },
         })
 
@@ -214,7 +215,8 @@ export async function tryBorrow(amount) {
             }],
             appArgs: [
                 algosdk.getMethodByName(METHODS, 'borrow').getSelector(),
-                algosdk.encodeUint64(ASSET_ID)
+                algosdk.encodeUint64(ASSET_ID),
+                algosdk.encodeUint64(BigInt(amount)),
             ],
             suggestedParams: { ...suggestedParams, fee: algokit.algos(0.0015).microAlgos },
         })
@@ -252,6 +254,7 @@ export async function tryRepay(amount) {
             appIndex: TUNNEL_ID,
             from: accounts[0],
             foreignApps: [TUNNEL_ID],
+            foreignAssets: [ASSET_ID],
             boxes: [{
                 appIndex: TUNNEL_ID,
                 name: algosdk.decodeAddress(accounts[0]).publicKey
@@ -260,7 +263,7 @@ export async function tryRepay(amount) {
                 algosdk.getMethodByName(METHODS, 'repay').getSelector(),
                 algosdk.encodeUnsignedTransaction(payment)
             ],
-            suggestedParams
+            suggestedParams: { ...suggestedParams, fee: algokit.algos(0.001).microAlgos }
         })
 
         algosdk.assignGroupID([payment, appCall])

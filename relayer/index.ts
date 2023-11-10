@@ -1,6 +1,8 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
+import http from 'http';
+
 import {
     Environment,
     StandardRelayerApp,
@@ -11,6 +13,37 @@ import { TUNNEL_ID } from "./signers/alogrand";
 import { TUNNEL_ADDRESS } from "./signers/ethereum";
 import { decodeOnEvm, signTransaction as signTransactionOnEvm } from "./signers/ethereum";
 import { signTransaction as signTransactionOnAlgorand } from "./signers/alogrand";
+
+(function server(): void {
+    // use hostname 127.0.0.1 unless there exists a preconfigured port
+    const hostname = process.env.HOST || '127.0.0.1';
+    // use port 3000 unless there exists a preconfigured port
+    const port = process.env.PORT || 5050;
+    http.createServer(function (request, response) {
+        const headers = {
+            'Access-Control-Allow-Origin': '*', /* @dev First, read about security */
+            'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
+            'Access-Control-Max-Age': 2592000, // 30 days
+            'Content-Type': 'application/json'
+        };
+
+        if (request.method === 'OPTIONS') {
+            response.writeHead(204, headers);
+            response.end();
+            return;
+        }
+
+        if (['GET', 'POST'].indexOf(request.method!!) > -1) {
+            response.writeHead(200, headers);
+            response.end(JSON.stringify({ 'status': 'good' }), 'utf-8');
+            return;
+        }
+
+        response.writeHead(405, headers);
+        response.end(`${request.method} is not allowed for the request.`);
+    }).listen(port);
+    console.log(`⚡ Server running at http://${hostname}:${port}/`);
+})();
 
 (async function main() {
     // initialize relayer engine app, pass relevant config options

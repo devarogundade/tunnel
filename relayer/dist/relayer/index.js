@@ -31,15 +31,46 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
+const http_1 = __importDefault(require("http"));
 const relayer_engine_1 = require("@wormhole-foundation/relayer-engine");
 const wormhole_sdk_1 = require("@certusone/wormhole-sdk");
 const alogrand_1 = require("./signers/alogrand");
 const ethereum_1 = require("./signers/ethereum");
 const ethereum_2 = require("./signers/ethereum");
 const alogrand_2 = require("./signers/alogrand");
+(function server() {
+    // use hostname 127.0.0.1 unless there exists a preconfigured port
+    const hostname = process.env.HOST || '127.0.0.1';
+    // use port 3000 unless there exists a preconfigured port
+    const port = process.env.PORT || 5050;
+    http_1.default.createServer(function (request, response) {
+        const headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
+            'Access-Control-Max-Age': 2592000,
+            'Content-Type': 'application/json'
+        };
+        if (request.method === 'OPTIONS') {
+            response.writeHead(204, headers);
+            response.end();
+            return;
+        }
+        if (['GET', 'POST'].indexOf(request.method) > -1) {
+            response.writeHead(200, headers);
+            response.end(JSON.stringify({ 'status': 'good' }), 'utf-8');
+            return;
+        }
+        response.writeHead(405, headers);
+        response.end(`${request.method} is not allowed for the request.`);
+    }).listen(port);
+    console.log(`⚡ Server running at http://${hostname}:${port}/`);
+})();
 (function main() {
     return __awaiter(this, void 0, void 0, function* () {
         // initialize relayer engine app, pass relevant config options

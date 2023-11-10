@@ -59,7 +59,8 @@
                                         </div>
                                     </div>
                                     <input type="number" v-model="borrow.amount" placeholder="0.00">
-                                    <div class="input_text">Bal: <span>100.00 Wormhole Shares</span></div>
+                                    <div class="input_text">Bal: <span>{{ $toMoney($fromMicroAlgo(borrow.balance1)) }}
+                                            Wormhole Shares</span></div>
                                 </div>
 
                                 <div class="principal"></div>
@@ -73,7 +74,7 @@
                                     </div>
 
                                     <div class="principal_amount">
-                                        <h3>100 ALGOs</h3>
+                                        <h3>{{ $toMoney(calcPrincipal()) }} ALGOs</h3>
                                     </div>
                                 </div>
                             </div>
@@ -190,6 +191,7 @@ import PrimaryButton from '../components/PrimaryButton.vue'
 import { notify } from '../reactives/notify';
 import { tryBorrow, readOptIn, readApp, tryRepay } from '../scripts/bridge'
 import { historyAll } from '../scripts/history';
+import { tryAsaBalance } from '../scripts/token';
 export default {
     data() {
         return {
@@ -199,19 +201,35 @@ export default {
             interest: 0,
             activities: [],
             borrow: {
-                amount: 0
+                amount: 0,
+                balance1: 0
             }
         }
     },
     mounted() {
         this.activities = historyAll()
 
+        this.refreshBalance()
         this.refreshLocalState()
         this.refreshGlobalState()
 
         setInterval(() => { this.calcEarnedInterest() }, 5 * 1000);
     },
     methods: {
+        calcPrincipal: function () {
+            if (this.borrow.amount == '') return 0
+            return (
+                this.borrow.amount * 0.8
+            )
+        },
+        refreshBalance: async function () {
+            if (this.$store.state.wallet1) {
+                this.borrow.balance1 = await tryAsaBalance(
+                    this.$store.state.wallet1
+                )
+            }
+        },
+
         calcApr: function () {
             return (
                 (
@@ -284,6 +302,15 @@ export default {
                 return
             }
 
+            if (this.borrow.amount > this.$fromMicroAlgo(this.borrow.balance1)) {
+                notify.push({
+                    'title': 'Insufficient amount!',
+                    'description': `Enter am amoount not greater than ${this.$fromMicroAlgo(this.borrow.balance1)}!`,
+                    'category': 'error'
+                })
+                return
+            }
+
             if (this.borrowing) return
             this.borrowing = true
 
@@ -300,6 +327,7 @@ export default {
                     'linkUrl': `https://testnet.algoexplorer.io/tx/${transactionId}`
                 })
 
+                this.refreshBalance()
                 this.refreshLocalState()
                 this.refreshGlobalState()
             } else {

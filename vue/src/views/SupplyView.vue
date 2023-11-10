@@ -52,7 +52,8 @@
                                         </div>
                                     </div>
                                     <input type="number" v-model="supply.amount" placeholder="0.00">
-                                    <div class="input_text">Bal: <span>100.00 ALGOs</span></div>
+                                    <div class="input_text">Bal: <span>{{ $toMoney($fromMicroAlgo(supply.balance1)) }}
+                                            ALGOs</span></div>
                                 </div>
 
                                 <div class="principal"></div>
@@ -184,6 +185,7 @@ import PrimaryButton from '../components/PrimaryButton.vue'
 import { notify } from '../reactives/notify';
 import { trySupply, tryWithdraw, readOptIn, readApp } from '../scripts/bridge'
 import { historyAll } from '../scripts/history';
+import { tryAlgoBalance } from '../scripts/token';
 export default {
     data() {
         return {
@@ -193,6 +195,7 @@ export default {
             interest: 0,
             activities: [],
             supply: {
+                balance1: 0,
                 amount: 0
             }
         }
@@ -200,6 +203,7 @@ export default {
     mounted() {
         this.activities = historyAll()
 
+        this.refreshBalance()
         this.refreshLocalState()
         this.refreshGlobalState()
 
@@ -214,6 +218,14 @@ export default {
                 ) /
                 100
             )
+        },
+
+        refreshBalance: async function () {
+            if (this.$store.state.wallet1) {
+                this.supply.balance1 = await tryAlgoBalance(
+                    this.$store.state.wallet1
+                )
+            }
         },
 
         refreshGlobalState: async function () {
@@ -297,6 +309,7 @@ export default {
                     'linkUrl': `https://testnet.algoexplorer.io/tx/${transactionId}`
                 })
 
+                this.refreshBalance()
                 this.refreshLocalState()
                 this.refreshGlobalState()
             } else {

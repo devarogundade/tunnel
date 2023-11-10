@@ -2105,7 +2105,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.11",
-  "updatedAt": "2023-11-07T06:15:50.496Z",
+  "updatedAt": "2023-11-09T17:24:29.649Z",
   "devdoc": {
     "details": "interface of the ERC734 (Key Holder) standard as defined in the EIP.",
     "events": {

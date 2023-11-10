@@ -103,7 +103,6 @@ contract Tunnel is Context {
     }
 
     /// @dev This function locks the Original NFT
-    /// and tell whirlExtension Contract to mint a new similar NFT
     function bridge(address assetId, uint256 amount) external payable {
         address evmWallet = _msgSender();
 

@@ -35,12 +35,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signTransaction = exports.TUNNEL_ADDR = exports.TUNNEL_ID = exports.ASSET_ID = void 0;
+exports.signTransaction = exports.TUNNEL_ADDR = exports.TUNNEL_ID = void 0;
 const algosdk_1 = __importDefault(require("algosdk"));
 const algokit = __importStar(require("@algorandfoundation/algokit-utils"));
-exports.ASSET_ID = 472701447;
-exports.TUNNEL_ID = 472699436;
-exports.TUNNEL_ADDR = 'XBZAZIWPBJHO76DEUFKW55EIVKAL7EUZVN55R64ZVV4NDUFWPZIKBILEKY';
+exports.TUNNEL_ID = 476149092;
+exports.TUNNEL_ADDR = 'TX6UGOKRNEMT66RM4MIFOR44BIOZ4L7FQIGDI4JQZTTQS6WM3LHOQZEALQ';
 // Signing Key
 const handlerAlgoKey = process.env.ALGO_PRIVATE_KEY;
 const algodClient = algokit.getAlgoClient({
@@ -49,7 +48,7 @@ const algodClient = algokit.getAlgoClient({
 const METHODS = [
     new algosdk_1.default.ABIMethod({ name: "receiveMessage", desc: "", args: [{ type: "uint64", name: "nonce", desc: "" }, { type: "asset", name: "asset", desc: "" }, { type: "uint64", name: "amount", desc: "" }, { type: "address", name: "receiver", desc: "" }], returns: { type: "void", desc: "" } }),
 ];
-function signTransaction(nonce, assetId, ammout, receiver) {
+function signTransaction(nonce, ASSET_ID, amount, receiver) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const account = algokit.mnemonicAccount(handlerAlgoKey);
@@ -60,12 +59,12 @@ function signTransaction(nonce, assetId, ammout, receiver) {
                 appArgs: [
                     algosdk_1.default.getMethodByName(METHODS, 'receiveMessage').getSelector(),
                     algosdk_1.default.encodeUint64(nonce),
-                    algosdk_1.default.encodeUint64(exports.ASSET_ID),
-                    algosdk_1.default.encodeUint64(BigInt(ammout)),
+                    algosdk_1.default.encodeUint64(ASSET_ID),
+                    algosdk_1.default.encodeUint64(BigInt(amount)),
                     algosdk_1.default.decodeAddress(receiver).publicKey
                 ],
                 accounts: [receiver],
-                foreignAssets: [exports.ASSET_ID],
+                foreignAssets: [ASSET_ID],
                 suggestedParams: Object.assign(Object.assign({}, suggestedParams), { fee: algokit.algos(0.0015).microAlgos }),
             });
             const signedTxn = algosdk_1.default.signTransaction(appCall, account.sk);

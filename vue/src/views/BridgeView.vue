@@ -118,7 +118,7 @@
 
                         <div class="to_balance">
                             <p>~${{ $toMoney(($store.state.prices[bridge.currency.symbol] * bridge.amount)) }}</p>
-                            <p>Bal: <span>{{ $toMoney($fromWei(bridge.balance1) * 1_000_000_000) }}</span></p>
+                            <p>Bal: <span>{{ $toMoney($fromMicroAlgo(bridge.balance1)) }}</span></p>
                         </div>
                     </div>
 
@@ -160,7 +160,7 @@ import TimeIcon from '@/components/icons/TimeIcon.vue'
 <script>
 import { notify } from '../reactives/notify'
 import { tryBridge, tryUnBridge } from '../scripts/bridge'
-import { tryErcBalance, tryErcAllocation, tryErcApprove } from '../scripts/token'
+import { tryErcBalance, tryErcAllocation, tryErcApprove, tryAsaBalance } from '../scripts/token'
 export default {
     watch: {
         bridge: {
@@ -218,6 +218,12 @@ export default {
                     this.$store.state.wallet0
                 )
             }
+
+            if (this.$store.state.wallet1) {
+                this.bridge.balance1 = await tryAsaBalance(
+                    this.$store.state.wallet1
+                )
+            }
         },
         refreshAllowance: async function () {
             if (this.interchange) {
@@ -255,8 +261,6 @@ export default {
                 return
             }
 
-            this.bridging = true
-
             let fromChainId = this.bridge.from.chain
             let destChain = this.bridge.to.chain
 
@@ -274,15 +278,26 @@ export default {
             }
 
             if (fromChainId.id == 97) {
+                if (this.bridge.amount > this.$fromWei(this.bridge.balance0)) {
+                    notify.push({
+                        'title': 'Insufficient amount!',
+                        'description': `Enter am amoount not greater than ${this.$fromWei(this.bridge.balance0)}!`,
+                        'category': 'error'
+                    })
+                    return
+                }
+
                 if (receiver == '') {
                     notify.push({
                         'title': 'Receiving wallet not connected!',
                         'description': 'Connect your Pera Wallet',
                         'category': 'error'
                     })
-                    this.bridging = false
                     return
                 }
+
+
+                this.bridging = true
 
                 const transaction = await tryBridge(
                     this.$toWei(this.bridge.amount)
@@ -304,17 +319,29 @@ export default {
                     })
                 }
             } else if (fromChainId.id == 416002) {
+                if (this.bridge.amount > this.$fromMicroAlgo(this.bridge.balance1)) {
+                    notify.push({
+                        'title': 'Insufficient amount!',
+                        'description': `Enter am amoount not greater than ${this.$fromMicroAlgo(this.bridge.balance1)}!`,
+                        'category': 'error'
+                    })
+                    return
+                }
+
                 if (receiver == '') {
                     notify.push({
                         'title': 'Receiving wallet not connected!',
                         'description': 'Connect your EVM Wallet',
                         'category': 'error'
                     })
-                    this.bridging = false
                     return
                 }
 
-                const transactionId = await tryUnBridge()
+                this.bridging = true
+
+                const transactionId = await tryUnBridge(
+                    this.$toMicroAlgo(this.bridge.amount)
+                )
 
                 if (transactionId) {
                     notify.push({
@@ -333,6 +360,7 @@ export default {
                 }
             }
 
+            this.bridge.amount = ''
             this.bridging = false
             this.refreshBalance()
         }

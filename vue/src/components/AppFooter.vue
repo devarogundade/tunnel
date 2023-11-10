@@ -23,7 +23,6 @@ import SemanticRed from './icons/SemanticRed.vue';
 import SemanticGreen from './icons/SemanticGreen.vue';
 import SemanticYellow from './icons/SemanticYellow.vue';
 import ArrowRightIcon from './icons/ArrowRightIcon.vue';
-import axios from 'axios'
 </script>
 
 <script>
@@ -34,10 +33,17 @@ export default {
         }
     },
     async mounted() {
-        await axios.get('http://localhost:7073/').then(() => { })
-            .catch((error) => {
-                this.status = error.code != 'ERR_NETWORK' ? 'good' : 'bad'
+        try {
+            const response = await fetch('http://127.0.0.1:5050/', {
+                method: "GET",
             })
+
+            const data = await response.json();
+
+            this.status = data.status
+        } catch (error) {
+            this.status = 'bad'
+        }
     }
 }
 </script>
