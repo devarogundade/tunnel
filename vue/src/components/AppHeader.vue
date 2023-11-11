@@ -46,7 +46,8 @@
                             <p>DoraHacks</p>
                         </button>
                     </a>
-                    <a href="/docs/pitch-deck.pdf" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.figma.com/proto/bRghIR6ZaP6sQqVOpt0HhU/TunnelFi?page-id=0%3A1&type=design&node-id=0-13&viewport=586%2C564%2C0.07&t=jiRrK6vt9sQelCRo-1&scaling=contain&mode=design"
+                        target="_blank" rel="noopener noreferrer">
                         <button style="text-decoration: none;" class="faucet_connect">
                             <p>Pitch Deck</p>
                         </button>
