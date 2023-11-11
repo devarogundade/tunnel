@@ -76,6 +76,11 @@ const alogrand_2 = require("./signers/alogrand");
         // initialize relayer engine app, pass relevant config options
         const app = new relayer_engine_1.StandardRelayerApp(relayer_engine_1.Environment.TESTNET, {
             name: "TunnelRelayer",
+            missedVaaOptions: {
+                startingSequenceConfig: {
+                    "8": BigInt(1)
+                }
+            }
         });
         // add a filter with a callback that will be
         // invoked on finding a VAA that matches the filter
@@ -86,7 +91,7 @@ const alogrand_2 = require("./signers/alogrand");
             const vaa = ctx.vaa;
             const hash = ctx.sourceTxHash;
             // if (!vaa?.payload) return;
-            console.log('⚡ Got VAA: ', vaa === null || vaa === void 0 ? void 0 : vaa.payload.toString('hex'));
+            console.log(`⚡ Got VAA: from ${vaa === null || vaa === void 0 ? void 0 : vaa.emitterChain}`, vaa === null || vaa === void 0 ? void 0 : vaa.payload.toString('hex'));
             // if (vaa?.emitterChain == CHAIN_ID_ALGORAND) {
             //     const txId = await signTransactionOnEvm(
             //         vaa.nonce, vaa.payload

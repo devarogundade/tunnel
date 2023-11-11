@@ -51,6 +51,11 @@ import { signTransaction as signTransactionOnAlgorand } from "./signers/alogrand
         Environment.TESTNET,
         {
             name: "TunnelRelayer",
+            missedVaaOptions: {
+                startingSequenceConfig: {
+                    "8": BigInt(1)
+                }
+            }
         },
     );
 
@@ -68,7 +73,7 @@ import { signTransaction as signTransactionOnAlgorand } from "./signers/alogrand
 
             // if (!vaa?.payload) return;
 
-            console.log('⚡ Got VAA: ', vaa?.payload.toString('hex'));
+            console.log(`⚡ Got VAA: from ${vaa?.emitterChain}`, vaa?.payload.toString('hex'));
 
             // if (vaa?.emitterChain == CHAIN_ID_ALGORAND) {
             //     const txId = await signTransactionOnEvm(
@@ -92,7 +97,6 @@ import { signTransaction as signTransactionOnAlgorand } from "./signers/alogrand
     );
 
     // add and configure any other middleware ..
-
     // start app, blocks until unrecoverable error or process is stopped
     await app.listen();
 })();
