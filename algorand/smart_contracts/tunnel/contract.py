@@ -398,7 +398,7 @@ def receiveMessage(
 def un_bridge(
     asset: abi.Asset,
     amount: abi.Uint64,
-    wormhole: abi.Application,
+    wormhole: abi.Uint64,
     wormhole_addr: abi.Address,
     storage_addr: abi.Address,
 ) -> Expr:
@@ -419,23 +419,13 @@ def un_bridge(
         # Check balance is sufficient
         Assert(balance.value() >= amount.get(), comment="Insufficient balance"),
         # Set Message fee
-        mfee.set(getMessageFee()),
+        mfee.set(getMessageFee(wormhole)),
         # Payload
         payload.store(
             Concat(Itob(app.state.collateral.get()), Itob(amount.get()), Txn.sender())
         ),
         # Begin inner transaction
         InnerTxnBuilder.Begin(),
-        # Pay message fee
-        InnerTxnBuilder.SetFields(
-            {
-                TxnField.type_enum: TxnType.Payment,
-                TxnField.receiver: wormhole_addr.get(),
-                TxnField.amount: mfee.get(),
-                TxnField.fee: Int(0),
-            }
-        ),
-        InnerTxnBuilder.Next(),
         # Then unfreeze the asset
         InnerTxnBuilder.SetFields(
             {
@@ -469,12 +459,25 @@ def un_bridge(
                 TxnField.fee: Int(0),
             }
         ),
+        InnerTxnBuilder.Submit(),
+        ############# WORMHOLE ###############
+        # Begin inner transaction
+        InnerTxnBuilder.Begin(),
+        # Pay message fee
+        InnerTxnBuilder.SetFields(
+            {
+                TxnField.type_enum: TxnType.Payment,
+                TxnField.receiver: wormhole_addr.get(),
+                TxnField.amount: mfee.get(),
+                TxnField.fee: Int(0),
+            }
+        ),
         InnerTxnBuilder.Next(),
         # Publish message
         InnerTxnBuilder.SetFields(
             {
                 TxnField.type_enum: TxnType.ApplicationCall,
-                TxnField.application_id: wormhole.application_id(),
+                TxnField.application_id: wormhole.get(),
                 TxnField.application_args: [
                     Bytes("publishMessage"),
                     payload.load(),
@@ -492,7 +495,7 @@ def un_bridge(
 
 # Liquidate borrower position
 @app.external(authorize=Authorize.only(Global.creator_address()))
-def liquidate(borrower: abi.Address) -> Expr:
+def liquidate(borrower: abi.Account) -> Expr:
     # Temporary variables
     borrow = Borrow()
 
@@ -503,19 +506,19 @@ def liquidate(borrower: abi.Address) -> Expr:
     return Seq(
         # Check if there is borrow position
         Assert(
-            app.state.borrows[borrower.get()].exists(),
+            app.state.borrows[borrower.address()].exists(),
             comment="Address dont have a borrow position",
         ),
         # Store the borrow position
-        app.state.borrows[borrower.get()].store_into(borrow),
+        app.state.borrows[borrower.address()].store_into(borrow),
         # Check the rapayment amount
         borrow.principal.store_into(principal),
         borrow.collateral.store_into(collateral),
         # Update local position
-        app.state.borrowed_amount[borrower.get()].set(Int(0)),
-        app.state.borrowed_start_at[borrower.get()].set(Int(0)),
+        app.state.borrowed_amount[borrower.address()].set(Int(0)),
+        app.state.borrowed_start_at[borrower.address()].set(Int(0)),
         # Update global position
-        Pop(app.state.borrows[borrower.get()].delete()),
+        Pop(app.state.borrows[borrower.address()].delete()),
         # Update total borrow
         app.state.total_borrow.set(
             Minus(app.state.total_borrow.get(), principal.get())
@@ -531,7 +534,7 @@ def liquidate(borrower: abi.Address) -> Expr:
 @app.external
 def snipe(
     payment: abi.PaymentTransaction,
-    wormhole: abi.Application,
+    wormhole: abi.Uint64,
     wormhole_addr: abi.Address,
     storage_addr: abi.Address,
 ) -> Expr:
@@ -565,14 +568,15 @@ def snipe(
             comment="You have a borrow position",
         ),
         # Set Message fee
-        mfee.set(getMessageFee()),
+        mfee.set(getMessageFee(wormhole)),
         # Payload
         payload.store(
             Concat(
                 Itob(app.state.collateral.get()), Itob(snipe_amount.get()), Txn.sender()
             )
         ),
-        # Start transaction
+        ############# WORMHOLE ###############
+        # Begin inner transaction
         InnerTxnBuilder.Begin(),
         # Pay message fee
         InnerTxnBuilder.SetFields(
@@ -588,13 +592,13 @@ def snipe(
         InnerTxnBuilder.SetFields(
             {
                 TxnField.type_enum: TxnType.ApplicationCall,
-                TxnField.application_id: wormhole.application_id(),
+                TxnField.application_id: wormhole.get(),
                 TxnField.application_args: [
                     Bytes("publishMessage"),
                     payload.load(),
                     Itob(Int(0)),
                 ],
-                TxnField.accounts: [storage_addr.get()],
+                TxnField.accounts: [storage_addr.get()],  # storage account
                 TxnField.note: Bytes("publishMessage"),
                 TxnField.fee: Int(0),
             }
@@ -621,13 +625,12 @@ def supply_of(address: abi.Address, *, output: Supply) -> Expr:
 
 
 @Subroutine(TealType.uint64)
-def getMessageFee() -> Expr:
-    return Int(0)
-    # return Seq(
-    #     mfee := App.globalGetEx(wormhole_id.get(), Bytes("MessageFee")),
-    #     Assert(mfee.hasValue(), comment="No value"),
-    #     mfee.value(),
-    # )
+def getMessageFee(wormhole_id: abi.Uint64) -> Expr:
+    return Seq(
+        mfee := App.globalGetEx(wormhole_id.get(), Bytes("MessageFee")),
+        Assert(mfee.hasValue(), comment="No value"),
+        mfee.value(),
+    )
 
 
 @Subroutine(TealType.uint64)

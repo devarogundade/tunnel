@@ -19,7 +19,6 @@ def tunnel_client(
     algod_client: AlgodClient, tunnel_app_spec: ApplicationSpecification
 ) -> ApplicationClient:
     client = ApplicationClient(
-        algod_client,
         app_spec=tunnel_app_spec,
         signer=get_localnet_default_account(algod_client),
     )

@@ -46,7 +46,7 @@
                             <p>DoraHacks</p>
                         </button>
                     </a>
-                    <a href="https://dorahacks.io/buidl/7771" target="_blank" rel="noopener noreferrer">
+                    <a href="/docs/pitch-deck.pdf" target="_blank" rel="noopener noreferrer">
                         <button style="text-decoration: none;" class="faucet_connect">
                             <p>Pitch Deck</p>
                         </button>

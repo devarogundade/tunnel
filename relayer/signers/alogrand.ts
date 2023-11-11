@@ -1,8 +1,8 @@
 import algosdk from 'algosdk';
 import * as algokit from '@algorandfoundation/algokit-utils';
 
-export const TUNNEL_ID = 476149092;
-export const TUNNEL_ADDR = 'TX6UGOKRNEMT66RM4MIFOR44BIOZ4L7FQIGDI4JQZTTQS6WM3LHOQZEALQ';
+export const TUNNEL_ID = 477525147;
+export const TUNNEL_ADDR = 'YUCENRKNQ3OTVIUHXXV7X4INI3JNOLNM4CESQOAICWHKQENVDPD237YRWQ';
 
 // Signing Key
 const handlerAlgoKey = process.env.ALGO_PRIVATE_KEY!!;

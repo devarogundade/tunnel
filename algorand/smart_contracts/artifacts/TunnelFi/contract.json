@@ -116,7 +116,7 @@
                     "name": "amount"
                 },
                 {
-                    "type": "application",
+                    "type": "uint64",
                     "name": "wormhole"
                 },
                 {
@@ -136,7 +136,7 @@
             "name": "liquidate",
             "args": [
                 {
-                    "type": "address",
+                    "type": "account",
                     "name": "borrower"
                 }
             ],
@@ -152,7 +152,7 @@
                     "name": "payment"
                 },
                 {
-                    "type": "application",
+                    "type": "uint64",
                     "name": "wormhole"
                 },
                 {
