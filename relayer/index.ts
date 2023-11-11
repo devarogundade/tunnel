@@ -9,7 +9,7 @@ import {
     StandardRelayerContext,
 } from "@wormhole-foundation/relayer-engine";
 import { CHAIN_ID_ALGORAND, CHAIN_ID_BSC } from "@certusone/wormhole-sdk";
-import { TUNNEL_ID } from "./signers/alogrand";
+import { TUNNEL_ID, decodeOnAlgo } from "./signers/alogrand";
 import { TUNNEL_ADDRESS } from "./signers/ethereum";
 import { decodeOnEvm, signTransaction as signTransactionOnEvm } from "./signers/ethereum";
 import { signTransaction as signTransactionOnAlgorand } from "./signers/alogrand";
@@ -71,19 +71,19 @@ import { signTransaction as signTransactionOnAlgorand } from "./signers/alogrand
             const vaa = ctx.vaa;
             const hash = ctx.sourceTxHash;
 
-            // if (!vaa?.payload) return;
+            if (!vaa?.payload) return;
 
             console.log(`⚡ Got VAA: from ${vaa?.emitterChain}`, vaa?.payload.toString('hex'));
 
-            // if (vaa?.emitterChain == CHAIN_ID_ALGORAND) {
-            //     const txId = await signTransactionOnEvm(
-            //         vaa.nonce, vaa.payload
-            //     );
+            if (vaa?.emitterChain == CHAIN_ID_ALGORAND) {
+                const { assetId, amount, receiver } = decodeOnAlgo(vaa?.payload.toString('hex'));
+                const txId = await signTransactionOnEvm(
+                    vaa.nonce, assetId, amount, receiver
+                );
 
-            //     console.log('⚡TxID: ', txId);
-            // }
-
-            if (vaa?.emitterChain == CHAIN_ID_BSC) {
+                console.log('⚡From TxID: ', hash);
+                console.log('⚡To TxID: ', txId);
+            } else if (vaa?.emitterChain == CHAIN_ID_BSC) {
                 const { assetId, amount, receiver } = decodeOnEvm(vaa?.payload.toString('hex'));
 
                 const txId = await signTransactionOnAlgorand(

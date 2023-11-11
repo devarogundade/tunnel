@@ -14,14 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.decodeOnEvm = exports.signTransaction = exports.TUNNEL_ADDRESS = void 0;
 const web3_1 = __importDefault(require("web3"));
-const Tunnel_json_1 = __importDefault(require("../../solidity/build/contracts/Tunnel.json"));
+const Tunnel = require('../../solidity/build/contracts/Tunnel.json');
 // Signing Key and Address
 const handlerEvmKey = process.env.EVM_PRIVATE_KEY;
 const web3 = new web3_1.default('https://bsc-testnet.public.blastapi.io');
-exports.TUNNEL_ADDRESS = Tunnel_json_1.default.networks[97].address;
+exports.TUNNEL_ADDRESS = Tunnel.networks[97].address;
 function signTransaction(nonce, assetId, amount, receiver) {
     return __awaiter(this, void 0, void 0, function* () {
-        const tunnel = new web3.eth.Contract(Tunnel_json_1.default.abi, exports.TUNNEL_ADDRESS, web3);
+        const tunnel = new web3.eth.Contract(Tunnel.abi, exports.TUNNEL_ADDRESS);
         const signer = web3.eth.accounts.privateKeyToAccount(handlerEvmKey);
         web3.eth.accounts.wallet.add(signer);
         try {

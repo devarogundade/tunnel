@@ -1,7 +1,11 @@
 from beaker import *
 from pyteal import *
 from beaker.lib.storage import BoxMapping
+from typing import Literal
 
+# TYPES
+
+Bytes32 = abi.StaticBytes[Literal[32]]
 
 # TUPLES
 
@@ -404,6 +408,7 @@ def un_bridge(
 ) -> Expr:
     # Temporary variables
     mfee = abi.Uint64()
+
     payload = ScratchVar(TealType.bytes)
 
     # On-chain logic that uses multiple expressions, always goes in the returned Seq

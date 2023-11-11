@@ -1,5 +1,6 @@
-import { Web3, Contract } from 'web3';
-import Tunnel from '../../solidity/build/contracts/Tunnel.json';
+import Web3 from 'web3';
+
+const Tunnel = require('../../solidity/build/contracts/Tunnel.json');
 
 // Signing Key and Address
 const handlerEvmKey = process.env.EVM_PRIVATE_KEY!!;
@@ -8,15 +9,15 @@ const web3 = new Web3('https://bsc-testnet.public.blastapi.io');
 
 export const TUNNEL_ADDRESS = Tunnel.networks[97].address;
 
-export async function signTransaction(nonce: number, payload: Buffer) {
-    const tunnel = new Contract(Tunnel.abi, TUNNEL_ADDRESS, web3);
+export async function signTransaction(nonce: number, assetId: number, amount: number, receiver: string) {
+    const tunnel = new web3.eth.Contract(Tunnel.abi, TUNNEL_ADDRESS);
 
     const signer = web3.eth.accounts.privateKeyToAccount(handlerEvmKey);
     web3.eth.accounts.wallet.add(signer);
 
     try {
         const gas = await tunnel.methods.receiveMessage(
-            nonce, payload
+            nonce, assetId, amount, receiver
         ).estimateGas({ from: signer.address });
         console.log('Gas: ', gas);
 
@@ -24,7 +25,7 @@ export async function signTransaction(nonce: number, payload: Buffer) {
         console.log('Gas Price: ', gasPrice);
 
         const { transactionHash } = await tunnel.methods.receiveMessage(
-            nonce, payload
+            nonce, assetId, amount, receiver
         ).send({
             from: signer.address,
             gasPrice: gasPrice.toString(),

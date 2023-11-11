@@ -1,8 +1,8 @@
 import algosdk from 'algosdk';
 import * as algokit from '@algorandfoundation/algokit-utils';
 
-export const TUNNEL_ID = 477525147;
-export const TUNNEL_ADDR = 'YUCENRKNQ3OTVIUHXXV7X4INI3JNOLNM4CESQOAICWHKQENVDPD237YRWQ';
+export const TUNNEL_ID = 477996536;
+export const TUNNEL_ADDR = 'MG57DIVYSBBEZHYX5MMEC666P7BX4OU3X2YWC5XBRX5BXJP6DEKBVQHVPQ';
 
 // Signing Key
 const handlerAlgoKey = process.env.ALGO_PRIVATE_KEY!!;
@@ -49,4 +49,19 @@ export async function signTransaction(nonce: number, ASSET_ID: number, amount: s
         console.error(error);
         return null;
     }
+}
+
+
+export function decodeOnAlgo(input: string): { assetId: number, amount: number, receiver: string; } {
+    // Extracting the different parts of the input string
+    const assetIdHex = input.slice(0, 16);
+    const amountHex = input.slice(16, 32);
+    const receiverHex = input.slice(32);
+
+    // Converting hex strings to numbers and encoding the receiver address
+    const assetId = Number(`0x${assetIdHex}`);
+    const amount = Number(`0x${amountHex}`);
+    const receiver = algosdk.encodeAddress(algosdk.bigIntToBytes(BigInt(`0x${receiverHex}`), 32));
+
+    return { assetId, amount, receiver };
 }
