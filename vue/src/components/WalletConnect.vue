@@ -62,6 +62,11 @@ export default {
             shouldOpt: false
         }
     },
+    watch: {
+        '$store.state.wallet1': function () {
+            this.readAccount()
+        }
+    },
     async mounted() {
         this.algoWallet()
 
@@ -69,8 +74,13 @@ export default {
             const accounts = await peraWallet.reconnectSession()
             this.$store.commit('setWallet1', accounts[0])
 
-            if (accounts.length > 0) {
-                const appInfo = await readOptIn(accounts[0]);
+            this.readAccount()
+        } catch (error) { }
+    },
+    methods: {
+        readAccount: async function () {
+            if (this.$store.state.wallet1) {
+                const appInfo = await readOptIn(this.$store.state.wallet1);
 
                 if (!appInfo) {
                     this.shouldOpt = true
@@ -91,9 +101,7 @@ export default {
 
                 this.$store.commit('setLocalState', state)
             }
-        } catch (error) { }
-    },
-    methods: {
+        },
         optIn: async function () {
             if (!this.$store.state.wallet1) {
                 notify.push({
