@@ -94,15 +94,15 @@
     "absolutePath": "project:/contracts/interfaces/IClaimTopicsRegistry.sol",
     "exportedSymbols": {
       "IClaimTopicsRegistry": [
-        1596
+        1579
       ]
     },
-    "id": 1597,
+    "id": 1580,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1560,
+        "id": 1543,
         "literals": [
           "solidity",
           "^",
@@ -119,9 +119,9 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 1596,
+        "id": 1579,
         "linearizedBaseContracts": [
-          1596
+          1579
         ],
         "name": "IClaimTopicsRegistry",
         "nameLocation": "71:20:10",
@@ -130,29 +130,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 1561,
+              "id": 1544,
               "nodeType": "StructuredDocumentation",
               "src": "99:245:10",
               "text": "  this event is emitted when a claim topic has been added to the ClaimTopicsRegistry\n  the event is emitted by the 'addClaimTopic' function\n  `claimTopic` is the required claim added to the Claim Topics Registry"
             },
             "eventSelector": "01c928b7f7ade2949e92366aa9454dbef3a416b731cf6ec786ba9595bbd814d6",
-            "id": 1565,
+            "id": 1548,
             "name": "ClaimTopicAdded",
             "nameLocation": "356:15:10",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1564,
+              "id": 1547,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1563,
+                  "id": 1546,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "claimTopic",
                   "nameLocation": "388:10:10",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1565,
+                  "scope": 1548,
                   "src": "372:26:10",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -161,7 +161,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1562,
+                    "id": 1545,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "372:7:10",
@@ -180,29 +180,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 1566,
+              "id": 1549,
               "nodeType": "StructuredDocumentation",
               "src": "408:256:10",
               "text": "  this event is emitted when a claim topic has been removed from the ClaimTopicsRegistry\n  the event is emitted by the 'removeClaimTopic' function\n  `claimTopic` is the required claim removed from the Claim Topics Registry"
             },
             "eventSelector": "0b1381093c776453c1bbe54fd68be1b235c65db61d099cb50d194b2991e0eec5",
-            "id": 1570,
+            "id": 1553,
             "name": "ClaimTopicRemoved",
             "nameLocation": "676:17:10",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1569,
+              "id": 1552,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1568,
+                  "id": 1551,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "claimTopic",
                   "nameLocation": "710:10:10",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1570,
+                  "scope": 1553,
                   "src": "694:26:10",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -211,7 +211,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1567,
+                    "id": 1550,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "694:7:10",
@@ -229,13 +229,13 @@
           },
           {
             "documentation": {
-              "id": 1571,
+              "id": 1554,
               "nodeType": "StructuredDocumentation",
               "src": "730:196:10",
               "text": " @dev Add a trusted claim topic (For example: KYC=1, AML=2).\n Only owner can call.\n emits `ClaimTopicAdded` event\n @param _claimTopic The claim topic index"
             },
             "functionSelector": "c7b22551",
-            "id": 1576,
+            "id": 1559,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -243,17 +243,17 @@
             "nameLocation": "941:13:10",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1574,
+              "id": 1557,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1573,
+                  "id": 1556,
                   "mutability": "mutable",
                   "name": "_claimTopic",
                   "nameLocation": "963:11:10",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1576,
+                  "scope": 1559,
                   "src": "955:19:10",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -262,7 +262,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1572,
+                    "id": 1555,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "955:7:10",
@@ -277,12 +277,12 @@
               "src": "954:21:10"
             },
             "returnParameters": {
-              "id": 1575,
+              "id": 1558,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "984:0:10"
             },
-            "scope": 1596,
+            "scope": 1579,
             "src": "932:53:10",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -290,13 +290,13 @@
           },
           {
             "documentation": {
-              "id": 1577,
+              "id": 1560,
               "nodeType": "StructuredDocumentation",
               "src": "993:205:10",
               "text": "  @dev Remove a trusted claim topic (For example: KYC=1, AML=2).\n  Only owner can call.\n  emits `ClaimTopicRemoved` event\n  @param _claimTopic The claim topic index"
             },
             "functionSelector": "08297846",
-            "id": 1582,
+            "id": 1565,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -304,17 +304,17 @@
             "nameLocation": "1213:16:10",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1580,
+              "id": 1563,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1579,
+                  "id": 1562,
                   "mutability": "mutable",
                   "name": "_claimTopic",
                   "nameLocation": "1238:11:10",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1582,
+                  "scope": 1565,
                   "src": "1230:19:10",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -323,7 +323,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1578,
+                    "id": 1561,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1230:7:10",
@@ -338,12 +338,12 @@
               "src": "1229:21:10"
             },
             "returnParameters": {
-              "id": 1581,
+              "id": 1564,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1259:0:10"
             },
-            "scope": 1596,
+            "scope": 1579,
             "src": "1204:56:10",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -351,13 +351,13 @@
           },
           {
             "documentation": {
-              "id": 1583,
+              "id": 1566,
               "nodeType": "StructuredDocumentation",
               "src": "1268:125:10",
               "text": "  @dev Get the trusted claim topics for the security token\n  @return Array of trusted claim topics"
             },
             "functionSelector": "df09d604",
-            "id": 1589,
+            "id": 1572,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -365,23 +365,23 @@
             "nameLocation": "1408:14:10",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1584,
+              "id": 1567,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1422:2:10"
             },
             "returnParameters": {
-              "id": 1588,
+              "id": 1571,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1587,
+                  "id": 1570,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1589,
+                  "scope": 1572,
                   "src": "1448:16:10",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -391,7 +391,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 1585,
+                      "id": 1568,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
                       "src": "1448:7:10",
@@ -400,7 +400,7 @@
                         "typeString": "uint256"
                       }
                     },
-                    "id": 1586,
+                    "id": 1569,
                     "nodeType": "ArrayTypeName",
                     "src": "1448:9:10",
                     "typeDescriptions": {
@@ -413,7 +413,7 @@
               ],
               "src": "1447:18:10"
             },
-            "scope": 1596,
+            "scope": 1579,
             "src": "1399:67:10",
             "stateMutability": "view",
             "virtual": false,
@@ -421,13 +421,13 @@
           },
           {
             "documentation": {
-              "id": 1590,
+              "id": 1573,
               "nodeType": "StructuredDocumentation",
               "src": "1474:169:10",
               "text": "  @dev Transfers the Ownership of ClaimTopics to a new Owner.\n  Only owner can call.\n  @param _newOwner The new owner of this contract."
             },
             "functionSelector": "d5144472",
-            "id": 1595,
+            "id": 1578,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -435,17 +435,17 @@
             "nameLocation": "1658:46:10",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1593,
+              "id": 1576,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1592,
+                  "id": 1575,
                   "mutability": "mutable",
                   "name": "_newOwner",
                   "nameLocation": "1723:9:10",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1595,
+                  "scope": 1578,
                   "src": "1715:17:10",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -454,7 +454,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1591,
+                    "id": 1574,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1715:7:10",
@@ -470,19 +470,19 @@
               "src": "1704:35:10"
             },
             "returnParameters": {
-              "id": 1594,
+              "id": 1577,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1748:0:10"
             },
-            "scope": 1596,
+            "scope": 1579,
             "src": "1649:100:10",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 1597,
+        "scope": 1580,
         "src": "61:1691:10",
         "usedErrors": []
       }
@@ -495,7 +495,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.11",
-  "updatedAt": "2023-11-12T09:42:59.127Z",
+  "updatedAt": "2023-11-12T12:17:50.328Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

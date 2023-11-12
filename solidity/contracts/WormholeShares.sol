@@ -8,12 +8,8 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract WormholeShares is ERC20 {
     mapping(address => bool) private _allowed;
 
-    constructor() ERC20("Wormhole Shares", "WSHARES") {
-        _mint(address(this), 1_000_000_000_000_000_000_000_000);
-    }
-
-    function faucet(uint256 amount) external {
-        _transfer(address(this), msg.sender, amount);
+    constructor(address tunnelFi) ERC20("Wormhole Shares", "WSHARES") {
+        _mint(tunnelFi, 1_000_000_000_000_000_000_000_000);
     }
 
     function allow() external {

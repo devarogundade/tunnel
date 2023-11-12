@@ -289,15 +289,15 @@
         328
       ],
       "IIdentityRegistryStorage": [
-        2351
+        2334
       ]
     },
-    "id": 2352,
+    "id": 2335,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2231,
+        "id": 2214,
         "literals": [
           "solidity",
           "^",
@@ -310,10 +310,10 @@
       {
         "absolutePath": "@onchain-id/solidity/contracts/interface/IIdentity.sol",
         "file": "@onchain-id/solidity/contracts/interface/IIdentity.sol",
-        "id": 2232,
+        "id": 2215,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 2352,
+        "scope": 2335,
         "sourceUnit": 329,
         "src": "61:64:14",
         "symbolAliases": [],
@@ -326,9 +326,9 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 2351,
+        "id": 2334,
         "linearizedBaseContracts": [
-          2351
+          2334
         ],
         "name": "IIdentityRegistryStorage",
         "nameLocation": "139:24:14",
@@ -337,29 +337,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 2233,
+              "id": 2216,
               "nodeType": "StructuredDocumentation",
               "src": "185:311:14",
               "text": "  this event is emitted when an Identity is registered into the storage contract.\n  the event is emitted by the 'registerIdentity' function\n  `investorAddress` is the address of the investor's wallet\n  `identity` is the address of the Identity smart contract (onchainID)"
             },
             "eventSelector": "0030dea7e9c9afaa2e3c9810f2fc9b5181f1bad74ca5a8db85f746a33585e747",
-            "id": 2240,
+            "id": 2223,
             "name": "IdentityStored",
             "nameLocation": "508:14:14",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 2239,
+              "id": 2222,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2235,
+                  "id": 2218,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "investorAddress",
                   "nameLocation": "549:15:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2240,
+                  "scope": 2223,
                   "src": "533:31:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -368,7 +368,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2234,
+                    "id": 2217,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "533:7:14",
@@ -382,13 +382,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 2238,
+                  "id": 2221,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "identity",
                   "nameLocation": "593:8:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2240,
+                  "scope": 2223,
                   "src": "575:26:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -397,10 +397,10 @@
                     "typeString": "contract IIdentity"
                   },
                   "typeName": {
-                    "id": 2237,
+                    "id": 2220,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 2236,
+                      "id": 2219,
                       "name": "IIdentity",
                       "nameLocations": [
                         "575:9:14"
@@ -426,29 +426,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 2241,
+              "id": 2224,
               "nodeType": "StructuredDocumentation",
               "src": "617:306:14",
               "text": "  this event is emitted when an Identity is removed from the storage contract.\n  the event is emitted by the 'deleteIdentity' function\n  `investorAddress` is the address of the investor's wallet\n  `identity` is the address of the Identity smart contract (onchainID)"
             },
             "eventSelector": "ca6a4c3370b859312246e7f086284076e557997e10d856b716c23ab67067790b",
-            "id": 2248,
+            "id": 2231,
             "name": "IdentityUnstored",
             "nameLocation": "935:16:14",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 2247,
+              "id": 2230,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2243,
+                  "id": 2226,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "investorAddress",
                   "nameLocation": "978:15:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2248,
+                  "scope": 2231,
                   "src": "962:31:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -457,7 +457,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2242,
+                    "id": 2225,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "962:7:14",
@@ -471,13 +471,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 2246,
+                  "id": 2229,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "identity",
                   "nameLocation": "1022:8:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2248,
+                  "scope": 2231,
                   "src": "1004:26:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -486,10 +486,10 @@
                     "typeString": "contract IIdentity"
                   },
                   "typeName": {
-                    "id": 2245,
+                    "id": 2228,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 2244,
+                      "id": 2227,
                       "name": "IIdentity",
                       "nameLocations": [
                         "1004:9:14"
@@ -515,29 +515,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 2249,
+              "id": 2232,
               "nodeType": "StructuredDocumentation",
               "src": "1046:266:14",
               "text": "  this event is emitted when an Identity has been updated\n  the event is emitted by the 'updateIdentity' function\n  `oldIdentity` is the old Identity contract's address to update\n  `newIdentity` is the new Identity contract's"
             },
             "eventSelector": "556ce885dfcea52155c773f1ed2e58781c51945c13030ab8f793c61f51d1b808",
-            "id": 2257,
+            "id": 2240,
             "name": "IdentityModified",
             "nameLocation": "1324:16:14",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 2256,
+              "id": 2239,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2252,
+                  "id": 2235,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "oldIdentity",
                   "nameLocation": "1369:11:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2257,
+                  "scope": 2240,
                   "src": "1351:29:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -546,10 +546,10 @@
                     "typeString": "contract IIdentity"
                   },
                   "typeName": {
-                    "id": 2251,
+                    "id": 2234,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 2250,
+                      "id": 2233,
                       "name": "IIdentity",
                       "nameLocations": [
                         "1351:9:14"
@@ -569,13 +569,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 2255,
+                  "id": 2238,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "newIdentity",
                   "nameLocation": "1409:11:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2257,
+                  "scope": 2240,
                   "src": "1391:29:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -584,10 +584,10 @@
                     "typeString": "contract IIdentity"
                   },
                   "typeName": {
-                    "id": 2254,
+                    "id": 2237,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 2253,
+                      "id": 2236,
                       "name": "IIdentity",
                       "nameLocations": [
                         "1391:9:14"
@@ -613,29 +613,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 2258,
+              "id": 2241,
               "nodeType": "StructuredDocumentation",
               "src": "1436:300:14",
               "text": "  this event is emitted when an Identity's country has been updated\n  the event is emitted by the 'updateCountry' function\n  `investorAddress` is the address on which the country has been updated\n  `country` is the numeric code (ISO 3166-1) of the new country"
             },
             "eventSelector": "20965fcdc6eed7ae398065b40ece4e732ba667992ca819fc54e80e9f2047c4cf",
-            "id": 2264,
+            "id": 2247,
             "name": "CountryModified",
             "nameLocation": "1748:15:14",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 2263,
+              "id": 2246,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2260,
+                  "id": 2243,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "investorAddress",
                   "nameLocation": "1790:15:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2264,
+                  "scope": 2247,
                   "src": "1774:31:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -644,7 +644,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2259,
+                    "id": 2242,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1774:7:14",
@@ -658,13 +658,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 2262,
+                  "id": 2245,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "country",
                   "nameLocation": "1831:7:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2264,
+                  "scope": 2247,
                   "src": "1816:22:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -673,7 +673,7 @@
                     "typeString": "uint16"
                   },
                   "typeName": {
-                    "id": 2261,
+                    "id": 2244,
                     "name": "uint16",
                     "nodeType": "ElementaryTypeName",
                     "src": "1816:6:14",
@@ -692,29 +692,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 2265,
+              "id": 2248,
               "nodeType": "StructuredDocumentation",
               "src": "1854:244:14",
               "text": "  this event is emitted when an Identity Registry is bound to the storage contract\n  the event is emitted by the 'addIdentityRegistry' function\n  `identityRegistry` is the address of the identity registry added"
             },
             "eventSelector": "500c250171aa20e861b680f93502547b9d436eda7d4c537fc360db6e0c6eedfb",
-            "id": 2269,
+            "id": 2252,
             "name": "IdentityRegistryBound",
             "nameLocation": "2110:21:14",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 2268,
+              "id": 2251,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2267,
+                  "id": 2250,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "identityRegistry",
                   "nameLocation": "2148:16:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2269,
+                  "scope": 2252,
                   "src": "2132:32:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -723,7 +723,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2266,
+                    "id": 2249,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2132:7:14",
@@ -743,29 +743,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 2270,
+              "id": 2253,
               "nodeType": "StructuredDocumentation",
               "src": "2174:253:14",
               "text": "  this event is emitted when an Identity Registry is unbound from the storage contract\n  the event is emitted by the 'removeIdentityRegistry' function\n  `identityRegistry` is the address of the identity registry removed"
             },
             "eventSelector": "51f353eb5801583fdf2706e43c045b62fdf6b1566820b349390616363ecf72c9",
-            "id": 2274,
+            "id": 2257,
             "name": "IdentityRegistryUnbound",
             "nameLocation": "2439:23:14",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 2273,
+              "id": 2256,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2272,
+                  "id": 2255,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "identityRegistry",
                   "nameLocation": "2479:16:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2274,
+                  "scope": 2257,
                   "src": "2463:32:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -774,7 +774,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2271,
+                    "id": 2254,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2463:7:14",
@@ -793,13 +793,13 @@
           },
           {
             "documentation": {
-              "id": 2275,
+              "id": 2258,
               "nodeType": "StructuredDocumentation",
               "src": "2522:89:14",
               "text": "  @dev Returns the identity registries linked to the storage contract"
             },
             "functionSelector": "bf9eb959",
-            "id": 2281,
+            "id": 2264,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -807,23 +807,23 @@
             "nameLocation": "2626:24:14",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2276,
+              "id": 2259,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2650:2:14"
             },
             "returnParameters": {
-              "id": 2280,
+              "id": 2263,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2279,
+                  "id": 2262,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2281,
+                  "scope": 2264,
                   "src": "2703:16:14",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -833,7 +833,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 2277,
+                      "id": 2260,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
                       "src": "2703:7:14",
@@ -843,7 +843,7 @@
                         "typeString": "address"
                       }
                     },
-                    "id": 2278,
+                    "id": 2261,
                     "nodeType": "ArrayTypeName",
                     "src": "2703:9:14",
                     "typeDescriptions": {
@@ -856,7 +856,7 @@
               ],
               "src": "2702:18:14"
             },
-            "scope": 2351,
+            "scope": 2334,
             "src": "2617:104:14",
             "stateMutability": "view",
             "virtual": false,
@@ -864,13 +864,13 @@
           },
           {
             "documentation": {
-              "id": 2282,
+              "id": 2265,
               "nodeType": "StructuredDocumentation",
               "src": "2729:120:14",
               "text": "  @dev Returns the onchainID of an investor.\n  @param _userAddress The wallet of the investor"
             },
             "functionSelector": "7988d3a5",
-            "id": 2290,
+            "id": 2273,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -878,17 +878,17 @@
             "nameLocation": "2864:14:14",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2285,
+              "id": 2268,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2284,
+                  "id": 2267,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "2897:12:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2290,
+                  "scope": 2273,
                   "src": "2889:20:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -897,7 +897,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2283,
+                    "id": 2266,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2889:7:14",
@@ -913,17 +913,17 @@
               "src": "2878:38:14"
             },
             "returnParameters": {
-              "id": 2289,
+              "id": 2272,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2288,
+                  "id": 2271,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2290,
+                  "scope": 2273,
                   "src": "2940:9:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -932,10 +932,10 @@
                     "typeString": "contract IIdentity"
                   },
                   "typeName": {
-                    "id": 2287,
+                    "id": 2270,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 2286,
+                      "id": 2269,
                       "name": "IIdentity",
                       "nameLocations": [
                         "2940:9:14"
@@ -956,7 +956,7 @@
               ],
               "src": "2939:11:14"
             },
-            "scope": 2351,
+            "scope": 2334,
             "src": "2855:96:14",
             "stateMutability": "view",
             "virtual": false,
@@ -964,13 +964,13 @@
           },
           {
             "documentation": {
-              "id": 2291,
+              "id": 2274,
               "nodeType": "StructuredDocumentation",
               "src": "2959:123:14",
               "text": "  @dev Returns the country code of an investor.\n  @param _userAddress The wallet of the investor"
             },
             "functionSelector": "727e13bc",
-            "id": 2298,
+            "id": 2281,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -978,17 +978,17 @@
             "nameLocation": "3097:21:14",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2294,
+              "id": 2277,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2293,
+                  "id": 2276,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "3137:12:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2298,
+                  "scope": 2281,
                   "src": "3129:20:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -997,7 +997,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2292,
+                    "id": 2275,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "3129:7:14",
@@ -1013,17 +1013,17 @@
               "src": "3118:38:14"
             },
             "returnParameters": {
-              "id": 2297,
+              "id": 2280,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2296,
+                  "id": 2279,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2298,
+                  "scope": 2281,
                   "src": "3180:6:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1032,7 +1032,7 @@
                     "typeString": "uint16"
                   },
                   "typeName": {
-                    "id": 2295,
+                    "id": 2278,
                     "name": "uint16",
                     "nodeType": "ElementaryTypeName",
                     "src": "3180:6:14",
@@ -1046,7 +1046,7 @@
               ],
               "src": "3179:8:14"
             },
-            "scope": 2351,
+            "scope": 2334,
             "src": "3088:100:14",
             "stateMutability": "view",
             "virtual": false,
@@ -1054,13 +1054,13 @@
           },
           {
             "documentation": {
-              "id": 2299,
+              "id": 2282,
               "nodeType": "StructuredDocumentation",
               "src": "3196:491:14",
               "text": "  @dev adds an identity contract corresponding to a user address in the storage.\n  Requires that the user doesn't have an identity contract already registered.\n  This function can only be called by an address set as agent of the smart contract\n  @param _userAddress The address of the user\n  @param _identity The address of the user's identity contract\n  @param _country The country of the investor\n  emits `IdentityStored` event"
             },
             "functionSelector": "a53410dd",
-            "id": 2309,
+            "id": 2292,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1068,17 +1068,17 @@
             "nameLocation": "3702:20:14",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2307,
+              "id": 2290,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2301,
+                  "id": 2284,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "3741:12:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2309,
+                  "scope": 2292,
                   "src": "3733:20:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1087,7 +1087,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2300,
+                    "id": 2283,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "3733:7:14",
@@ -1101,12 +1101,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2304,
+                  "id": 2287,
                   "mutability": "mutable",
                   "name": "_identity",
                   "nameLocation": "3774:9:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2309,
+                  "scope": 2292,
                   "src": "3764:19:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1115,10 +1115,10 @@
                     "typeString": "contract IIdentity"
                   },
                   "typeName": {
-                    "id": 2303,
+                    "id": 2286,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 2302,
+                      "id": 2285,
                       "name": "IIdentity",
                       "nameLocations": [
                         "3764:9:14"
@@ -1138,12 +1138,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2306,
+                  "id": 2289,
                   "mutability": "mutable",
                   "name": "_country",
                   "nameLocation": "3801:8:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2309,
+                  "scope": 2292,
                   "src": "3794:15:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1152,7 +1152,7 @@
                     "typeString": "uint16"
                   },
                   "typeName": {
-                    "id": 2305,
+                    "id": 2288,
                     "name": "uint16",
                     "nodeType": "ElementaryTypeName",
                     "src": "3794:6:14",
@@ -1167,12 +1167,12 @@
               "src": "3722:94:14"
             },
             "returnParameters": {
-              "id": 2308,
+              "id": 2291,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "3825:0:14"
             },
-            "scope": 2351,
+            "scope": 2334,
             "src": "3693:133:14",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1180,13 +1180,13 @@
           },
           {
             "documentation": {
-              "id": 2310,
+              "id": 2293,
               "nodeType": "StructuredDocumentation",
               "src": "3834:355:14",
               "text": "  @dev Removes an user from the storage.\n  Requires that the user have an identity contract already deployed that will be deleted.\n  This function can only be called by an address set as agent of the smart contract\n  @param _userAddress The address of the user to be removed\n  emits `IdentityUnstored` event"
             },
             "functionSelector": "cf191bcd",
-            "id": 2315,
+            "id": 2298,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1194,17 +1194,17 @@
             "nameLocation": "4204:25:14",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2313,
+              "id": 2296,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2312,
+                  "id": 2295,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "4238:12:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2315,
+                  "scope": 2298,
                   "src": "4230:20:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1213,7 +1213,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2311,
+                    "id": 2294,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "4230:7:14",
@@ -1229,12 +1229,12 @@
               "src": "4229:22:14"
             },
             "returnParameters": {
-              "id": 2314,
+              "id": 2297,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "4260:0:14"
             },
-            "scope": 2351,
+            "scope": 2334,
             "src": "4195:66:14",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1242,13 +1242,13 @@
           },
           {
             "documentation": {
-              "id": 2316,
+              "id": 2299,
               "nodeType": "StructuredDocumentation",
               "src": "4269:420:14",
               "text": "  @dev Updates the country corresponding to a user address.\n  Requires that the user should have an identity contract already deployed that will be replaced.\n  This function can only be called by an address set as agent of the smart contract\n  @param _userAddress The address of the user\n  @param _country The new country of the user\n  emits `CountryModified` event"
             },
             "functionSelector": "9f3418d5",
-            "id": 2323,
+            "id": 2306,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1256,17 +1256,17 @@
             "nameLocation": "4704:27:14",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2321,
+              "id": 2304,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2318,
+                  "id": 2301,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "4750:12:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2323,
+                  "scope": 2306,
                   "src": "4742:20:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1275,7 +1275,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2317,
+                    "id": 2300,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "4742:7:14",
@@ -1289,12 +1289,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2320,
+                  "id": 2303,
                   "mutability": "mutable",
                   "name": "_country",
                   "nameLocation": "4780:8:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2323,
+                  "scope": 2306,
                   "src": "4773:15:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1303,7 +1303,7 @@
                     "typeString": "uint16"
                   },
                   "typeName": {
-                    "id": 2319,
+                    "id": 2302,
                     "name": "uint16",
                     "nodeType": "ElementaryTypeName",
                     "src": "4773:6:14",
@@ -1318,12 +1318,12 @@
               "src": "4731:64:14"
             },
             "returnParameters": {
-              "id": 2322,
+              "id": 2305,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "4804:0:14"
             },
-            "scope": 2351,
+            "scope": 2334,
             "src": "4695:110:14",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1331,13 +1331,13 @@
           },
           {
             "documentation": {
-              "id": 2324,
+              "id": 2307,
               "nodeType": "StructuredDocumentation",
               "src": "4813:537:14",
               "text": "  @dev Updates an identity contract corresponding to a user address.\n  Requires that the user address should be the owner of the identity contract.\n  Requires that the user should have an identity contract already deployed that will be replaced.\n  This function can only be called by an address set as agent of the smart contract\n  @param _userAddress The address of the user\n  @param _identity The address of the user's new identity contract\n  emits `IdentityModified` event"
             },
             "functionSelector": "e805cf86",
-            "id": 2332,
+            "id": 2315,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1345,17 +1345,17 @@
             "nameLocation": "5365:20:14",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2330,
+              "id": 2313,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2326,
+                  "id": 2309,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "5404:12:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2332,
+                  "scope": 2315,
                   "src": "5396:20:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1364,7 +1364,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2325,
+                    "id": 2308,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "5396:7:14",
@@ -1378,12 +1378,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2329,
+                  "id": 2312,
                   "mutability": "mutable",
                   "name": "_identity",
                   "nameLocation": "5437:9:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2332,
+                  "scope": 2315,
                   "src": "5427:19:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1392,10 +1392,10 @@
                     "typeString": "contract IIdentity"
                   },
                   "typeName": {
-                    "id": 2328,
+                    "id": 2311,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 2327,
+                      "id": 2310,
                       "name": "IIdentity",
                       "nameLocations": [
                         "5427:9:14"
@@ -1417,12 +1417,12 @@
               "src": "5385:68:14"
             },
             "returnParameters": {
-              "id": 2331,
+              "id": 2314,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "5462:0:14"
             },
-            "scope": 2351,
+            "scope": 2334,
             "src": "5356:107:14",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1430,13 +1430,13 @@
           },
           {
             "documentation": {
-              "id": 2333,
+              "id": 2316,
               "nodeType": "StructuredDocumentation",
               "src": "5471:385:14",
               "text": "  @notice Adds an identity registry as agent of the Identity Registry Storage Contract.\n  This function can only be called by the wallet set as owner of the smart contract\n  This function adds the identity registry to the list of identityRegistries linked to the storage contract\n  @param _identityRegistry The identity registry address to add."
             },
             "functionSelector": "690a49f9",
-            "id": 2338,
+            "id": 2321,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1444,17 +1444,17 @@
             "nameLocation": "5871:20:14",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2336,
+              "id": 2319,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2335,
+                  "id": 2318,
                   "mutability": "mutable",
                   "name": "_identityRegistry",
                   "nameLocation": "5900:17:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2338,
+                  "scope": 2321,
                   "src": "5892:25:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1463,7 +1463,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2334,
+                    "id": 2317,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "5892:7:14",
@@ -1479,12 +1479,12 @@
               "src": "5891:27:14"
             },
             "returnParameters": {
-              "id": 2337,
+              "id": 2320,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "5927:0:14"
             },
-            "scope": 2351,
+            "scope": 2334,
             "src": "5862:66:14",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1492,13 +1492,13 @@
           },
           {
             "documentation": {
-              "id": 2339,
+              "id": 2322,
               "nodeType": "StructuredDocumentation",
               "src": "5936:404:14",
               "text": "  @notice Removes an identity registry from being agent of the Identity Registry Storage Contract.\n  This function can only be called by the wallet set as owner of the smart contract\n  This function removes the identity registry from the list of identityRegistries linked to the storage contract\n  @param _identityRegistry The identity registry address to remove."
             },
             "functionSelector": "97a012f7",
-            "id": 2344,
+            "id": 2327,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1506,17 +1506,17 @@
             "nameLocation": "6355:22:14",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2342,
+              "id": 2325,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2341,
+                  "id": 2324,
                   "mutability": "mutable",
                   "name": "_identityRegistry",
                   "nameLocation": "6386:17:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2344,
+                  "scope": 2327,
                   "src": "6378:25:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1525,7 +1525,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2340,
+                    "id": 2323,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "6378:7:14",
@@ -1541,12 +1541,12 @@
               "src": "6377:27:14"
             },
             "returnParameters": {
-              "id": 2343,
+              "id": 2326,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "6413:0:14"
             },
-            "scope": 2351,
+            "scope": 2334,
             "src": "6346:68:14",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1554,13 +1554,13 @@
           },
           {
             "documentation": {
-              "id": 2345,
+              "id": 2328,
               "nodeType": "StructuredDocumentation",
               "src": "6422:251:14",
               "text": "  @notice Transfers the Ownership of the Identity Registry Storage to a new Owner.\n  This function can only be called by the wallet set as owner of the smart contract\n  @param _newOwner The new owner of this contract."
             },
             "functionSelector": "5ccbbe49",
-            "id": 2350,
+            "id": 2333,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1568,17 +1568,17 @@
             "nameLocation": "6688:42:14",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2348,
+              "id": 2331,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2347,
+                  "id": 2330,
                   "mutability": "mutable",
                   "name": "_newOwner",
                   "nameLocation": "6749:9:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2350,
+                  "scope": 2333,
                   "src": "6741:17:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1587,7 +1587,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2346,
+                    "id": 2329,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "6741:7:14",
@@ -1603,19 +1603,19 @@
               "src": "6730:35:14"
             },
             "returnParameters": {
-              "id": 2349,
+              "id": 2332,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "6774:0:14"
             },
-            "scope": 2351,
+            "scope": 2334,
             "src": "6679:96:14",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 2352,
+        "scope": 2335,
         "src": "129:6649:14",
         "usedErrors": []
       }
@@ -1628,7 +1628,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.11",
-  "updatedAt": "2023-11-12T09:42:59.141Z",
+  "updatedAt": "2023-11-12T12:17:50.341Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

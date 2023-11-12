@@ -918,16 +918,16 @@
         49
       ],
       "IClaimTopicsRegistry": [
-        1596
+        1579
       ],
       "ICompliance": [
-        1703
+        1686
       ],
       "IERC20": [
         993
       ],
       "IERC3643": [
-        2036
+        2019
       ],
       "IERC734": [
         196
@@ -939,21 +939,21 @@
         328
       ],
       "IIdentityRegistry": [
-        2229
+        2212
       ],
       "IIdentityRegistryStorage": [
-        2351
+        2334
       ],
       "ITrustedIssuersRegistry": [
-        2448
+        2431
       ]
     },
-    "id": 2037,
+    "id": 2020,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1705,
+        "id": 1688,
         "literals": [
           "solidity",
           "^",
@@ -966,10 +966,10 @@
       {
         "absolutePath": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
         "file": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-        "id": 1706,
+        "id": 1689,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 2037,
+        "scope": 2020,
         "sourceUnit": 994,
         "src": "61:56:12",
         "symbolAliases": [],
@@ -978,11 +978,11 @@
       {
         "absolutePath": "project:/contracts/interfaces/IIdentityRegistry.sol",
         "file": "./IIdentityRegistry.sol",
-        "id": 1707,
+        "id": 1690,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 2037,
-        "sourceUnit": 2230,
+        "scope": 2020,
+        "sourceUnit": 2213,
         "src": "119:33:12",
         "symbolAliases": [],
         "unitAlias": ""
@@ -990,11 +990,11 @@
       {
         "absolutePath": "project:/contracts/interfaces/ICompliance.sol",
         "file": "./ICompliance.sol",
-        "id": 1708,
+        "id": 1691,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 2037,
-        "sourceUnit": 1704,
+        "scope": 2020,
+        "sourceUnit": 1687,
         "src": "154:27:12",
         "symbolAliases": [],
         "unitAlias": ""
@@ -1004,7 +1004,7 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 1710,
+              "id": 1693,
               "name": "IERC20",
               "nameLocations": [
                 "221:6:12"
@@ -1013,7 +1013,7 @@
               "referencedDeclaration": 993,
               "src": "221:6:12"
             },
-            "id": 1711,
+            "id": 1694,
             "nodeType": "InheritanceSpecifier",
             "src": "221:6:12"
           }
@@ -1022,15 +1022,15 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "documentation": {
-          "id": 1709,
+          "id": 1692,
           "nodeType": "StructuredDocumentation",
           "src": "185:14:12",
           "text": "interface"
         },
         "fullyImplemented": false,
-        "id": 2036,
+        "id": 2019,
         "linearizedBaseContracts": [
-          2036,
+          2019,
           993
         ],
         "name": "IERC3643",
@@ -1040,29 +1040,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 1712,
+              "id": 1695,
               "nodeType": "StructuredDocumentation",
               "src": "235:469:12",
               "text": "  this event is emitted when the token information is updated.\n  the event is emitted by the token constructor and by the setTokenInformation function\n  `_newName` is the name of the token\n  `_newSymbol` is the symbol of the token\n  `_newDecimals` is the decimals of the token\n  `_newVersion` is the version of the token, current version is 3.0\n  `_newOnchainID` is the address of the onchainID of the token"
             },
             "eventSelector": "6a1105ac8148a3c319adbc369f9072573e8a11d3a3d195e067e7c40767ec54d1",
-            "id": 1724,
+            "id": 1707,
             "name": "UpdatedTokenInformation",
             "nameLocation": "716:23:12",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1723,
+              "id": 1706,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1714,
+                  "id": 1697,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_newName",
                   "nameLocation": "757:8:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1724,
+                  "scope": 1707,
                   "src": "750:15:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1071,7 +1071,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1713,
+                    "id": 1696,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "750:6:12",
@@ -1084,13 +1084,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 1716,
+                  "id": 1699,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_newSymbol",
                   "nameLocation": "783:10:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1724,
+                  "scope": 1707,
                   "src": "776:17:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1099,7 +1099,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1715,
+                    "id": 1698,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "776:6:12",
@@ -1112,13 +1112,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 1718,
+                  "id": 1701,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_newDecimals",
                   "nameLocation": "810:12:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1724,
+                  "scope": 1707,
                   "src": "804:18:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1127,7 +1127,7 @@
                     "typeString": "uint8"
                   },
                   "typeName": {
-                    "id": 1717,
+                    "id": 1700,
                     "name": "uint8",
                     "nodeType": "ElementaryTypeName",
                     "src": "804:5:12",
@@ -1140,13 +1140,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 1720,
+                  "id": 1703,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_newVersion",
                   "nameLocation": "840:11:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1724,
+                  "scope": 1707,
                   "src": "833:18:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1155,7 +1155,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1719,
+                    "id": 1702,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "833:6:12",
@@ -1168,13 +1168,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 1722,
+                  "id": 1705,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_newOnchainID",
                   "nameLocation": "870:13:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1724,
+                  "scope": 1707,
                   "src": "862:21:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1183,7 +1183,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1721,
+                    "id": 1704,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "862:7:12",
@@ -1203,29 +1203,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 1725,
+              "id": 1708,
               "nodeType": "StructuredDocumentation",
               "src": "899:273:12",
               "text": "  this event is emitted when the IdentityRegistry has been set for the token\n  the event is emitted by the token constructor and by the setIdentityRegistry function\n  `_identityRegistry` is the address of the Identity Registry of the token"
             },
             "eventSelector": "d2be862d755bca7e0d39772b2cab3a5578da9c285f69199f4c063c2294a7f36c",
-            "id": 1729,
+            "id": 1712,
             "name": "IdentityRegistryAdded",
             "nameLocation": "1184:21:12",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1728,
+              "id": 1711,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1727,
+                  "id": 1710,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_identityRegistry",
                   "nameLocation": "1222:17:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1729,
+                  "scope": 1712,
                   "src": "1206:33:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1234,7 +1234,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1726,
+                    "id": 1709,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1206:7:12",
@@ -1254,29 +1254,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 1730,
+              "id": 1713,
               "nodeType": "StructuredDocumentation",
               "src": "1249:257:12",
               "text": "  this event is emitted when the Compliance has been set for the token\n  the event is emitted by the token constructor and by the setCompliance function\n  `_compliance` is the address of the Compliance contract of the token"
             },
             "eventSelector": "7f3a888862559648ec01d97deb7b5012bff86dc91e654a1de397170db40e35b6",
-            "id": 1734,
+            "id": 1717,
             "name": "ComplianceAdded",
             "nameLocation": "1518:15:12",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1733,
+              "id": 1716,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1732,
+                  "id": 1715,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_compliance",
                   "nameLocation": "1550:11:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1734,
+                  "scope": 1717,
                   "src": "1534:27:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1285,7 +1285,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1731,
+                    "id": 1714,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1534:7:12",
@@ -1305,29 +1305,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 1735,
+              "id": 1718,
               "nodeType": "StructuredDocumentation",
               "src": "1571:438:12",
               "text": "  this event is emitted when an investor successfully recovers his tokens\n  the event is emitted by the recoveryAddress function\n  `_lostWallet` is the address of the wallet that the investor lost access to\n  `_newWallet` is the address of the wallet that the investor provided for the recovery\n  `_investorOnchainID` is the address of the onchainID of the investor who asked for a recovery"
             },
             "eventSelector": "f0c9129a94f30f1caaceb63e44b9811d0a3edf1d6c23757f346093af5553fed0",
-            "id": 1743,
+            "id": 1726,
             "name": "RecoverySuccess",
             "nameLocation": "2021:15:12",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1742,
+              "id": 1725,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1737,
+                  "id": 1720,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_lostWallet",
                   "nameLocation": "2055:11:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1743,
+                  "scope": 1726,
                   "src": "2047:19:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1336,7 +1336,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1736,
+                    "id": 1719,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2047:7:12",
@@ -1350,13 +1350,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 1739,
+                  "id": 1722,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_newWallet",
                   "nameLocation": "2085:10:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1743,
+                  "scope": 1726,
                   "src": "2077:18:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1365,7 +1365,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1738,
+                    "id": 1721,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2077:7:12",
@@ -1379,13 +1379,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 1741,
+                  "id": 1724,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_investorOnchainID",
                   "nameLocation": "2114:18:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1743,
+                  "scope": 1726,
                   "src": "2106:26:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1394,7 +1394,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1740,
+                    "id": 1723,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2106:7:12",
@@ -1414,29 +1414,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 1744,
+              "id": 1727,
               "nodeType": "StructuredDocumentation",
               "src": "2148:603:12",
               "text": "  this event is emitted when the wallet of an investor is frozen or unfrozen\n  the event is emitted by setAddressFrozen and batchSetAddressFrozen functions\n  `_userAddress` is the wallet of the investor that is concerned by the freezing status\n  `_isFrozen` is the freezing status of the wallet\n  if `_isFrozen` equals `true` the wallet is frozen after emission of the event\n  if `_isFrozen` equals `false` the wallet is unfrozen after emission of the event\n  `_owner` is the address of the agent who called the function to freeze the wallet"
             },
             "eventSelector": "7fa523c84ab8d7fc5b72f08b9e46dbbf10c39e119a075b3e317002d14bc9f436",
-            "id": 1752,
+            "id": 1735,
             "name": "AddressFrozen",
             "nameLocation": "2763:13:12",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1751,
+              "id": 1734,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1746,
+                  "id": 1729,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "2803:12:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1752,
+                  "scope": 1735,
                   "src": "2787:28:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1445,7 +1445,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1745,
+                    "id": 1728,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2787:7:12",
@@ -1459,13 +1459,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 1748,
+                  "id": 1731,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_isFrozen",
                   "nameLocation": "2839:9:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1752,
+                  "scope": 1735,
                   "src": "2826:22:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1474,7 +1474,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 1747,
+                    "id": 1730,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "2826:4:12",
@@ -1487,13 +1487,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 1750,
+                  "id": 1733,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_owner",
                   "nameLocation": "2875:6:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1752,
+                  "scope": 1735,
                   "src": "2859:22:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1502,7 +1502,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1749,
+                    "id": 1732,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2859:7:12",
@@ -1522,29 +1522,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 1753,
+              "id": 1736,
               "nodeType": "StructuredDocumentation",
               "src": "2897:343:12",
               "text": "  this event is emitted when a certain amount of tokens is frozen on a wallet\n  the event is emitted by freezePartialTokens and batchFreezePartialTokens functions\n  `_userAddress` is the wallet of the investor that is concerned by the freezing status\n  `_amount` is the amount of tokens that are frozen"
             },
             "eventSelector": "a065e63c631c86f1b9f66a4a2f63f2093bf1c2168d23290259dbd969e0222a45",
-            "id": 1759,
+            "id": 1742,
             "name": "TokensFrozen",
             "nameLocation": "3252:12:12",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1758,
+              "id": 1741,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1755,
+                  "id": 1738,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "3281:12:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1759,
+                  "scope": 1742,
                   "src": "3265:28:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1553,7 +1553,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1754,
+                    "id": 1737,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "3265:7:12",
@@ -1567,13 +1567,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 1757,
+                  "id": 1740,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_amount",
                   "nameLocation": "3303:7:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1759,
+                  "scope": 1742,
                   "src": "3295:15:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1582,7 +1582,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1756,
+                    "id": 1739,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "3295:7:12",
@@ -1601,29 +1601,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 1760,
+              "id": 1743,
               "nodeType": "StructuredDocumentation",
               "src": "3320:351:12",
               "text": "  this event is emitted when a certain amount of tokens is unfrozen on a wallet\n  the event is emitted by unfreezePartialTokens and batchUnfreezePartialTokens functions\n  `_userAddress` is the wallet of the investor that is concerned by the freezing status\n  `_amount` is the amount of tokens that are unfrozen"
             },
             "eventSelector": "9bed35cb62ad0dba04f9d5bfee4b5bc91443e77da8a65c4c84834c51bb08b0d6",
-            "id": 1766,
+            "id": 1749,
             "name": "TokensUnfrozen",
             "nameLocation": "3683:14:12",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1765,
+              "id": 1748,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1762,
+                  "id": 1745,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "3714:12:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1766,
+                  "scope": 1749,
                   "src": "3698:28:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1632,7 +1632,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1761,
+                    "id": 1744,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "3698:7:12",
@@ -1646,13 +1646,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 1764,
+                  "id": 1747,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_amount",
                   "nameLocation": "3736:7:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1766,
+                  "scope": 1749,
                   "src": "3728:15:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1661,7 +1661,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1763,
+                    "id": 1746,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "3728:7:12",
@@ -1680,29 +1680,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 1767,
+              "id": 1750,
               "nodeType": "StructuredDocumentation",
               "src": "3753:204:12",
               "text": "  this event is emitted when the token is paused\n  the event is emitted by the pause function\n  `_userAddress` is the address of the wallet that called the pause function"
             },
             "eventSelector": "62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258",
-            "id": 1771,
+            "id": 1754,
             "name": "Paused",
             "nameLocation": "3969:6:12",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1770,
+              "id": 1753,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1769,
+                  "id": 1752,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "3984:12:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1771,
+                  "scope": 1754,
                   "src": "3976:20:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1711,7 +1711,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1768,
+                    "id": 1751,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "3976:7:12",
@@ -1731,29 +1731,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 1772,
+              "id": 1755,
               "nodeType": "StructuredDocumentation",
               "src": "4006:210:12",
               "text": "  this event is emitted when the token is unpaused\n  the event is emitted by the unpause function\n  `_userAddress` is the address of the wallet that called the unpause function"
             },
             "eventSelector": "5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa",
-            "id": 1776,
+            "id": 1759,
             "name": "Unpaused",
             "nameLocation": "4228:8:12",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1775,
+              "id": 1758,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1774,
+                  "id": 1757,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "4245:12:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1776,
+                  "scope": 1759,
                   "src": "4237:20:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1762,7 +1762,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1773,
+                    "id": 1756,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "4237:7:12",
@@ -1781,13 +1781,13 @@
           },
           {
             "documentation": {
-              "id": 1777,
+              "id": 1760,
               "nodeType": "StructuredDocumentation",
               "src": "4267:534:12",
               "text": " @dev Returns the number of decimals used to get its user representation.\n For example, if `decimals` equals `2`, a balance of `505` tokens should\n be displayed to a user as `5,05` (`505 / 1 ** 2`).\n Tokens usually opt for a value of 18, imitating the relationship between\n Ether and Wei.\n NOTE: This information is only used for _display_ purposes: it in\n no way affects any of the arithmetic of the contract, including\n balanceOf() and transfer()."
             },
             "functionSelector": "313ce567",
-            "id": 1782,
+            "id": 1765,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1795,23 +1795,23 @@
             "nameLocation": "4816:8:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1778,
+              "id": 1761,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "4824:2:12"
             },
             "returnParameters": {
-              "id": 1781,
+              "id": 1764,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1780,
+                  "id": 1763,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1782,
+                  "scope": 1765,
                   "src": "4850:5:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1820,7 +1820,7 @@
                     "typeString": "uint8"
                   },
                   "typeName": {
-                    "id": 1779,
+                    "id": 1762,
                     "name": "uint8",
                     "nodeType": "ElementaryTypeName",
                     "src": "4850:5:12",
@@ -1834,7 +1834,7 @@
               ],
               "src": "4849:7:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "4807:50:12",
             "stateMutability": "view",
             "virtual": false,
@@ -1842,13 +1842,13 @@
           },
           {
             "documentation": {
-              "id": 1783,
+              "id": 1766,
               "nodeType": "StructuredDocumentation",
               "src": "4865:56:12",
               "text": " @dev Returns the name of the token."
             },
             "functionSelector": "06fdde03",
-            "id": 1788,
+            "id": 1771,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1856,23 +1856,23 @@
             "nameLocation": "4936:4:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1784,
+              "id": 1767,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "4940:2:12"
             },
             "returnParameters": {
-              "id": 1787,
+              "id": 1770,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1786,
+                  "id": 1769,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1788,
+                  "scope": 1771,
                   "src": "4966:13:12",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1881,7 +1881,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1785,
+                    "id": 1768,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "4966:6:12",
@@ -1895,7 +1895,7 @@
               ],
               "src": "4965:15:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "4927:54:12",
             "stateMutability": "view",
             "virtual": false,
@@ -1903,13 +1903,13 @@
           },
           {
             "documentation": {
-              "id": 1789,
+              "id": 1772,
               "nodeType": "StructuredDocumentation",
               "src": "4989:220:12",
               "text": " @dev Returns the address of the onchainID of the token.\n the onchainID of the token gives all the information available\n about the token and is managed by the token issuer or his agent."
             },
             "functionSelector": "aba63705",
-            "id": 1794,
+            "id": 1777,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1917,23 +1917,23 @@
             "nameLocation": "5224:9:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1790,
+              "id": 1773,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "5233:2:12"
             },
             "returnParameters": {
-              "id": 1793,
+              "id": 1776,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1792,
+                  "id": 1775,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1794,
+                  "scope": 1777,
                   "src": "5259:7:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1942,7 +1942,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1791,
+                    "id": 1774,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "5259:7:12",
@@ -1957,7 +1957,7 @@
               ],
               "src": "5258:9:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "5215:53:12",
             "stateMutability": "view",
             "virtual": false,
@@ -1965,13 +1965,13 @@
           },
           {
             "documentation": {
-              "id": 1795,
+              "id": 1778,
               "nodeType": "StructuredDocumentation",
               "src": "5276:105:12",
               "text": " @dev Returns the symbol of the token, usually a shorter version of the\n name."
             },
             "functionSelector": "95d89b41",
-            "id": 1800,
+            "id": 1783,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1979,23 +1979,23 @@
             "nameLocation": "5396:6:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1796,
+              "id": 1779,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "5402:2:12"
             },
             "returnParameters": {
-              "id": 1799,
+              "id": 1782,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1798,
+                  "id": 1781,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1800,
+                  "scope": 1783,
                   "src": "5428:13:12",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -2004,7 +2004,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1797,
+                    "id": 1780,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "5428:6:12",
@@ -2018,7 +2018,7 @@
               ],
               "src": "5427:15:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "5387:56:12",
             "stateMutability": "view",
             "virtual": false,
@@ -2026,13 +2026,13 @@
           },
           {
             "documentation": {
-              "id": 1801,
+              "id": 1784,
               "nodeType": "StructuredDocumentation",
               "src": "5451:97:12",
               "text": " @dev Returns the TREX version of the token.\n current version is 3.0.0"
             },
             "functionSelector": "54fd4d50",
-            "id": 1806,
+            "id": 1789,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -2040,23 +2040,23 @@
             "nameLocation": "5563:7:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1802,
+              "id": 1785,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "5570:2:12"
             },
             "returnParameters": {
-              "id": 1805,
+              "id": 1788,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1804,
+                  "id": 1787,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1806,
+                  "scope": 1789,
                   "src": "5596:13:12",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -2065,7 +2065,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1803,
+                    "id": 1786,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "5596:6:12",
@@ -2079,7 +2079,7 @@
               ],
               "src": "5595:15:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "5554:57:12",
             "stateMutability": "view",
             "virtual": false,
@@ -2087,13 +2087,13 @@
           },
           {
             "documentation": {
-              "id": 1807,
+              "id": 1790,
               "nodeType": "StructuredDocumentation",
               "src": "5619:76:12",
               "text": "  @dev Returns the Identity Registry linked to the token"
             },
             "functionSelector": "134e18f4",
-            "id": 1813,
+            "id": 1796,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -2101,47 +2101,47 @@
             "nameLocation": "5710:16:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1808,
+              "id": 1791,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "5726:2:12"
             },
             "returnParameters": {
-              "id": 1812,
+              "id": 1795,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1811,
+                  "id": 1794,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1813,
+                  "scope": 1796,
                   "src": "5752:17:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_IIdentityRegistry_$2229",
+                    "typeIdentifier": "t_contract$_IIdentityRegistry_$2212",
                     "typeString": "contract IIdentityRegistry"
                   },
                   "typeName": {
-                    "id": 1810,
+                    "id": 1793,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 1809,
+                      "id": 1792,
                       "name": "IIdentityRegistry",
                       "nameLocations": [
                         "5752:17:12"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 2229,
+                      "referencedDeclaration": 2212,
                       "src": "5752:17:12"
                     },
-                    "referencedDeclaration": 2229,
+                    "referencedDeclaration": 2212,
                     "src": "5752:17:12",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IIdentityRegistry_$2229",
+                      "typeIdentifier": "t_contract$_IIdentityRegistry_$2212",
                       "typeString": "contract IIdentityRegistry"
                     }
                   },
@@ -2150,7 +2150,7 @@
               ],
               "src": "5751:19:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "5701:70:12",
             "stateMutability": "view",
             "virtual": false,
@@ -2158,13 +2158,13 @@
           },
           {
             "documentation": {
-              "id": 1814,
+              "id": 1797,
               "nodeType": "StructuredDocumentation",
               "src": "5779:78:12",
               "text": "  @dev Returns the Compliance contract linked to the token"
             },
             "functionSelector": "6290865d",
-            "id": 1820,
+            "id": 1803,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -2172,47 +2172,47 @@
             "nameLocation": "5872:10:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1815,
+              "id": 1798,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "5882:2:12"
             },
             "returnParameters": {
-              "id": 1819,
+              "id": 1802,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1818,
+                  "id": 1801,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1820,
+                  "scope": 1803,
                   "src": "5908:11:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_ICompliance_$1703",
+                    "typeIdentifier": "t_contract$_ICompliance_$1686",
                     "typeString": "contract ICompliance"
                   },
                   "typeName": {
-                    "id": 1817,
+                    "id": 1800,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 1816,
+                      "id": 1799,
                       "name": "ICompliance",
                       "nameLocations": [
                         "5908:11:12"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 1703,
+                      "referencedDeclaration": 1686,
                       "src": "5908:11:12"
                     },
-                    "referencedDeclaration": 1703,
+                    "referencedDeclaration": 1686,
                     "src": "5908:11:12",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_ICompliance_$1703",
+                      "typeIdentifier": "t_contract$_ICompliance_$1686",
                       "typeString": "contract ICompliance"
                     }
                   },
@@ -2221,7 +2221,7 @@
               ],
               "src": "5907:13:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "5863:58:12",
             "stateMutability": "view",
             "virtual": false,
@@ -2229,13 +2229,13 @@
           },
           {
             "documentation": {
-              "id": 1821,
+              "id": 1804,
               "nodeType": "StructuredDocumentation",
               "src": "5929:86:12",
               "text": " @dev Returns true if the contract is paused, and false otherwise."
             },
             "functionSelector": "5c975abb",
-            "id": 1826,
+            "id": 1809,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -2243,23 +2243,23 @@
             "nameLocation": "6030:6:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1822,
+              "id": 1805,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "6036:2:12"
             },
             "returnParameters": {
-              "id": 1825,
+              "id": 1808,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1824,
+                  "id": 1807,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1826,
+                  "scope": 1809,
                   "src": "6062:4:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2268,7 +2268,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 1823,
+                    "id": 1806,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "6062:4:12",
@@ -2282,7 +2282,7 @@
               ],
               "src": "6061:6:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "6021:47:12",
             "stateMutability": "view",
             "virtual": false,
@@ -2290,13 +2290,13 @@
           },
           {
             "documentation": {
-              "id": 1827,
+              "id": 1810,
               "nodeType": "StructuredDocumentation",
               "src": "6076:440:12",
               "text": "  @dev Returns the freezing status of a wallet\n  if isFrozen returns `true` the wallet is frozen\n  if isFrozen returns `false` the wallet is not frozen\n  isFrozen returning `true` doesn't mean that the balance is free, tokens could be blocked by\n  a partial freeze or the whole token could be blocked by pause\n  @param _userAddress the address of the wallet on which isFrozen is called"
             },
             "functionSelector": "e5839836",
-            "id": 1834,
+            "id": 1817,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -2304,17 +2304,17 @@
             "nameLocation": "6531:8:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1830,
+              "id": 1813,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1829,
+                  "id": 1812,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "6548:12:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1834,
+                  "scope": 1817,
                   "src": "6540:20:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2323,7 +2323,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1828,
+                    "id": 1811,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "6540:7:12",
@@ -2339,17 +2339,17 @@
               "src": "6539:22:12"
             },
             "returnParameters": {
-              "id": 1833,
+              "id": 1816,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1832,
+                  "id": 1815,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1834,
+                  "scope": 1817,
                   "src": "6585:4:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2358,7 +2358,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 1831,
+                    "id": 1814,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "6585:4:12",
@@ -2372,7 +2372,7 @@
               ],
               "src": "6584:6:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "6522:69:12",
             "stateMutability": "view",
             "virtual": false,
@@ -2380,13 +2380,13 @@
           },
           {
             "documentation": {
-              "id": 1835,
+              "id": 1818,
               "nodeType": "StructuredDocumentation",
               "src": "6599:268:12",
               "text": "  @dev Returns the amount of tokens that are partially frozen on a wallet\n  the amount of frozen tokens is always <= to the total balance of the wallet\n  @param _userAddress the address of the wallet on which getFrozenTokens is called"
             },
             "functionSelector": "158b1a57",
-            "id": 1842,
+            "id": 1825,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -2394,17 +2394,17 @@
             "nameLocation": "6882:15:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1838,
+              "id": 1821,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1837,
+                  "id": 1820,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "6916:12:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1842,
+                  "scope": 1825,
                   "src": "6908:20:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2413,7 +2413,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1836,
+                    "id": 1819,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "6908:7:12",
@@ -2429,17 +2429,17 @@
               "src": "6897:38:12"
             },
             "returnParameters": {
-              "id": 1841,
+              "id": 1824,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1840,
+                  "id": 1823,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1842,
+                  "scope": 1825,
                   "src": "6959:7:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2448,7 +2448,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1839,
+                    "id": 1822,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "6959:7:12",
@@ -2462,7 +2462,7 @@
               ],
               "src": "6958:9:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "6873:95:12",
             "stateMutability": "view",
             "virtual": false,
@@ -2470,13 +2470,13 @@
           },
           {
             "documentation": {
-              "id": 1843,
+              "id": 1826,
               "nodeType": "StructuredDocumentation",
               "src": "6976:217:12",
               "text": "  @dev sets the token name\n  @param _name the name of token to set\n  Only the owner of the token smart contract can call this function\n  emits a `UpdatedTokenInformation` event"
             },
             "functionSelector": "c47f0027",
-            "id": 1848,
+            "id": 1831,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -2484,17 +2484,17 @@
             "nameLocation": "7208:7:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1846,
+              "id": 1829,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1845,
+                  "id": 1828,
                   "mutability": "mutable",
                   "name": "_name",
                   "nameLocation": "7232:5:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1848,
+                  "scope": 1831,
                   "src": "7216:21:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -2503,7 +2503,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1844,
+                    "id": 1827,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "7216:6:12",
@@ -2518,12 +2518,12 @@
               "src": "7215:23:12"
             },
             "returnParameters": {
-              "id": 1847,
+              "id": 1830,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "7247:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "7199:49:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -2531,13 +2531,13 @@
           },
           {
             "documentation": {
-              "id": 1849,
+              "id": 1832,
               "nodeType": "StructuredDocumentation",
               "src": "7256:220:12",
               "text": "  @dev sets the token symbol\n  @param _symbol the token symbol to set\n  Only the owner of the token smart contract can call this function\n  emits a `UpdatedTokenInformation` event"
             },
             "functionSelector": "b84c8246",
-            "id": 1854,
+            "id": 1837,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -2545,17 +2545,17 @@
             "nameLocation": "7491:9:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1852,
+              "id": 1835,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1851,
+                  "id": 1834,
                   "mutability": "mutable",
                   "name": "_symbol",
                   "nameLocation": "7517:7:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1854,
+                  "scope": 1837,
                   "src": "7501:23:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -2564,7 +2564,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1850,
+                    "id": 1833,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "7501:6:12",
@@ -2579,12 +2579,12 @@
               "src": "7500:25:12"
             },
             "returnParameters": {
-              "id": 1853,
+              "id": 1836,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "7534:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "7482:53:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -2592,13 +2592,13 @@
           },
           {
             "documentation": {
-              "id": 1855,
+              "id": 1838,
               "nodeType": "StructuredDocumentation",
               "src": "7543:247:12",
               "text": "  @dev sets the onchain ID of the token\n  @param _onchainID the address of the onchain ID to set\n  Only the owner of the token smart contract can call this function\n  emits a `UpdatedTokenInformation` event"
             },
             "functionSelector": "3d1ddc5b",
-            "id": 1860,
+            "id": 1843,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -2606,17 +2606,17 @@
             "nameLocation": "7805:12:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1858,
+              "id": 1841,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1857,
+                  "id": 1840,
                   "mutability": "mutable",
                   "name": "_onchainID",
                   "nameLocation": "7826:10:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1860,
+                  "scope": 1843,
                   "src": "7818:18:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2625,7 +2625,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1856,
+                    "id": 1839,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "7818:7:12",
@@ -2641,12 +2641,12 @@
               "src": "7817:20:12"
             },
             "returnParameters": {
-              "id": 1859,
+              "id": 1842,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "7846:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "7796:51:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -2654,13 +2654,13 @@
           },
           {
             "documentation": {
-              "id": 1861,
+              "id": 1844,
               "nodeType": "StructuredDocumentation",
               "src": "7855:230:12",
               "text": "  @dev pauses the token contract, when contract is paused investors cannot transfer tokens anymore\n  This function can only be called by a wallet set as agent of the token\n  emits a `Paused` event"
             },
             "functionSelector": "8456cb59",
-            "id": 1864,
+            "id": 1847,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -2668,18 +2668,18 @@
             "nameLocation": "8100:5:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1862,
+              "id": 1845,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "8105:2:12"
             },
             "returnParameters": {
-              "id": 1863,
+              "id": 1846,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "8116:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "8091:26:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -2687,13 +2687,13 @@
           },
           {
             "documentation": {
-              "id": 1865,
+              "id": 1848,
               "nodeType": "StructuredDocumentation",
               "src": "8125:329:12",
               "text": "  @dev unpauses the token contract, when contract is unpaused investors can transfer tokens\n  if their wallet is not blocked & if the amount to transfer is <= to the amount of free tokens\n  This function can only be called by a wallet set as agent of the token\n  emits an `Unpaused` event"
             },
             "functionSelector": "3f4ba83a",
-            "id": 1868,
+            "id": 1851,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -2701,18 +2701,18 @@
             "nameLocation": "8469:7:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1866,
+              "id": 1849,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "8476:2:12"
             },
             "returnParameters": {
-              "id": 1867,
+              "id": 1850,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "8487:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "8460:28:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -2720,13 +2720,13 @@
           },
           {
             "documentation": {
-              "id": 1869,
+              "id": 1852,
               "nodeType": "StructuredDocumentation",
               "src": "8496:320:12",
               "text": "  @dev sets an address frozen status for this token.\n  @param _userAddress The address for which to update frozen status\n  @param _freeze Frozen status of the address\n  This function can only be called by a wallet set as agent of the token\n  emits an `AddressFrozen` event"
             },
             "functionSelector": "c69c09cf",
-            "id": 1876,
+            "id": 1859,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -2734,17 +2734,17 @@
             "nameLocation": "8831:16:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1874,
+              "id": 1857,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1871,
+                  "id": 1854,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "8856:12:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1876,
+                  "scope": 1859,
                   "src": "8848:20:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2753,7 +2753,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1870,
+                    "id": 1853,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "8848:7:12",
@@ -2767,12 +2767,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1873,
+                  "id": 1856,
                   "mutability": "mutable",
                   "name": "_freeze",
                   "nameLocation": "8875:7:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1876,
+                  "scope": 1859,
                   "src": "8870:12:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2781,7 +2781,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 1872,
+                    "id": 1855,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "8870:4:12",
@@ -2796,12 +2796,12 @@
               "src": "8847:36:12"
             },
             "returnParameters": {
-              "id": 1875,
+              "id": 1858,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "8892:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "8822:71:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -2809,13 +2809,13 @@
           },
           {
             "documentation": {
-              "id": 1877,
+              "id": 1860,
               "nodeType": "StructuredDocumentation",
               "src": "8901:323:12",
               "text": "  @dev freezes token amount specified for given address.\n  @param _userAddress The address for which to update frozen tokens\n  @param _amount Amount of Tokens to be frozen\n  This function can only be called by a wallet set as agent of the token\n  emits a `TokensFrozen` event"
             },
             "functionSelector": "125c4a33",
-            "id": 1884,
+            "id": 1867,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -2823,17 +2823,17 @@
             "nameLocation": "9239:19:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1882,
+              "id": 1865,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1879,
+                  "id": 1862,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "9277:12:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1884,
+                  "scope": 1867,
                   "src": "9269:20:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2842,7 +2842,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1878,
+                    "id": 1861,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "9269:7:12",
@@ -2856,12 +2856,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1881,
+                  "id": 1864,
                   "mutability": "mutable",
                   "name": "_amount",
                   "nameLocation": "9308:7:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1884,
+                  "scope": 1867,
                   "src": "9300:15:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2870,7 +2870,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1880,
+                    "id": 1863,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "9300:7:12",
@@ -2885,12 +2885,12 @@
               "src": "9258:64:12"
             },
             "returnParameters": {
-              "id": 1883,
+              "id": 1866,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "9331:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "9230:102:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -2898,13 +2898,13 @@
           },
           {
             "documentation": {
-              "id": 1885,
+              "id": 1868,
               "nodeType": "StructuredDocumentation",
               "src": "9340:328:12",
               "text": "  @dev unfreezes token amount specified for given address\n  @param _userAddress The address for which to update frozen tokens\n  @param _amount Amount of Tokens to be unfrozen\n  This function can only be called by a wallet set as agent of the token\n  emits a `TokensUnfrozen` event"
             },
             "functionSelector": "1fe56f7d",
-            "id": 1892,
+            "id": 1875,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -2912,17 +2912,17 @@
             "nameLocation": "9683:21:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1890,
+              "id": 1873,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1887,
+                  "id": 1870,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "9723:12:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1892,
+                  "scope": 1875,
                   "src": "9715:20:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2931,7 +2931,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1886,
+                    "id": 1869,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "9715:7:12",
@@ -2945,12 +2945,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1889,
+                  "id": 1872,
                   "mutability": "mutable",
                   "name": "_amount",
                   "nameLocation": "9754:7:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1892,
+                  "scope": 1875,
                   "src": "9746:15:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2959,7 +2959,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1888,
+                    "id": 1871,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "9746:7:12",
@@ -2974,12 +2974,12 @@
               "src": "9704:64:12"
             },
             "returnParameters": {
-              "id": 1891,
+              "id": 1874,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "9777:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "9674:104:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -2987,13 +2987,13 @@
           },
           {
             "documentation": {
-              "id": 1893,
+              "id": 1876,
               "nodeType": "StructuredDocumentation",
               "src": "9786:268:12",
               "text": "  @dev sets the Identity Registry for the token\n  @param _identityRegistry the address of the Identity Registry to set\n  Only the owner of the token smart contract can call this function\n  emits an `IdentityRegistryAdded` event"
             },
             "functionSelector": "cbf3f861",
-            "id": 1898,
+            "id": 1881,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -3001,17 +3001,17 @@
             "nameLocation": "10069:19:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1896,
+              "id": 1879,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1895,
+                  "id": 1878,
                   "mutability": "mutable",
                   "name": "_identityRegistry",
                   "nameLocation": "10097:17:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1898,
+                  "scope": 1881,
                   "src": "10089:25:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3020,7 +3020,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1894,
+                    "id": 1877,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "10089:7:12",
@@ -3036,12 +3036,12 @@
               "src": "10088:27:12"
             },
             "returnParameters": {
-              "id": 1897,
+              "id": 1880,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "10124:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "10060:65:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -3049,13 +3049,13 @@
           },
           {
             "documentation": {
-              "id": 1899,
+              "id": 1882,
               "nodeType": "StructuredDocumentation",
               "src": "10133:258:12",
               "text": "  @dev sets the compliance contract of the token\n  @param _compliance the address of the compliance contract to set\n  Only the owner of the token smart contract can call this function\n  emits a `ComplianceAdded` event"
             },
             "functionSelector": "f8981789",
-            "id": 1904,
+            "id": 1887,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -3063,17 +3063,17 @@
             "nameLocation": "10406:13:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1902,
+              "id": 1885,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1901,
+                  "id": 1884,
                   "mutability": "mutable",
                   "name": "_compliance",
                   "nameLocation": "10428:11:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1904,
+                  "scope": 1887,
                   "src": "10420:19:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3082,7 +3082,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1900,
+                    "id": 1883,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "10420:7:12",
@@ -3098,12 +3098,12 @@
               "src": "10419:21:12"
             },
             "returnParameters": {
-              "id": 1903,
+              "id": 1886,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "10449:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "10397:53:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -3111,13 +3111,13 @@
           },
           {
             "documentation": {
-              "id": 1905,
+              "id": 1888,
               "nodeType": "StructuredDocumentation",
               "src": "10458:955:12",
               "text": "  @dev force a transfer of tokens between 2 whitelisted wallets\n  In case the `from` address has not enough free tokens (unfrozen tokens)\n  but has a total balance higher or equal to the `amount`\n  the amount of frozen tokens is reduced in order to have enough free tokens\n  to proceed the transfer, in such a case, the remaining balance on the `from`\n  account is 100% composed of frozen tokens post-transfer.\n  Require that the `to` address is a verified address,\n  @param _from The address of the sender\n  @param _to The address of the receiver\n  @param _amount The number of tokens to transfer\n  @return `true` if successful and revert if unsuccessful\n  This function can only be called by a wallet set as agent of the token\n  emits a `TokensUnfrozen` event if `_amount` is higher than the free balance of `_from`\n  emits a `Transfer` event"
             },
             "functionSelector": "9fc1d0e7",
-            "id": 1916,
+            "id": 1899,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -3125,17 +3125,17 @@
             "nameLocation": "11428:14:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1912,
+              "id": 1895,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1907,
+                  "id": 1890,
                   "mutability": "mutable",
                   "name": "_from",
                   "nameLocation": "11461:5:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1916,
+                  "scope": 1899,
                   "src": "11453:13:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3144,7 +3144,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1906,
+                    "id": 1889,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "11453:7:12",
@@ -3158,12 +3158,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1909,
+                  "id": 1892,
                   "mutability": "mutable",
                   "name": "_to",
                   "nameLocation": "11485:3:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1916,
+                  "scope": 1899,
                   "src": "11477:11:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3172,7 +3172,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1908,
+                    "id": 1891,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "11477:7:12",
@@ -3186,12 +3186,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1911,
+                  "id": 1894,
                   "mutability": "mutable",
                   "name": "_amount",
                   "nameLocation": "11507:7:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1916,
+                  "scope": 1899,
                   "src": "11499:15:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3200,7 +3200,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1910,
+                    "id": 1893,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "11499:7:12",
@@ -3215,17 +3215,17 @@
               "src": "11442:79:12"
             },
             "returnParameters": {
-              "id": 1915,
+              "id": 1898,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1914,
+                  "id": 1897,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1916,
+                  "scope": 1899,
                   "src": "11540:4:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3234,7 +3234,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 1913,
+                    "id": 1896,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "11540:4:12",
@@ -3248,7 +3248,7 @@
               ],
               "src": "11539:6:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "11419:127:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -3256,13 +3256,13 @@
           },
           {
             "documentation": {
-              "id": 1917,
+              "id": 1900,
               "nodeType": "StructuredDocumentation",
               "src": "11554:419:12",
               "text": "  @dev mint tokens on a wallet\n  Improved version of default mint method. Tokens can be minted\n  to an address if only it is a verified address as per the security token.\n  @param _to Address to mint the tokens to.\n  @param _amount Amount of tokens to mint.\n  This function can only be called by a wallet set as agent of the token\n  emits a `Transfer` event"
             },
             "functionSelector": "40c10f19",
-            "id": 1924,
+            "id": 1907,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -3270,17 +3270,17 @@
             "nameLocation": "11988:4:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1922,
+              "id": 1905,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1919,
+                  "id": 1902,
                   "mutability": "mutable",
                   "name": "_to",
                   "nameLocation": "12001:3:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1924,
+                  "scope": 1907,
                   "src": "11993:11:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3289,7 +3289,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1918,
+                    "id": 1901,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "11993:7:12",
@@ -3303,12 +3303,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1921,
+                  "id": 1904,
                   "mutability": "mutable",
                   "name": "_amount",
                   "nameLocation": "12014:7:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1924,
+                  "scope": 1907,
                   "src": "12006:15:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3317,7 +3317,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1920,
+                    "id": 1903,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "12006:7:12",
@@ -3332,12 +3332,12 @@
               "src": "11992:30:12"
             },
             "returnParameters": {
-              "id": 1923,
+              "id": 1906,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "12031:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "11979:53:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -3345,13 +3345,13 @@
           },
           {
             "documentation": {
-              "id": 1925,
+              "id": 1908,
               "nodeType": "StructuredDocumentation",
               "src": "12040:764:12",
               "text": "  @dev burn tokens on a wallet\n  In case the `account` address has not enough free tokens (unfrozen tokens)\n  but has a total balance higher or equal to the `value` amount\n  the amount of frozen tokens is reduced in order to have enough free tokens\n  to proceed the burn, in such a case, the remaining balance on the `account`\n  is 100% composed of frozen tokens post-transaction.\n  @param _userAddress Address to burn the tokens from.\n  @param _amount Amount of tokens to burn.\n  This function can only be called by a wallet set as agent of the token\n  emits a `TokensUnfrozen` event if `_amount` is higher than the free balance of `_userAddress`\n  emits a `Transfer` event"
             },
             "functionSelector": "9dc29fac",
-            "id": 1932,
+            "id": 1915,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -3359,17 +3359,17 @@
             "nameLocation": "12819:4:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1930,
+              "id": 1913,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1927,
+                  "id": 1910,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nameLocation": "12832:12:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1932,
+                  "scope": 1915,
                   "src": "12824:20:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3378,7 +3378,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1926,
+                    "id": 1909,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "12824:7:12",
@@ -3392,12 +3392,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1929,
+                  "id": 1912,
                   "mutability": "mutable",
                   "name": "_amount",
                   "nameLocation": "12854:7:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1932,
+                  "scope": 1915,
                   "src": "12846:15:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3406,7 +3406,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1928,
+                    "id": 1911,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "12846:7:12",
@@ -3421,12 +3421,12 @@
               "src": "12823:39:12"
             },
             "returnParameters": {
-              "id": 1931,
+              "id": 1914,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "12871:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "12810:62:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -3434,13 +3434,13 @@
           },
           {
             "documentation": {
-              "id": 1933,
+              "id": 1916,
               "nodeType": "StructuredDocumentation",
               "src": "12880:804:12",
               "text": "  @dev recovery function used to force transfer tokens from a\n  lost wallet to a new wallet for an investor.\n  @param _lostWallet the wallet that the investor lost\n  @param _newWallet the newly provided wallet on which tokens have to be transferred\n  @param _investorOnchainID the onchainID of the investor asking for a recovery\n  This function can only be called by a wallet set as agent of the token\n  emits a `TokensUnfrozen` event if there is some frozen tokens on the lost wallet if the recovery process is successful\n  emits a `Transfer` event if the recovery process is successful\n  emits a `RecoverySuccess` event if the recovery process is successful\n  emits a `RecoveryFails` event if the recovery process fails"
             },
             "functionSelector": "9285948a",
-            "id": 1944,
+            "id": 1927,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -3448,17 +3448,17 @@
             "nameLocation": "13699:15:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1940,
+              "id": 1923,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1935,
+                  "id": 1918,
                   "mutability": "mutable",
                   "name": "_lostWallet",
                   "nameLocation": "13733:11:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1944,
+                  "scope": 1927,
                   "src": "13725:19:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3467,7 +3467,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1934,
+                    "id": 1917,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "13725:7:12",
@@ -3481,12 +3481,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1937,
+                  "id": 1920,
                   "mutability": "mutable",
                   "name": "_newWallet",
                   "nameLocation": "13763:10:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1944,
+                  "scope": 1927,
                   "src": "13755:18:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3495,7 +3495,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1936,
+                    "id": 1919,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "13755:7:12",
@@ -3509,12 +3509,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1939,
+                  "id": 1922,
                   "mutability": "mutable",
                   "name": "_investorOnchainID",
                   "nameLocation": "13792:18:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1944,
+                  "scope": 1927,
                   "src": "13784:26:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3523,7 +3523,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1938,
+                    "id": 1921,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "13784:7:12",
@@ -3539,17 +3539,17 @@
               "src": "13714:103:12"
             },
             "returnParameters": {
-              "id": 1943,
+              "id": 1926,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1942,
+                  "id": 1925,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1944,
+                  "scope": 1927,
                   "src": "13836:4:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3558,7 +3558,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 1941,
+                    "id": 1924,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "13836:4:12",
@@ -3572,7 +3572,7 @@
               ],
               "src": "13835:6:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "13690:152:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -3580,13 +3580,13 @@
           },
           {
             "documentation": {
-              "id": 1945,
+              "id": 1928,
               "nodeType": "StructuredDocumentation",
               "src": "13850:655:12",
               "text": "  @dev function allowing to issue transfers in batch\n  Require that the msg.sender and `to` addresses are not frozen.\n  Require that the total value should not exceed available balance.\n  Require that the `to` addresses are all verified addresses,\n  IMPORTANT : THIS TRANSACTION COULD EXCEED GAS LIMIT IF `_toList.length` IS TOO HIGH,\n  USE WITH CARE OR YOU COULD LOSE TX FEES WITH AN \"OUT OF GAS\" TRANSACTION\n  @param _toList The addresses of the receivers\n  @param _amounts The number of tokens to transfer to the corresponding receiver\n  emits _toList.length `Transfer` events"
             },
             "functionSelector": "88d695b2",
-            "id": 1954,
+            "id": 1937,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -3594,17 +3594,17 @@
             "nameLocation": "14520:13:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1952,
+              "id": 1935,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1948,
+                  "id": 1931,
                   "mutability": "mutable",
                   "name": "_toList",
                   "nameLocation": "14563:7:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1954,
+                  "scope": 1937,
                   "src": "14544:26:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -3614,7 +3614,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 1946,
+                      "id": 1929,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
                       "src": "14544:7:12",
@@ -3624,7 +3624,7 @@
                         "typeString": "address"
                       }
                     },
-                    "id": 1947,
+                    "id": 1930,
                     "nodeType": "ArrayTypeName",
                     "src": "14544:9:12",
                     "typeDescriptions": {
@@ -3636,12 +3636,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1951,
+                  "id": 1934,
                   "mutability": "mutable",
                   "name": "_amounts",
                   "nameLocation": "14600:8:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1954,
+                  "scope": 1937,
                   "src": "14581:27:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -3651,7 +3651,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 1949,
+                      "id": 1932,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
                       "src": "14581:7:12",
@@ -3660,7 +3660,7 @@
                         "typeString": "uint256"
                       }
                     },
-                    "id": 1950,
+                    "id": 1933,
                     "nodeType": "ArrayTypeName",
                     "src": "14581:9:12",
                     "typeDescriptions": {
@@ -3674,12 +3674,12 @@
               "src": "14533:82:12"
             },
             "returnParameters": {
-              "id": 1953,
+              "id": 1936,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "14624:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "14511:114:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -3687,13 +3687,13 @@
           },
           {
             "documentation": {
-              "id": 1955,
+              "id": 1938,
               "nodeType": "StructuredDocumentation",
               "src": "14633:855:12",
               "text": "  @dev function allowing to issue forced transfers in batch\n  Require that `_amounts[i]` should not exceed available balance of `_fromList[i]`.\n  Require that the `_toList` addresses are all verified addresses\n  IMPORTANT : THIS TRANSACTION COULD EXCEED GAS LIMIT IF `_fromList.length` IS TOO HIGH,\n  USE WITH CARE OR YOU COULD LOSE TX FEES WITH AN \"OUT OF GAS\" TRANSACTION\n  @param _fromList The addresses of the senders\n  @param _toList The addresses of the receivers\n  @param _amounts The number of tokens to transfer to the corresponding receiver\n  This function can only be called by a wallet set as agent of the token\n  emits `TokensUnfrozen` events if `_amounts[i]` is higher than the free balance of `_fromList[i]`\n  emits _fromList.length `Transfer` events"
             },
             "functionSelector": "42a47abc",
-            "id": 1967,
+            "id": 1950,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -3701,17 +3701,17 @@
             "nameLocation": "15503:19:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1965,
+              "id": 1948,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1958,
+                  "id": 1941,
                   "mutability": "mutable",
                   "name": "_fromList",
                   "nameLocation": "15552:9:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1967,
+                  "scope": 1950,
                   "src": "15533:28:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -3721,7 +3721,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 1956,
+                      "id": 1939,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
                       "src": "15533:7:12",
@@ -3731,7 +3731,7 @@
                         "typeString": "address"
                       }
                     },
-                    "id": 1957,
+                    "id": 1940,
                     "nodeType": "ArrayTypeName",
                     "src": "15533:9:12",
                     "typeDescriptions": {
@@ -3743,12 +3743,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1961,
+                  "id": 1944,
                   "mutability": "mutable",
                   "name": "_toList",
                   "nameLocation": "15591:7:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1967,
+                  "scope": 1950,
                   "src": "15572:26:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -3758,7 +3758,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 1959,
+                      "id": 1942,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
                       "src": "15572:7:12",
@@ -3768,7 +3768,7 @@
                         "typeString": "address"
                       }
                     },
-                    "id": 1960,
+                    "id": 1943,
                     "nodeType": "ArrayTypeName",
                     "src": "15572:9:12",
                     "typeDescriptions": {
@@ -3780,12 +3780,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1964,
+                  "id": 1947,
                   "mutability": "mutable",
                   "name": "_amounts",
                   "nameLocation": "15628:8:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1967,
+                  "scope": 1950,
                   "src": "15609:27:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -3795,7 +3795,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 1962,
+                      "id": 1945,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
                       "src": "15609:7:12",
@@ -3804,7 +3804,7 @@
                         "typeString": "uint256"
                       }
                     },
-                    "id": 1963,
+                    "id": 1946,
                     "nodeType": "ArrayTypeName",
                     "src": "15609:9:12",
                     "typeDescriptions": {
@@ -3818,12 +3818,12 @@
               "src": "15522:121:12"
             },
             "returnParameters": {
-              "id": 1966,
+              "id": 1949,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "15652:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "15494:159:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -3831,13 +3831,13 @@
           },
           {
             "documentation": {
-              "id": 1968,
+              "id": 1951,
               "nodeType": "StructuredDocumentation",
               "src": "15661:584:12",
               "text": "  @dev function allowing to mint tokens in batch\n  Require that the `_toList` addresses are all verified addresses\n  IMPORTANT : THIS TRANSACTION COULD EXCEED GAS LIMIT IF `_toList.length` IS TOO HIGH,\n  USE WITH CARE OR YOU COULD LOSE TX FEES WITH AN \"OUT OF GAS\" TRANSACTION\n  @param _toList The addresses of the receivers\n  @param _amounts The number of tokens to mint to the corresponding receiver\n  This function can only be called by a wallet set as agent of the token\n  emits _toList.length `Transfer` events"
             },
             "functionSelector": "68573107",
-            "id": 1977,
+            "id": 1960,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -3845,17 +3845,17 @@
             "nameLocation": "16260:9:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1975,
+              "id": 1958,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1971,
+                  "id": 1954,
                   "mutability": "mutable",
                   "name": "_toList",
                   "nameLocation": "16299:7:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1977,
+                  "scope": 1960,
                   "src": "16280:26:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -3865,7 +3865,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 1969,
+                      "id": 1952,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
                       "src": "16280:7:12",
@@ -3875,7 +3875,7 @@
                         "typeString": "address"
                       }
                     },
-                    "id": 1970,
+                    "id": 1953,
                     "nodeType": "ArrayTypeName",
                     "src": "16280:9:12",
                     "typeDescriptions": {
@@ -3887,12 +3887,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1974,
+                  "id": 1957,
                   "mutability": "mutable",
                   "name": "_amounts",
                   "nameLocation": "16336:8:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1977,
+                  "scope": 1960,
                   "src": "16317:27:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -3902,7 +3902,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 1972,
+                      "id": 1955,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
                       "src": "16317:7:12",
@@ -3911,7 +3911,7 @@
                         "typeString": "uint256"
                       }
                     },
-                    "id": 1973,
+                    "id": 1956,
                     "nodeType": "ArrayTypeName",
                     "src": "16317:9:12",
                     "typeDescriptions": {
@@ -3925,12 +3925,12 @@
               "src": "16269:82:12"
             },
             "returnParameters": {
-              "id": 1976,
+              "id": 1959,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "16360:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "16251:110:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -3938,13 +3938,13 @@
           },
           {
             "documentation": {
-              "id": 1978,
+              "id": 1961,
               "nodeType": "StructuredDocumentation",
               "src": "16369:633:12",
               "text": "  @dev function allowing to burn tokens in batch\n  Require that the `_userAddresses` addresses are all verified addresses\n  IMPORTANT : THIS TRANSACTION COULD EXCEED GAS LIMIT IF `_userAddresses.length` IS TOO HIGH,\n  USE WITH CARE OR YOU COULD LOSE TX FEES WITH AN \"OUT OF GAS\" TRANSACTION\n  @param _userAddresses The addresses of the wallets concerned by the burn\n  @param _amounts The number of tokens to burn from the corresponding wallets\n  This function can only be called by a wallet set as agent of the token\n  emits _userAddresses.length `Transfer` events"
             },
             "functionSelector": "4a6cc677",
-            "id": 1987,
+            "id": 1970,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -3952,17 +3952,17 @@
             "nameLocation": "17017:9:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1985,
+              "id": 1968,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1981,
+                  "id": 1964,
                   "mutability": "mutable",
                   "name": "_userAddresses",
                   "nameLocation": "17056:14:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1987,
+                  "scope": 1970,
                   "src": "17037:33:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -3972,7 +3972,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 1979,
+                      "id": 1962,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
                       "src": "17037:7:12",
@@ -3982,7 +3982,7 @@
                         "typeString": "address"
                       }
                     },
-                    "id": 1980,
+                    "id": 1963,
                     "nodeType": "ArrayTypeName",
                     "src": "17037:9:12",
                     "typeDescriptions": {
@@ -3994,12 +3994,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1984,
+                  "id": 1967,
                   "mutability": "mutable",
                   "name": "_amounts",
                   "nameLocation": "17100:8:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1987,
+                  "scope": 1970,
                   "src": "17081:27:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -4009,7 +4009,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 1982,
+                      "id": 1965,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
                       "src": "17081:7:12",
@@ -4018,7 +4018,7 @@
                         "typeString": "uint256"
                       }
                     },
-                    "id": 1983,
+                    "id": 1966,
                     "nodeType": "ArrayTypeName",
                     "src": "17081:9:12",
                     "typeDescriptions": {
@@ -4032,12 +4032,12 @@
               "src": "17026:89:12"
             },
             "returnParameters": {
-              "id": 1986,
+              "id": 1969,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "17124:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "17008:117:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -4045,13 +4045,13 @@
           },
           {
             "documentation": {
-              "id": 1988,
+              "id": 1971,
               "nodeType": "StructuredDocumentation",
               "src": "17133:546:12",
               "text": "  @dev function allowing to set frozen addresses in batch\n  IMPORTANT : THIS TRANSACTION COULD EXCEED GAS LIMIT IF `_userAddresses.length` IS TOO HIGH,\n  USE WITH CARE OR YOU COULD LOSE TX FEES WITH AN \"OUT OF GAS\" TRANSACTION\n  @param _userAddresses The addresses for which to update frozen status\n  @param _freeze Frozen status of the corresponding address\n  This function can only be called by a wallet set as agent of the token\n  emits _userAddresses.length `AddressFrozen` events"
             },
             "functionSelector": "1a7af379",
-            "id": 1997,
+            "id": 1980,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -4059,17 +4059,17 @@
             "nameLocation": "17694:21:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1995,
+              "id": 1978,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1991,
+                  "id": 1974,
                   "mutability": "mutable",
                   "name": "_userAddresses",
                   "nameLocation": "17745:14:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1997,
+                  "scope": 1980,
                   "src": "17726:33:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -4079,7 +4079,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 1989,
+                      "id": 1972,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
                       "src": "17726:7:12",
@@ -4089,7 +4089,7 @@
                         "typeString": "address"
                       }
                     },
-                    "id": 1990,
+                    "id": 1973,
                     "nodeType": "ArrayTypeName",
                     "src": "17726:9:12",
                     "typeDescriptions": {
@@ -4101,12 +4101,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1994,
+                  "id": 1977,
                   "mutability": "mutable",
                   "name": "_freeze",
                   "nameLocation": "17786:7:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1997,
+                  "scope": 1980,
                   "src": "17770:23:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -4116,7 +4116,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 1992,
+                      "id": 1975,
                       "name": "bool",
                       "nodeType": "ElementaryTypeName",
                       "src": "17770:4:12",
@@ -4125,7 +4125,7 @@
                         "typeString": "bool"
                       }
                     },
-                    "id": 1993,
+                    "id": 1976,
                     "nodeType": "ArrayTypeName",
                     "src": "17770:6:12",
                     "typeDescriptions": {
@@ -4139,12 +4139,12 @@
               "src": "17715:85:12"
             },
             "returnParameters": {
-              "id": 1996,
+              "id": 1979,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "17809:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "17685:125:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -4152,13 +4152,13 @@
           },
           {
             "documentation": {
-              "id": 1998,
+              "id": 1981,
               "nodeType": "StructuredDocumentation",
               "src": "17818:566:12",
               "text": "  @dev function allowing to freeze tokens partially in batch\n  IMPORTANT : THIS TRANSACTION COULD EXCEED GAS LIMIT IF `_userAddresses.length` IS TOO HIGH,\n  USE WITH CARE OR YOU COULD LOSE TX FEES WITH AN \"OUT OF GAS\" TRANSACTION\n  @param _userAddresses The addresses on which tokens need to be frozen\n  @param _amounts the amount of tokens to freeze on the corresponding address\n  This function can only be called by a wallet set as agent of the token\n  emits _userAddresses.length `TokensFrozen` events"
             },
             "functionSelector": "fc7e5fa8",
-            "id": 2007,
+            "id": 1990,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -4166,17 +4166,17 @@
             "nameLocation": "18399:24:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2005,
+              "id": 1988,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2001,
+                  "id": 1984,
                   "mutability": "mutable",
                   "name": "_userAddresses",
                   "nameLocation": "18453:14:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2007,
+                  "scope": 1990,
                   "src": "18434:33:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -4186,7 +4186,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 1999,
+                      "id": 1982,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
                       "src": "18434:7:12",
@@ -4196,7 +4196,7 @@
                         "typeString": "address"
                       }
                     },
-                    "id": 2000,
+                    "id": 1983,
                     "nodeType": "ArrayTypeName",
                     "src": "18434:9:12",
                     "typeDescriptions": {
@@ -4208,12 +4208,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2004,
+                  "id": 1987,
                   "mutability": "mutable",
                   "name": "_amounts",
                   "nameLocation": "18497:8:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2007,
+                  "scope": 1990,
                   "src": "18478:27:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -4223,7 +4223,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 2002,
+                      "id": 1985,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
                       "src": "18478:7:12",
@@ -4232,7 +4232,7 @@
                         "typeString": "uint256"
                       }
                     },
-                    "id": 2003,
+                    "id": 1986,
                     "nodeType": "ArrayTypeName",
                     "src": "18478:9:12",
                     "typeDescriptions": {
@@ -4246,12 +4246,12 @@
               "src": "18423:89:12"
             },
             "returnParameters": {
-              "id": 2006,
+              "id": 1989,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "18521:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "18390:132:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -4259,13 +4259,13 @@
           },
           {
             "documentation": {
-              "id": 2008,
+              "id": 1991,
               "nodeType": "StructuredDocumentation",
               "src": "18530:574:12",
               "text": "  @dev function allowing to unfreeze tokens partially in batch\n  IMPORTANT : THIS TRANSACTION COULD EXCEED GAS LIMIT IF `_userAddresses.length` IS TOO HIGH,\n  USE WITH CARE OR YOU COULD LOSE TX FEES WITH AN \"OUT OF GAS\" TRANSACTION\n  @param _userAddresses The addresses on which tokens need to be unfrozen\n  @param _amounts the amount of tokens to unfreeze on the corresponding address\n  This function can only be called by a wallet set as agent of the token\n  emits _userAddresses.length `TokensUnfrozen` events"
             },
             "functionSelector": "4710362d",
-            "id": 2017,
+            "id": 2000,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -4273,17 +4273,17 @@
             "nameLocation": "19119:26:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2015,
+              "id": 1998,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2011,
+                  "id": 1994,
                   "mutability": "mutable",
                   "name": "_userAddresses",
                   "nameLocation": "19175:14:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2017,
+                  "scope": 2000,
                   "src": "19156:33:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -4293,7 +4293,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 2009,
+                      "id": 1992,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
                       "src": "19156:7:12",
@@ -4303,7 +4303,7 @@
                         "typeString": "address"
                       }
                     },
-                    "id": 2010,
+                    "id": 1993,
                     "nodeType": "ArrayTypeName",
                     "src": "19156:9:12",
                     "typeDescriptions": {
@@ -4315,12 +4315,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2014,
+                  "id": 1997,
                   "mutability": "mutable",
                   "name": "_amounts",
                   "nameLocation": "19219:8:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2017,
+                  "scope": 2000,
                   "src": "19200:27:12",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -4330,7 +4330,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 2012,
+                      "id": 1995,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
                       "src": "19200:7:12",
@@ -4339,7 +4339,7 @@
                         "typeString": "uint256"
                       }
                     },
-                    "id": 2013,
+                    "id": 1996,
                     "nodeType": "ArrayTypeName",
                     "src": "19200:9:12",
                     "typeDescriptions": {
@@ -4353,12 +4353,12 @@
               "src": "19145:89:12"
             },
             "returnParameters": {
-              "id": 2016,
+              "id": 1999,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "19243:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "19110:134:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -4366,13 +4366,13 @@
           },
           {
             "documentation": {
-              "id": 2018,
+              "id": 2001,
               "nodeType": "StructuredDocumentation",
               "src": "19252:269:12",
               "text": "  @dev transfers the ownership of the token smart contract\n  @param _newOwner the address of the new token smart contract owner\n  This function can only be called by the owner of the token\n  emits an `OwnershipTransferred` event"
             },
             "functionSelector": "51411b33",
-            "id": 2023,
+            "id": 2006,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -4380,17 +4380,17 @@
             "nameLocation": "19536:32:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2021,
+              "id": 2004,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2020,
+                  "id": 2003,
                   "mutability": "mutable",
                   "name": "_newOwner",
                   "nameLocation": "19577:9:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2023,
+                  "scope": 2006,
                   "src": "19569:17:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4399,7 +4399,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2019,
+                    "id": 2002,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "19569:7:12",
@@ -4415,12 +4415,12 @@
               "src": "19568:19:12"
             },
             "returnParameters": {
-              "id": 2022,
+              "id": 2005,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "19596:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "19527:70:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -4428,13 +4428,13 @@
           },
           {
             "documentation": {
-              "id": 2024,
+              "id": 2007,
               "nodeType": "StructuredDocumentation",
               "src": "19605:253:12",
               "text": "  @dev adds an agent to the token smart contract\n  @param _agent the address of the new agent of the token smart contract\n  This function can only be called by the owner of the token\n  emits an `AgentAdded` event"
             },
             "functionSelector": "b422d830",
-            "id": 2029,
+            "id": 2012,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -4442,17 +4442,17 @@
             "nameLocation": "19873:23:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2027,
+              "id": 2010,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2026,
+                  "id": 2009,
                   "mutability": "mutable",
                   "name": "_agent",
                   "nameLocation": "19905:6:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2029,
+                  "scope": 2012,
                   "src": "19897:14:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4461,7 +4461,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2025,
+                    "id": 2008,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "19897:7:12",
@@ -4477,12 +4477,12 @@
               "src": "19896:16:12"
             },
             "returnParameters": {
-              "id": 2028,
+              "id": 2011,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "19921:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "19864:58:12",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -4490,13 +4490,13 @@
           },
           {
             "documentation": {
-              "id": 2030,
+              "id": 2013,
               "nodeType": "StructuredDocumentation",
               "src": "19930:237:12",
               "text": "  @dev remove an agent from the token smart contract\n  @param _agent the address of the agent to remove\n  This function can only be called by the owner of the token\n  emits an `AgentRemoved` event"
             },
             "functionSelector": "5dc7a3cb",
-            "id": 2035,
+            "id": 2018,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -4504,17 +4504,17 @@
             "nameLocation": "20182:26:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2033,
+              "id": 2016,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2032,
+                  "id": 2015,
                   "mutability": "mutable",
                   "name": "_agent",
                   "nameLocation": "20217:6:12",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2035,
+                  "scope": 2018,
                   "src": "20209:14:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4523,7 +4523,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2031,
+                    "id": 2014,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "20209:7:12",
@@ -4539,19 +4539,19 @@
               "src": "20208:16:12"
             },
             "returnParameters": {
-              "id": 2034,
+              "id": 2017,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "20233:0:12"
             },
-            "scope": 2036,
+            "scope": 2019,
             "src": "20173:61:12",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 2037,
+        "scope": 2020,
         "src": "199:20038:12",
         "usedErrors": []
       }
@@ -4564,7 +4564,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.11",
-  "updatedAt": "2023-11-12T09:42:59.133Z",
+  "updatedAt": "2023-11-12T12:17:50.334Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

@@ -14889,16 +14889,16 @@
         49
       ],
       "IClaimTopicsRegistry": [
-        1596
+        1579
       ],
       "ICompliance": [
-        1703
+        1686
       ],
       "IERC20": [
         993
       ],
       "IERC3643": [
-        2036
+        2019
       ],
       "IERC734": [
         196
@@ -14910,16 +14910,16 @@
         328
       ],
       "IIdentityRegistry": [
-        2229
+        2212
       ],
       "IIdentityRegistryStorage": [
-        2351
+        2334
       ],
       "ITrustedIssuersRegistry": [
-        2448
+        2431
       ],
       "IWormhole": [
-        2764
+        2747
       ],
       "Tunnel": [
         1477
@@ -14947,7 +14947,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 1478,
-        "sourceUnit": 2765,
+        "sourceUnit": 2748,
         "src": "61:36:8",
         "symbolAliases": [],
         "unitAlias": ""
@@ -14959,7 +14959,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 1478,
-        "sourceUnit": 2037,
+        "sourceUnit": 2020,
         "src": "101:35:8",
         "symbolAliases": [],
         "unitAlias": ""
@@ -15020,7 +15020,7 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_IWormhole_$2764",
+              "typeIdentifier": "t_contract$_IWormhole_$2747",
               "typeString": "contract IWormhole"
             },
             "typeName": {
@@ -15033,13 +15033,13 @@
                   "227:9:8"
                 ],
                 "nodeType": "IdentifierPath",
-                "referencedDeclaration": 2764,
+                "referencedDeclaration": 2747,
                 "src": "227:9:8"
               },
-              "referencedDeclaration": 2764,
+              "referencedDeclaration": 2747,
               "src": "227:9:8",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IWormhole_$2764",
+                "typeIdentifier": "t_contract$_IWormhole_$2747",
                 "typeString": "contract IWormhole"
               }
             },
@@ -15930,7 +15930,7 @@
                       "referencedDeclaration": 1050,
                       "src": "1215:9:8",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IWormhole_$2764",
+                        "typeIdentifier": "t_contract$_IWormhole_$2747",
                         "typeString": "contract IWormhole"
                       }
                     },
@@ -15962,10 +15962,10 @@
                         "name": "IWormhole",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2764,
+                        "referencedDeclaration": 2747,
                         "src": "1227:9:8",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_IWormhole_$2764_$",
+                          "typeIdentifier": "t_type$_t_contract$_IWormhole_$2747_$",
                           "typeString": "type(contract IWormhole)"
                         }
                       },
@@ -15981,13 +15981,13 @@
                       "src": "1227:20:8",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IWormhole_$2764",
+                        "typeIdentifier": "t_contract$_IWormhole_$2747",
                         "typeString": "contract IWormhole"
                       }
                     },
                     "src": "1215:32:8",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IWormhole_$2764",
+                      "typeIdentifier": "t_contract$_IWormhole_$2747",
                       "typeString": "contract IWormhole"
                     }
                   },
@@ -16143,7 +16143,7 @@
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IERC3643_$2036",
+                        "typeIdentifier": "t_contract$_IERC3643_$2019",
                         "typeString": "contract IERC3643"
                       },
                       "typeName": {
@@ -16156,13 +16156,13 @@
                             "1377:8:8"
                           ],
                           "nodeType": "IdentifierPath",
-                          "referencedDeclaration": 2036,
+                          "referencedDeclaration": 2019,
                           "src": "1377:8:8"
                         },
-                        "referencedDeclaration": 2036,
+                        "referencedDeclaration": 2019,
                         "src": "1377:8:8",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IERC3643_$2036",
+                          "typeIdentifier": "t_contract$_IERC3643_$2019",
                           "typeString": "contract IERC3643"
                         }
                       },
@@ -16196,10 +16196,10 @@
                       "name": "IERC3643",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2036,
+                      "referencedDeclaration": 2019,
                       "src": "1394:8:8",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_contract$_IERC3643_$2036_$",
+                        "typeIdentifier": "t_type$_t_contract$_IERC3643_$2019_$",
                         "typeString": "type(contract IERC3643)"
                       }
                     },
@@ -16215,7 +16215,7 @@
                     "src": "1394:17:8",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IERC3643_$2036",
+                      "typeIdentifier": "t_contract$_IERC3643_$2019",
                       "typeString": "contract IERC3643"
                     }
                   },
@@ -16269,7 +16269,7 @@
                         "referencedDeclaration": 1145,
                         "src": "1422:5:8",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IERC3643_$2036",
+                          "typeIdentifier": "t_contract$_IERC3643_$2019",
                           "typeString": "contract IERC3643"
                         }
                       },
@@ -17771,7 +17771,7 @@
                         "referencedDeclaration": 1050,
                         "src": "2771:9:8",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IWormhole_$2764",
+                          "typeIdentifier": "t_contract$_IWormhole_$2747",
                           "typeString": "contract IWormhole"
                         }
                       },
@@ -17783,7 +17783,7 @@
                       "memberLocation": "2781:10:8",
                       "memberName": "messageFee",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 2686,
+                      "referencedDeclaration": 2669,
                       "src": "2771:20:8",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$__$returns$_t_uint256_$",
@@ -18342,7 +18342,7 @@
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IERC3643_$2036",
+                        "typeIdentifier": "t_contract$_IERC3643_$2019",
                         "typeString": "contract IERC3643"
                       },
                       "typeName": {
@@ -18355,13 +18355,13 @@
                             "3181:8:8"
                           ],
                           "nodeType": "IdentifierPath",
-                          "referencedDeclaration": 2036,
+                          "referencedDeclaration": 2019,
                           "src": "3181:8:8"
                         },
-                        "referencedDeclaration": 2036,
+                        "referencedDeclaration": 2019,
                         "src": "3181:8:8",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IERC3643_$2036",
+                          "typeIdentifier": "t_contract$_IERC3643_$2019",
                           "typeString": "contract IERC3643"
                         }
                       },
@@ -18395,10 +18395,10 @@
                       "name": "IERC3643",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2036,
+                      "referencedDeclaration": 2019,
                       "src": "3198:8:8",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_contract$_IERC3643_$2036_$",
+                        "typeIdentifier": "t_type$_t_contract$_IERC3643_$2019_$",
                         "typeString": "type(contract IERC3643)"
                       }
                     },
@@ -18414,7 +18414,7 @@
                     "src": "3198:17:8",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IERC3643_$2036",
+                      "typeIdentifier": "t_contract$_IERC3643_$2019",
                       "typeString": "contract IERC3643"
                     }
                   },
@@ -18529,7 +18529,7 @@
                         "referencedDeclaration": 1318,
                         "src": "3226:5:8",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IERC3643_$2036",
+                          "typeIdentifier": "t_contract$_IERC3643_$2019",
                           "typeString": "contract IERC3643"
                         }
                       },
@@ -18866,7 +18866,7 @@
                           "referencedDeclaration": 1050,
                           "src": "3453:9:8",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_contract$_IWormhole_$2764",
+                            "typeIdentifier": "t_contract$_IWormhole_$2747",
                             "typeString": "contract IWormhole"
                           }
                         },
@@ -18878,7 +18878,7 @@
                         "memberLocation": "3463:14:8",
                         "memberName": "publishMessage",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 2573,
+                        "referencedDeclaration": 2556,
                         "src": "3453:24:8",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_external_payable$_t_uint32_$_t_bytes_memory_ptr_$_t_uint8_$returns$_t_uint64_$",
@@ -19626,7 +19626,7 @@
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IERC3643_$2036",
+                        "typeIdentifier": "t_contract$_IERC3643_$2019",
                         "typeString": "contract IERC3643"
                       },
                       "typeName": {
@@ -19639,13 +19639,13 @@
                             "4272:8:8"
                           ],
                           "nodeType": "IdentifierPath",
-                          "referencedDeclaration": 2036,
+                          "referencedDeclaration": 2019,
                           "src": "4272:8:8"
                         },
-                        "referencedDeclaration": 2036,
+                        "referencedDeclaration": 2019,
                         "src": "4272:8:8",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IERC3643_$2036",
+                          "typeIdentifier": "t_contract$_IERC3643_$2019",
                           "typeString": "contract IERC3643"
                         }
                       },
@@ -19704,10 +19704,10 @@
                       "name": "IERC3643",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2036,
+                      "referencedDeclaration": 2019,
                       "src": "4289:8:8",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_contract$_IERC3643_$2036_$",
+                        "typeIdentifier": "t_type$_t_contract$_IERC3643_$2019_$",
                         "typeString": "type(contract IERC3643)"
                       }
                     },
@@ -19723,7 +19723,7 @@
                     "src": "4289:32:8",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IERC3643_$2036",
+                      "typeIdentifier": "t_contract$_IERC3643_$2019",
                       "typeString": "contract IERC3643"
                     }
                   },
@@ -19839,7 +19839,7 @@
                         "referencedDeclaration": 1414,
                         "src": "4332:5:8",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IERC3643_$2036",
+                          "typeIdentifier": "t_contract$_IERC3643_$2019",
                           "typeString": "contract IERC3643"
                         }
                       },
@@ -20565,12 +20565,12 @@
     "97": {
       "events": {},
       "links": {},
-      "address": "0xB1451F06A4a57F17E45b7B2532477A5D528EaEeB",
-      "transactionHash": "0x73206fa775efe108fed1f62049c652ff016bf8061af64f601eb90087649498d9"
+      "address": "0x7450cC79a7A8E73b755DC3769457eaAf00Cefd2a",
+      "transactionHash": "0x870c0209f6dfc14c20a87bfba777ccf131d1b4a44c67729c43ef4936b81d4b85"
     }
   },
   "schemaVersion": "3.4.11",
-  "updatedAt": "2023-11-12T09:42:59.108Z",
+  "updatedAt": "2023-11-12T12:17:50.311Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

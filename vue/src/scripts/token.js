@@ -59,7 +59,7 @@ export async function tryFaucet() {
             address: WormholeSharesJson.networks[97].address,
             abi: WormholeSharesJson.abi,
             functionName: 'faucet',
-            args: ['10000000000000000000'] // 10 Units
+            args: ['1000000000000000000000000'] // 10 Units
         })
 
         const { hash } = await writeContract(config)
