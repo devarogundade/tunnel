@@ -66,7 +66,7 @@ InnerTxnBuilder.SetFields(
        payload.load(),
        Itob(Int(0)),
     ],
-    TxnField.accounts: [storage_addr.get()],  # storage account
+    TxnField.accounts: [storage_addr.get()],
     TxnField.note: Bytes("publishMessage"),
     TxnField.fee: Int(0),
   }
