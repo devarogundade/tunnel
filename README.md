@@ -41,6 +41,7 @@ npm run dev
 
 BSC
 ```
+0x34795bA4E73954A4f6e6468eC45e4c2b287BB74c
 ```
 
 ALGORAND
