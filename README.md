@@ -74,6 +74,20 @@ InnerTxnBuilder.SetFields(
 InnerTxnBuilder.Submit(),
 ```
 
+```ts
+const app = new StandardRelayerApp<StandardRelayerContext>(
+  Environment.TESTNET,
+  {
+    name: "TunnelRelayer",
+    missedVaaOptions: {
+      startingSequenceConfig: {
+        "8": BigInt(1)
+      }
+    }
+  },
+);
+```
+
 # Contract Ids
 
 BSC
