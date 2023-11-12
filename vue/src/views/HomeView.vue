@@ -64,7 +64,7 @@
             </div>
 
             <div class="arch">
-                <p>Architectural Image</p>
+                <p>Flow Diagram.</p>
                 <img src="/images/arch.png" alt="">
             </div>
         </div>
