@@ -36,3 +36,14 @@ Setup [Spy node and Redis](https://docs.wormhole.com/wormhole/explore-wormhole/s
 ```
 npm run dev
 ```
+
+# Contract Ids
+
+BSC
+```
+```
+
+ALGORAND
+```
+478376514
+```
