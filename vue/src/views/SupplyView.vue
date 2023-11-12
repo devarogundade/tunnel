@@ -40,7 +40,7 @@
 
                         <div class="borrow" v-if="tab == 1">
                             <div class="borrow_header">
-                                <p>Borrow Algo</p>
+                                <p>Supply Algo</p>
                             </div>
 
                             <div class="fields">
