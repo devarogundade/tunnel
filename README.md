@@ -37,6 +37,15 @@ Setup [Spy node and Redis](https://docs.wormhole.com/wormhole/explore-wormhole/s
 npm run dev
 ```
 
+# Code Highlights
+```solidity
+  _wormhole.publishMessage{value: messageFee()}(
+            _nonce,
+            payload,
+            CONSISTENCY_LEVEL
+        );
+```
+
 # Contract Ids
 
 BSC
