@@ -26,7 +26,8 @@
             </div>
         </div>
 
-        <PrimaryButton v-if="shouldOpt" :text="'OptIn to TunnelFi'" :progress="optingIn" @click="optIn" :width="'330px'" />
+        <PrimaryButton v-if="$store.state.wallet1 && shouldOpt" :text="'OptIn to TunnelFi'" :progress="optingIn"
+            @click="optIn" :width="'330px'" />
     </div>
 </template>
 
