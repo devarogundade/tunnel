@@ -39,11 +39,39 @@ npm run dev
 
 # Code Highlights
 ```solidity
-  _wormhole.publishMessage{value: messageFee()}(
-            _nonce,
-            payload,
-            CONSISTENCY_LEVEL
-        );
+_wormhole.publishMessage{value: messageFee()}(
+  _nonce,
+  payload,
+  CONSISTENCY_LEVEL
+);
+```
+
+```py
+InnerTxnBuilder.Begin(),
+InnerTxnBuilder.SetFields(
+  {
+    TxnField.type_enum: TxnType.Payment,
+    TxnField.receiver: wormhole_addr.get(),
+    TxnField.amount: mfee.get(),
+    TxnField.fee: Int(0),
+  }
+),
+InnerTxnBuilder.Next(),
+InnerTxnBuilder.SetFields(
+  {
+    TxnField.type_enum: TxnType.ApplicationCall,
+    TxnField.application_id: wormhole.get(),
+    TxnField.application_args: [
+       Bytes("publishMessage"),
+       payload.load(),
+       Itob(Int(0)),
+    ],
+    TxnField.accounts: [storage_addr.get()],  # storage account
+    TxnField.note: Bytes("publishMessage"),
+    TxnField.fee: Int(0),
+  }
+),
+InnerTxnBuilder.Submit(),
 ```
 
 # Contract Ids
