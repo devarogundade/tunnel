@@ -149,7 +149,8 @@
                                                 </tr>
                                             </thead>
                                         </div>
-                                        <div v-for="history, index in activities.filter(h => h.action == 'borrow' || h.action == 'repay')"
+                                        <div class="tbody"
+                                            v-for="history, index in activities.filter(h => h.action == 'borrow' || h.action == 'repay')"
                                             :key="index">
                                             <tbody>
                                                 <tr>
@@ -259,6 +260,7 @@ export default {
 
             this.$store.commit('setState', state)
 
+            this.activities = historyAll()
         },
 
         refreshLocalState: async function () {
