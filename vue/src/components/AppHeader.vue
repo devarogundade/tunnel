@@ -32,8 +32,12 @@
 
                 <div style="width: 300px; display: flex; justify-content: flex-end; align-items: center; gap: 20px;"
                     v-show="$route.name != 'home'">
-                    <button @click="connection = true" class="connect_wallets">
+                    <button v-if="!$store.state.wallet0 || !$store.state.wallet1" @click="connection = true"
+                        class="connect_wallets">
                         <p>Connect Wallets</p>
+                    </button>
+                    <button v-else @click="connection = true" class="connect_wallets">
+                        <p>Connected</p>
                     </button>
                     <button @click="faucet = true" class="faucet_connect">
                         <p>Faucet</p>

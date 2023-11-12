@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <PrimaryButton :text="'OptIn to TunnelFi'" :progress="optingIn" @click="optIn" :width="'330px'" />
+        <PrimaryButton v-if="shouldOpt" :text="'OptIn to TunnelFi'" :progress="optingIn" @click="optIn" :width="'330px'" />
     </div>
 </template>
 
@@ -57,7 +57,8 @@ export default {
             syncing: false,
             aWallet: null,
             checking: true,
-            optingIn: false
+            optingIn: false,
+            shouldOpt: false
         }
     },
     async mounted() {
@@ -70,7 +71,10 @@ export default {
             if (accounts.length > 0) {
                 const appInfo = await readOptIn(accounts[0]);
 
-                if (!appInfo) return
+                if (!appInfo) {
+                    this.shouldOpt = true
+                    return
+                }
 
                 const localStates = appInfo['app-local-state']['key-value'];
 
