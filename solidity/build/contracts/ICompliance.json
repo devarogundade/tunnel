@@ -259,15 +259,15 @@
     "absolutePath": "project:/contracts/interfaces/ICompliance.sol",
     "exportedSymbols": {
       "ICompliance": [
-        1685
+        1703
       ]
     },
-    "id": 1686,
+    "id": 1704,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1580,
+        "id": 1598,
         "literals": [
           "solidity",
           "^",
@@ -284,9 +284,9 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 1685,
+        "id": 1703,
         "linearizedBaseContracts": [
-          1685
+          1703
         ],
         "name": "ICompliance",
         "nameLocation": "71:11:11",
@@ -295,29 +295,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 1581,
+              "id": 1599,
               "nodeType": "StructuredDocumentation",
               "src": "90:266:11",
               "text": "  this event is emitted when the Agent has been added on the allowedList of this Compliance.\n  the event is emitted by the Compliance constructor and by the addTokenAgent function\n  `_agentAddress` is the address of the Agent to add"
             },
             "eventSelector": "d62c45e13ac30396aceb3ad37c89bd1ba9048032fe61679000e92eb93dbfd67d",
-            "id": 1585,
+            "id": 1603,
             "name": "TokenAgentAdded",
             "nameLocation": "368:15:11",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1584,
+              "id": 1602,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1583,
+                  "id": 1601,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_agentAddress",
                   "nameLocation": "392:13:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1585,
+                  "scope": 1603,
                   "src": "384:21:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -326,7 +326,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1582,
+                    "id": 1600,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "384:7:11",
@@ -346,29 +346,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 1586,
+              "id": 1604,
               "nodeType": "StructuredDocumentation",
               "src": "415:275:11",
               "text": "  this event is emitted when the Agent has been removed from the agent list of this Compliance.\n  the event is emitted by the Compliance constructor and by the removeTokenAgent function\n  `_agentAddress` is the address of the Agent to remove"
             },
             "eventSelector": "6a659bb87bb23efbdc295f8eed8ae8c4379bfb77660ced2ef0f3d7d26b05c6a6",
-            "id": 1590,
+            "id": 1608,
             "name": "TokenAgentRemoved",
             "nameLocation": "702:17:11",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1589,
+              "id": 1607,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1588,
+                  "id": 1606,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_agentAddress",
                   "nameLocation": "728:13:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1590,
+                  "scope": 1608,
                   "src": "720:21:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -377,7 +377,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1587,
+                    "id": 1605,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "720:7:11",
@@ -397,29 +397,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 1591,
+              "id": 1609,
               "nodeType": "StructuredDocumentation",
               "src": "751:208:11",
               "text": "  this event is emitted when a token has been bound to the compliance contract\n  the event is emitted by the bindToken function\n  `_token` is the address of the token to bind"
             },
             "eventSelector": "2de35142b19ed5a07796cf30791959c592018f70b1d2d7c460eef8ffe713692b",
-            "id": 1595,
+            "id": 1613,
             "name": "TokenBound",
             "nameLocation": "971:10:11",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1594,
+              "id": 1612,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1593,
+                  "id": 1611,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_token",
                   "nameLocation": "990:6:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1595,
+                  "scope": 1613,
                   "src": "982:14:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -428,7 +428,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1592,
+                    "id": 1610,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "982:7:11",
@@ -448,29 +448,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 1596,
+              "id": 1614,
               "nodeType": "StructuredDocumentation",
               "src": "1006:216:11",
               "text": "  this event is emitted when a token has been unbound from the compliance contract\n  the event is emitted by the unbindToken function\n  `_token` is the address of the token to unbind"
             },
             "eventSelector": "28a4ca7134a3b3f9aff286e79ad3daadb4a06d1b43d037a3a98bdc074edd9b7a",
-            "id": 1600,
+            "id": 1618,
             "name": "TokenUnbound",
             "nameLocation": "1234:12:11",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1599,
+              "id": 1617,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1598,
+                  "id": 1616,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_token",
                   "nameLocation": "1255:6:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1600,
+                  "scope": 1618,
                   "src": "1247:14:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -479,7 +479,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1597,
+                    "id": 1615,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1247:7:11",
@@ -498,13 +498,13 @@
           },
           {
             "documentation": {
-              "id": 1601,
+              "id": 1619,
               "nodeType": "StructuredDocumentation",
               "src": "1271:137:11",
               "text": "  @dev Returns true if the Address is in the list of token agents\n  @param _agentAddress address of this agent"
             },
             "functionSelector": "346531fa",
-            "id": 1608,
+            "id": 1626,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -512,17 +512,17 @@
             "nameLocation": "1423:12:11",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1604,
+              "id": 1622,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1603,
+                  "id": 1621,
                   "mutability": "mutable",
                   "name": "_agentAddress",
                   "nameLocation": "1444:13:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1608,
+                  "scope": 1626,
                   "src": "1436:21:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -531,7 +531,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1602,
+                    "id": 1620,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1436:7:11",
@@ -547,17 +547,17 @@
               "src": "1435:23:11"
             },
             "returnParameters": {
-              "id": 1607,
+              "id": 1625,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1606,
+                  "id": 1624,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1608,
+                  "scope": 1626,
                   "src": "1482:4:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -566,7 +566,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 1605,
+                    "id": 1623,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "1482:4:11",
@@ -580,7 +580,7 @@
               ],
               "src": "1481:6:11"
             },
-            "scope": 1685,
+            "scope": 1703,
             "src": "1414:74:11",
             "stateMutability": "view",
             "virtual": false,
@@ -588,13 +588,13 @@
           },
           {
             "documentation": {
-              "id": 1609,
+              "id": 1627,
               "nodeType": "StructuredDocumentation",
               "src": "1496:170:11",
               "text": "  @dev Returns true if the address given corresponds to a token that is bound with the Compliance contract\n  @param _token address of the token"
             },
             "functionSelector": "993e8b95",
-            "id": 1616,
+            "id": 1634,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -602,17 +602,17 @@
             "nameLocation": "1681:12:11",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1612,
+              "id": 1630,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1611,
+                  "id": 1629,
                   "mutability": "mutable",
                   "name": "_token",
                   "nameLocation": "1702:6:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1616,
+                  "scope": 1634,
                   "src": "1694:14:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -621,7 +621,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1610,
+                    "id": 1628,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1694:7:11",
@@ -637,17 +637,17 @@
               "src": "1693:16:11"
             },
             "returnParameters": {
-              "id": 1615,
+              "id": 1633,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1614,
+                  "id": 1632,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1616,
+                  "scope": 1634,
                   "src": "1733:4:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -656,7 +656,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 1613,
+                    "id": 1631,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "1733:4:11",
@@ -670,7 +670,7 @@
               ],
               "src": "1732:6:11"
             },
-            "scope": 1685,
+            "scope": 1703,
             "src": "1672:67:11",
             "stateMutability": "view",
             "virtual": false,
@@ -678,13 +678,13 @@
           },
           {
             "documentation": {
-              "id": 1617,
+              "id": 1635,
               "nodeType": "StructuredDocumentation",
               "src": "1747:170:11",
               "text": "  @dev adds an agent to the list of token agents\n  @param _agentAddress address of the agent to be added\n  Emits a TokenAgentAdded event"
             },
             "functionSelector": "ff3e6954",
-            "id": 1622,
+            "id": 1640,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -692,17 +692,17 @@
             "nameLocation": "1932:13:11",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1620,
+              "id": 1638,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1619,
+                  "id": 1637,
                   "mutability": "mutable",
                   "name": "_agentAddress",
                   "nameLocation": "1954:13:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1622,
+                  "scope": 1640,
                   "src": "1946:21:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -711,7 +711,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1618,
+                    "id": 1636,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1946:7:11",
@@ -727,12 +727,12 @@
               "src": "1945:23:11"
             },
             "returnParameters": {
-              "id": 1621,
+              "id": 1639,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1977:0:11"
             },
-            "scope": 1685,
+            "scope": 1703,
             "src": "1923:55:11",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -740,13 +740,13 @@
           },
           {
             "documentation": {
-              "id": 1623,
+              "id": 1641,
               "nodeType": "StructuredDocumentation",
               "src": "1986:197:11",
               "text": "  @dev remove Agent from the list of token agents\n  @param _agentAddress address of the agent to be removed (must be added first)\n  Emits a TokenAgentRemoved event"
             },
             "functionSelector": "cdde2932",
-            "id": 1628,
+            "id": 1646,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -754,17 +754,17 @@
             "nameLocation": "2198:16:11",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1626,
+              "id": 1644,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1625,
+                  "id": 1643,
                   "mutability": "mutable",
                   "name": "_agentAddress",
                   "nameLocation": "2223:13:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1628,
+                  "scope": 1646,
                   "src": "2215:21:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -773,7 +773,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1624,
+                    "id": 1642,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2215:7:11",
@@ -789,12 +789,12 @@
               "src": "2214:23:11"
             },
             "returnParameters": {
-              "id": 1627,
+              "id": 1645,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2246:0:11"
             },
-            "scope": 1685,
+            "scope": 1703,
             "src": "2189:58:11",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -802,13 +802,13 @@
           },
           {
             "documentation": {
-              "id": 1629,
+              "id": 1647,
               "nodeType": "StructuredDocumentation",
               "src": "2255:153:11",
               "text": "  @dev binds a token to the compliance contract\n  @param _token address of the token to bind\n  Emits a TokenBound event"
             },
             "functionSelector": "3ff5aa02",
-            "id": 1634,
+            "id": 1652,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -816,17 +816,17 @@
             "nameLocation": "2423:9:11",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1632,
+              "id": 1650,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1631,
+                  "id": 1649,
                   "mutability": "mutable",
                   "name": "_token",
                   "nameLocation": "2441:6:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1634,
+                  "scope": 1652,
                   "src": "2433:14:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -835,7 +835,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1630,
+                    "id": 1648,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2433:7:11",
@@ -851,12 +851,12 @@
               "src": "2432:16:11"
             },
             "returnParameters": {
-              "id": 1633,
+              "id": 1651,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2457:0:11"
             },
-            "scope": 1685,
+            "scope": 1703,
             "src": "2414:44:11",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -864,13 +864,13 @@
           },
           {
             "documentation": {
-              "id": 1635,
+              "id": 1653,
               "nodeType": "StructuredDocumentation",
               "src": "2466:161:11",
               "text": "  @dev unbinds a token from the compliance contract\n  @param _token address of the token to unbind\n  Emits a TokenUnbound event"
             },
             "functionSelector": "40db3b50",
-            "id": 1640,
+            "id": 1658,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -878,17 +878,17 @@
             "nameLocation": "2642:11:11",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1638,
+              "id": 1656,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1637,
+                  "id": 1655,
                   "mutability": "mutable",
                   "name": "_token",
                   "nameLocation": "2662:6:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1640,
+                  "scope": 1658,
                   "src": "2654:14:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -897,7 +897,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1636,
+                    "id": 1654,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2654:7:11",
@@ -913,12 +913,12 @@
               "src": "2653:16:11"
             },
             "returnParameters": {
-              "id": 1639,
+              "id": 1657,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2678:0:11"
             },
-            "scope": 1685,
+            "scope": 1703,
             "src": "2633:46:11",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -926,13 +926,13 @@
           },
           {
             "documentation": {
-              "id": 1641,
+              "id": 1659,
               "nodeType": "StructuredDocumentation",
               "src": "2687:386:11",
               "text": "  @dev checks that the transfer is compliant.\n  default compliance always returns true\n  READ ONLY FUNCTION, this function cannot be used to increment\n  counters, emit events, ...\n  @param _from The address of the sender\n  @param _to The address of the receiver\n  @param _amount The amount of tokens involved in the transfer"
             },
             "functionSelector": "e46638e6",
-            "id": 1652,
+            "id": 1670,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -940,17 +940,17 @@
             "nameLocation": "3088:11:11",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1648,
+              "id": 1666,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1643,
+                  "id": 1661,
                   "mutability": "mutable",
                   "name": "_from",
                   "nameLocation": "3118:5:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1652,
+                  "scope": 1670,
                   "src": "3110:13:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -959,7 +959,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1642,
+                    "id": 1660,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "3110:7:11",
@@ -973,12 +973,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1645,
+                  "id": 1663,
                   "mutability": "mutable",
                   "name": "_to",
                   "nameLocation": "3142:3:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1652,
+                  "scope": 1670,
                   "src": "3134:11:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -987,7 +987,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1644,
+                    "id": 1662,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "3134:7:11",
@@ -1001,12 +1001,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1647,
+                  "id": 1665,
                   "mutability": "mutable",
                   "name": "_amount",
                   "nameLocation": "3164:7:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1652,
+                  "scope": 1670,
                   "src": "3156:15:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1015,7 +1015,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1646,
+                    "id": 1664,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "3156:7:11",
@@ -1030,17 +1030,17 @@
               "src": "3099:79:11"
             },
             "returnParameters": {
-              "id": 1651,
+              "id": 1669,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1650,
+                  "id": 1668,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1652,
+                  "scope": 1670,
                   "src": "3202:4:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1049,7 +1049,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 1649,
+                    "id": 1667,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "3202:4:11",
@@ -1063,7 +1063,7 @@
               ],
               "src": "3201:6:11"
             },
-            "scope": 1685,
+            "scope": 1703,
             "src": "3079:129:11",
             "stateMutability": "view",
             "virtual": false,
@@ -1071,13 +1071,13 @@
           },
           {
             "documentation": {
-              "id": 1653,
+              "id": 1671,
               "nodeType": "StructuredDocumentation",
               "src": "3216:585:11",
               "text": "  @dev function called whenever tokens are transferred\n  from one wallet to another\n  this function can update state variables in the compliance contract\n  these state variables being used by `canTransfer` to decide if a transfer\n  is compliant or not depending on the values stored in these state variables and on\n  the parameters of the compliance smart contract\n  @param _from The address of the sender\n  @param _to The address of the receiver\n  @param _amount The amount of tokens involved in the transfer"
             },
             "functionSelector": "8baf29b4",
-            "id": 1662,
+            "id": 1680,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1085,17 +1085,17 @@
             "nameLocation": "3816:11:11",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1660,
+              "id": 1678,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1655,
+                  "id": 1673,
                   "mutability": "mutable",
                   "name": "_from",
                   "nameLocation": "3836:5:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1662,
+                  "scope": 1680,
                   "src": "3828:13:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1104,7 +1104,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1654,
+                    "id": 1672,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "3828:7:11",
@@ -1118,12 +1118,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1657,
+                  "id": 1675,
                   "mutability": "mutable",
                   "name": "_to",
                   "nameLocation": "3851:3:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1662,
+                  "scope": 1680,
                   "src": "3843:11:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1132,7 +1132,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1656,
+                    "id": 1674,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "3843:7:11",
@@ -1146,12 +1146,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1659,
+                  "id": 1677,
                   "mutability": "mutable",
                   "name": "_amount",
                   "nameLocation": "3864:7:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1662,
+                  "scope": 1680,
                   "src": "3856:15:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1160,7 +1160,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1658,
+                    "id": 1676,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "3856:7:11",
@@ -1175,12 +1175,12 @@
               "src": "3827:45:11"
             },
             "returnParameters": {
-              "id": 1661,
+              "id": 1679,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "3881:0:11"
             },
-            "scope": 1685,
+            "scope": 1703,
             "src": "3807:75:11",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1188,13 +1188,13 @@
           },
           {
             "documentation": {
-              "id": 1663,
+              "id": 1681,
               "nodeType": "StructuredDocumentation",
               "src": "3890:518:11",
               "text": "  @dev function called whenever tokens are created\n  on a wallet\n  this function can update state variables in the compliance contract\n  these state variables being used by `canTransfer` to decide if a transfer\n  is compliant or not depending on the values stored in these state variables and on\n  the parameters of the compliance smart contract\n  @param _to The address of the receiver\n  @param _amount The amount of tokens involved in the transfer"
             },
             "functionSelector": "5f8dead3",
-            "id": 1670,
+            "id": 1688,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1202,17 +1202,17 @@
             "nameLocation": "4423:7:11",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1668,
+              "id": 1686,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1665,
+                  "id": 1683,
                   "mutability": "mutable",
                   "name": "_to",
                   "nameLocation": "4439:3:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1670,
+                  "scope": 1688,
                   "src": "4431:11:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1221,7 +1221,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1664,
+                    "id": 1682,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "4431:7:11",
@@ -1235,12 +1235,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1667,
+                  "id": 1685,
                   "mutability": "mutable",
                   "name": "_amount",
                   "nameLocation": "4452:7:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1670,
+                  "scope": 1688,
                   "src": "4444:15:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1249,7 +1249,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1666,
+                    "id": 1684,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "4444:7:11",
@@ -1264,12 +1264,12 @@
               "src": "4430:30:11"
             },
             "returnParameters": {
-              "id": 1669,
+              "id": 1687,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "4469:0:11"
             },
-            "scope": 1685,
+            "scope": 1703,
             "src": "4414:56:11",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1277,13 +1277,13 @@
           },
           {
             "documentation": {
-              "id": 1671,
+              "id": 1689,
               "nodeType": "StructuredDocumentation",
               "src": "4478:501:11",
               "text": "  @dev function called whenever tokens are destroyed\n  this function can update state variables in the compliance contract\n  these state variables being used by `canTransfer` to decide if a transfer\n  is compliant or not depending on the values stored in these state variables and on\n  the parameters of the compliance smart contract\n  @param _from The address of the receiver\n  @param _amount The amount of tokens involved in the transfer"
             },
             "functionSelector": "8d2ea772",
-            "id": 1678,
+            "id": 1696,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1291,17 +1291,17 @@
             "nameLocation": "4994:9:11",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1676,
+              "id": 1694,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1673,
+                  "id": 1691,
                   "mutability": "mutable",
                   "name": "_from",
                   "nameLocation": "5012:5:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1678,
+                  "scope": 1696,
                   "src": "5004:13:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1310,7 +1310,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1672,
+                    "id": 1690,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "5004:7:11",
@@ -1324,12 +1324,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1675,
+                  "id": 1693,
                   "mutability": "mutable",
                   "name": "_amount",
                   "nameLocation": "5027:7:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1678,
+                  "scope": 1696,
                   "src": "5019:15:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1338,7 +1338,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1674,
+                    "id": 1692,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "5019:7:11",
@@ -1353,12 +1353,12 @@
               "src": "5003:32:11"
             },
             "returnParameters": {
-              "id": 1677,
+              "id": 1695,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "5044:0:11"
             },
-            "scope": 1685,
+            "scope": 1703,
             "src": "4985:60:11",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1366,13 +1366,13 @@
           },
           {
             "documentation": {
-              "id": 1679,
+              "id": 1697,
               "nodeType": "StructuredDocumentation",
               "src": "5053:403:11",
               "text": "  @dev function used to transfer the ownership of the compliance contract\n  to a new owner, giving him access to the `OnlyOwner` functions implemented on the contract\n  @param newOwner The address of the new owner of the compliance contract\n  This function can only be called by the owner of the compliance contract\n  emits an `OwnershipTransferred` event"
             },
             "functionSelector": "7bcf0487",
-            "id": 1684,
+            "id": 1702,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1380,17 +1380,17 @@
             "nameLocation": "5471:37:11",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1682,
+              "id": 1700,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1681,
+                  "id": 1699,
                   "mutability": "mutable",
                   "name": "newOwner",
                   "nameLocation": "5517:8:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1684,
+                  "scope": 1702,
                   "src": "5509:16:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1399,7 +1399,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1680,
+                    "id": 1698,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "5509:7:11",
@@ -1415,19 +1415,19 @@
               "src": "5508:18:11"
             },
             "returnParameters": {
-              "id": 1683,
+              "id": 1701,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "5535:0:11"
             },
-            "scope": 1685,
+            "scope": 1703,
             "src": "5462:74:11",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 1686,
+        "scope": 1704,
         "src": "61:5478:11",
         "usedErrors": []
       }
@@ -1440,7 +1440,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.11",
-  "updatedAt": "2023-11-09T17:24:29.704Z",
+  "updatedAt": "2023-11-12T09:42:59.130Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

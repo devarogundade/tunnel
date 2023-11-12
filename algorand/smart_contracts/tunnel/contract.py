@@ -110,37 +110,7 @@ def opt_in() -> Expr:
     )
 
 
-# opt_into_asset method that opts the contract account into an ASA
-@app.external(authorize=Authorize.only(Global.creator_address()))
-def set_collateral(asset_id: abi.Uint64) -> Expr:
-    return app.state.collateral.set(asset_id.get())
-
-
-# create set tunnel collateral ASA
-@app.external(authorize=Authorize.only(Global.creator_address()))
-def create_collateral(
-    name: abi.String, unit_name: abi.String, supply: abi.Uint64
-) -> Expr:
-    # On-chain logic that uses multiple expressions, always goes in the returned Seq
-    return Seq(
-        InnerTxnBuilder.Execute(
-            {
-                TxnField.type_enum: TxnType.AssetConfig,
-                TxnField.config_asset_name: name.get(),
-                TxnField.config_asset_unit_name: unit_name.get(),
-                TxnField.config_asset_clawback: Global.current_application_address(),
-                TxnField.config_asset_reserve: Global.current_application_address(),
-                TxnField.config_asset_manager: Global.current_application_address(),
-                TxnField.config_asset_freeze: Global.current_application_address(),
-                # Default asset frozen
-                TxnField.config_asset_default_frozen: Int(1),
-                TxnField.config_asset_total: supply.get(),
-                TxnField.config_asset_decimals: Int(6),
-            }
-        )
-    )
-
-
+# Provide liquidity
 @app.external
 def supply(payment: abi.PaymentTransaction) -> Expr:
     # Temporary variables
@@ -183,6 +153,56 @@ def supply(payment: abi.PaymentTransaction) -> Expr:
     )
 
 
+# Withdraw liquidity
+@app.external
+def withdraw() -> Expr:
+    # Temporary variables
+    supply = Supply()
+
+    interest = abi.Uint64()
+
+    start_at = abi.Uint64()
+    principal = abi.Uint64()
+
+    # On-chain logic that uses multiple expressions, always goes in the returned Seq
+    return Seq(
+        # Check if sender has supply position
+        Assert(
+            app.state.supplies[Txn.sender()].exists(),
+            comment="You dont have a supply position",
+        ),
+        # Store the position
+        app.state.supplies[Txn.sender()].store_into(supply),
+        # Store amount
+        supply.start_at.store_into(start_at),
+        supply.principal.store_into(principal),
+        # Earned interest
+        interest.set(
+            interestOf(principal.get(), start_at.get(), app.state.supply_apr.get())
+        ),
+        # Transfer principal to address
+        InnerTxnBuilder.Execute(
+            {
+                TxnField.type_enum: TxnType.Payment,
+                TxnField.amount: Add(interest.get(), principal.get()),
+                TxnField.receiver: Txn.sender(),
+                TxnField.sender: Global.current_application_address(),
+                TxnField.fee: Int(0),
+            }
+        ),
+        # Update local position
+        app.state.supplied_amount[Txn.sender()].set(Int(0)),
+        app.state.supplied_start_at[Txn.sender()].set(Int(0)),
+        # Update global position
+        Pop(app.state.supplies[Txn.sender()].delete()),
+        # Update total supply
+        app.state.total_supply.set(
+            Minus(app.state.total_supply.get(), principal.get())
+        ),
+    )
+
+
+# Borrow algo with asset
 @app.external
 def borrow(asset: abi.Asset, amount: abi.Uint64) -> Expr:
     # Temporary variables
@@ -268,6 +288,7 @@ def borrow(asset: abi.Asset, amount: abi.Uint64) -> Expr:
     )
 
 
+# Settle loan position
 @app.external
 def repay(payment: abi.PaymentTransaction) -> Expr:
     # Temporary variables
@@ -326,78 +347,7 @@ def repay(payment: abi.PaymentTransaction) -> Expr:
     )
 
 
-@app.external
-def withdraw() -> Expr:
-    # Temporary variables
-    supply = Supply()
-
-    interest = abi.Uint64()
-
-    start_at = abi.Uint64()
-    principal = abi.Uint64()
-
-    # On-chain logic that uses multiple expressions, always goes in the returned Seq
-    return Seq(
-        # Check if sender has supply position
-        Assert(
-            app.state.supplies[Txn.sender()].exists(),
-            comment="You dont have a supply position",
-        ),
-        # Store the position
-        app.state.supplies[Txn.sender()].store_into(supply),
-        # Store amount
-        supply.start_at.store_into(start_at),
-        supply.principal.store_into(principal),
-        # Earned interest
-        interest.set(
-            interestOf(principal.get(), start_at.get(), app.state.supply_apr.get())
-        ),
-        # Transfer principal to address
-        InnerTxnBuilder.Execute(
-            {
-                TxnField.type_enum: TxnType.Payment,
-                TxnField.amount: Add(interest.get(), principal.get()),
-                TxnField.receiver: Txn.sender(),
-                TxnField.sender: Global.current_application_address(),
-                TxnField.fee: Int(0),
-            }
-        ),
-        # Update local position
-        app.state.supplied_amount[Txn.sender()].set(Int(0)),
-        app.state.supplied_start_at[Txn.sender()].set(Int(0)),
-        # Update global position
-        Pop(app.state.supplies[Txn.sender()].delete()),
-        # Update total supply
-        app.state.total_supply.set(
-            Minus(app.state.total_supply.get(), principal.get())
-        ),
-    )
-
-
-@app.external
-def receiveMessage(
-    nonce: abi.Uint64, asset: abi.Asset, amount: abi.Uint64, receiver: abi.Address
-) -> Expr:
-    # On-chain logic that uses multiple expressions, always goes in the returned Seq
-    return Seq(
-        # Validate nonce
-        Assert(nonce.get() >= Int(0), comment="Invalid nonce"),
-        # Check asset id
-        Assert(asset.asset_id() == app.state.collateral.get(), comment="Invalid asset"),
-        # Send the asset to receiver
-        InnerTxnBuilder.Execute(
-            {
-                TxnField.type_enum: TxnType.AssetTransfer,
-                TxnField.asset_amount: amount.get(),
-                TxnField.xfer_asset: asset.asset_id(),
-                TxnField.asset_receiver: receiver.get(),
-                TxnField.asset_sender: Global.current_application_address(),
-                TxnField.fee: Int(0),
-            }
-        ),
-    )
-
-
+# Bridge back assets
 @app.external
 def un_bridge(
     asset: abi.Asset,
@@ -498,43 +448,6 @@ def un_bridge(
     )
 
 
-# Liquidate borrower position
-@app.external(authorize=Authorize.only(Global.creator_address()))
-def liquidate(borrower: abi.Account) -> Expr:
-    # Temporary variables
-    borrow = Borrow()
-
-    principal = abi.Uint64()
-    collateral = abi.Uint64()
-
-    # On-chain logic that uses multiple expressions, always goes in the returned Seq
-    return Seq(
-        # Check if there is borrow position
-        Assert(
-            app.state.borrows[borrower.address()].exists(),
-            comment="Address dont have a borrow position",
-        ),
-        # Store the borrow position
-        app.state.borrows[borrower.address()].store_into(borrow),
-        # Check the rapayment amount
-        borrow.principal.store_into(principal),
-        borrow.collateral.store_into(collateral),
-        # Update local position
-        app.state.borrowed_amount[borrower.address()].set(Int(0)),
-        app.state.borrowed_start_at[borrower.address()].set(Int(0)),
-        # Update global position
-        Pop(app.state.borrows[borrower.address()].delete()),
-        # Update total borrow
-        app.state.total_borrow.set(
-            Minus(app.state.total_borrow.get(), principal.get())
-        ),
-        # Update snipeable amount
-        app.state.snipeable_amount.set(
-            Add(app.state.snipeable_amount.get(), collateral.get())
-        ),
-    )
-
-
 # Snipe liquidated position
 @app.external
 def snipe(
@@ -545,6 +458,7 @@ def snipe(
 ) -> Expr:
     # Temporary variables
     mfee = abi.Uint64()
+
     payload = ScratchVar(TealType.bytes)
 
     snipe_amount = abi.Uint64()
@@ -558,7 +472,7 @@ def snipe(
         ),
         # Calculate snipe amount
         snipe_amount.set(snipeOf(payment.get().amount())),
-        # Check the asset is the collateral
+        # Check the snipeable amount is sufficient
         Assert(
             app.state.snipeable_amount.get() >= snipe_amount.get(),
             comment="Insufficient amount",
@@ -613,22 +527,106 @@ def snipe(
     )
 
 
-# VIEW
+# AUTHORIZED FUNCTIONS
 
 
-@app.external
-def borrow_of(address: abi.Address, *, output: Borrow) -> Expr:
-    return app.state.borrows[address.get()].store_into(output)
+# opt_into_asset method that opts the contract account into an ASA
+@app.external(authorize=Authorize.only(Global.creator_address()))
+def set_collateral(asset_id: abi.Uint64) -> Expr:
+    return app.state.collateral.set(asset_id.get())
 
 
-@app.external
-def supply_of(address: abi.Address, *, output: Supply) -> Expr:
-    return app.state.supplies[address.get()].store_into(output)
+# create set tunnel collateral ASA
+@app.external(authorize=Authorize.only(Global.creator_address()))
+def create_collateral(
+    name: abi.String, unit_name: abi.String, supply: abi.Uint64
+) -> Expr:
+    # On-chain logic that uses multiple expressions, always goes in the returned Seq
+    return Seq(
+        InnerTxnBuilder.Execute(
+            {
+                TxnField.type_enum: TxnType.AssetConfig,
+                TxnField.config_asset_name: name.get(),
+                TxnField.config_asset_unit_name: unit_name.get(),
+                TxnField.config_asset_clawback: Global.current_application_address(),
+                TxnField.config_asset_reserve: Global.current_application_address(),
+                TxnField.config_asset_manager: Global.current_application_address(),
+                TxnField.config_asset_freeze: Global.current_application_address(),
+                # Default asset frozen
+                TxnField.config_asset_default_frozen: Int(1),
+                TxnField.config_asset_total: supply.get(),
+                TxnField.config_asset_decimals: Int(6),
+            }
+        )
+    )
+
+
+# Receive worhmole message
+@app.external(authorize=Authorize.only(Global.creator_address()))
+def receiveMessage(
+    nonce: abi.Uint64, asset: abi.Asset, amount: abi.Uint64, receiver: abi.Address
+) -> Expr:
+    # On-chain logic that uses multiple expressions, always goes in the returned Seq
+    return Seq(
+        # Validate nonce # Should be improved
+        Assert(nonce.get() >= Int(0), comment="Invalid nonce"),
+        # Check asset id
+        Assert(asset.asset_id() == app.state.collateral.get(), comment="Invalid asset"),
+        # Send the asset to receiver
+        InnerTxnBuilder.Execute(
+            {
+                TxnField.type_enum: TxnType.AssetTransfer,
+                TxnField.asset_amount: amount.get(),
+                TxnField.xfer_asset: asset.asset_id(),
+                TxnField.asset_receiver: receiver.get(),
+                TxnField.asset_sender: Global.current_application_address(),
+                TxnField.fee: Int(0),
+            }
+        ),
+    )
+
+
+# Liquidate borrower position
+@app.external(authorize=Authorize.only(Global.creator_address()))
+def liquidate(borrower: abi.Account) -> Expr:
+    # Temporary variables
+    borrow = Borrow()
+
+    principal = abi.Uint64()
+    collateral = abi.Uint64()
+
+    # On-chain logic that uses multiple expressions, always goes in the returned Seq
+    return Seq(
+        # Check if there is borrow position
+        Assert(
+            app.state.borrows[borrower.address()].exists(),
+            comment="Address dont have a borrow position",
+        ),
+        # Store the borrow position
+        app.state.borrows[borrower.address()].store_into(borrow),
+        # Check the rapayment amount
+        borrow.principal.store_into(principal),
+        borrow.collateral.store_into(collateral),
+        # Update local position
+        app.state.borrowed_amount[borrower.address()].set(Int(0)),
+        app.state.borrowed_start_at[borrower.address()].set(Int(0)),
+        # Update global position
+        Pop(app.state.borrows[borrower.address()].delete()),
+        # Update total borrow
+        app.state.total_borrow.set(
+            Minus(app.state.total_borrow.get(), principal.get())
+        ),
+        # Update snipeable amount
+        app.state.snipeable_amount.set(
+            Add(app.state.snipeable_amount.get(), collateral.get())
+        ),
+    )
 
 
 # PRIVATE FUNCTIONS
 
 
+# Get wormhole message fee
 @Subroutine(TealType.uint64)
 def getMessageFee(wormhole_id: abi.Uint64) -> Expr:
     return Seq(
@@ -638,6 +636,7 @@ def getMessageFee(wormhole_id: abi.Uint64) -> Expr:
     )
 
 
+# Calculate borrowable amount of collateral
 @Subroutine(TealType.uint64)
 def principalOf(collateral: Expr, collateral_value: Expr) -> Expr:
     return Div(
@@ -646,6 +645,7 @@ def principalOf(collateral: Expr, collateral_value: Expr) -> Expr:
     )
 
 
+# Get interest of borrow or supply position
 @Subroutine(TealType.uint64)
 def interestOf(amount: Expr, start_at: Expr, rate: Expr) -> Expr:
     return Div(
@@ -654,9 +654,10 @@ def interestOf(amount: Expr, start_at: Expr, rate: Expr) -> Expr:
     )
 
 
+# Get the snipe amount of capital
 @Subroutine(TealType.uint64)
 def snipeOf(amount: Expr) -> Expr:
     return Div(
-        Mul(Mul(amount, app.state.snipe_rate.get())),
+        Mul(amount, app.state.snipe_rate.get()),
         app.state.rate_divider.get(),
     )

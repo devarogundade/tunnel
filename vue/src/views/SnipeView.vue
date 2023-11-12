@@ -68,7 +68,7 @@
                             <p>~${{ $toMoney((($store.state.prices[snipe.currency.symbol] * snipe.amount) +
                                 (($store.state.prices[snipe.currency.symbol] * snipe.amount)
                                     * 0.05))) }}</p>
-                            <p>Aval: <span>{{ $toMoney($fromMicroAlgo($store.state.snipeable_amount)) }}</span></p>
+                            <p>Aval: <span>{{ $toMoney($fromMicroAlgo($store.state.state.snipeable_amount)) }}</span></p>
                         </div>
 
                     </div>
@@ -206,7 +206,7 @@ export default {
                 return
             }
 
-            if (this.snipe.amount > this.$fromMicroAlgo(this.$store.state.snipeable_amount)) {
+            if (this.snipe.amount > this.$fromMicroAlgo(this.$store.state.state.snipeable_amount)) {
                 notify.push({
                     'title': 'Not enough liquidity!',
                     'description': `Enter an amount not larger than ${this.$fromMicroAlgo(this.$store.state.snipeable_amount)}!`,
@@ -231,7 +231,7 @@ export default {
                 this.$toMicroAlgo(this.snipe.amount)
             )
 
-            if (txId) {
+            if (transactionId) {
                 notify.push({
                     'title': 'Transaction sent',
                     'description': 'View transaction at the transactions page!',

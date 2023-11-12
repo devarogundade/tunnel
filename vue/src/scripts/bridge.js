@@ -327,7 +327,7 @@ export async function trySnipe(amount) {
         const payment = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
             from: accounts[0],
             to: TUNNEL_ADDR,
-            amount: BigInt(amount.toFixed(0)),
+            amount: BigInt(amount),
             suggestedParams
         })
 
@@ -335,10 +335,6 @@ export async function trySnipe(amount) {
             appIndex: TUNNEL_ID,
             from: accounts[0],
             foreignApps: [WORMHOLE_ID],
-            boxes: [{
-                appIndex: TUNNEL_ID,
-                name: algosdk.decodeAddress(accounts[0]).publicKey
-            }],
             appArgs: [
                 algosdk.getMethodByName(METHODS, 'snipe').getSelector(),
                 algosdk.encodeUnsignedTransaction(payment),
@@ -346,8 +342,12 @@ export async function trySnipe(amount) {
                 algosdk.decodeAddress(WORMHOLE_ADDR).publicKey,
                 algosdk.decodeAddress(STORAGE_ADDR).publicKey
             ],
+            boxes: [{
+                appIndex: TUNNEL_ID,
+                name: algosdk.decodeAddress(accounts[0]).publicKey
+            }],
             accounts: [WORMHOLE_ADDR, STORAGE_ADDR],
-            suggestedParams
+            suggestedParams: { ...suggestedParams, fee: algokit.algos(0.001).microAlgos }
         })
 
         algosdk.assignGroupID([payment, appCall])
@@ -358,7 +358,7 @@ export async function trySnipe(amount) {
 
         await algosdk.waitForConfirmation(algodClient, txId, 3)
 
-        historySet(txId, 'withdraw', estimate, 'a'.repeat(64), Date.now())
+        historySet(txId, 'snipe', estimate, 'a'.repeat(64), Date.now())
 
         return txId
     } catch (error) {

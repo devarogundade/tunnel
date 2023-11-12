@@ -13,11 +13,19 @@ contract WormholeShares is ERC20 {
     }
 
     function faucet(uint256 amount) external {
-        require(_allowed[msg.sender] == true);
         _transfer(address(this), msg.sender, amount);
     }
 
     function allow() external {
         _allowed[msg.sender] = true;
+    }
+
+    function _transfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal override {
+        require(_allowed[to] == true);
+        super._transfer(from, to, amount);
     }
 }

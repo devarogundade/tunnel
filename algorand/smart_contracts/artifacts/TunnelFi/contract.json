@@ -2,38 +2,6 @@
     "name": "TunnelFi",
     "methods": [
         {
-            "name": "set_collateral",
-            "args": [
-                {
-                    "type": "uint64",
-                    "name": "asset_id"
-                }
-            ],
-            "returns": {
-                "type": "void"
-            }
-        },
-        {
-            "name": "create_collateral",
-            "args": [
-                {
-                    "type": "string",
-                    "name": "name"
-                },
-                {
-                    "type": "string",
-                    "name": "unit_name"
-                },
-                {
-                    "type": "uint64",
-                    "name": "supply"
-                }
-            ],
-            "returns": {
-                "type": "void"
-            }
-        },
-        {
             "name": "supply",
             "args": [
                 {
@@ -41,6 +9,13 @@
                     "name": "payment"
                 }
             ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "withdraw",
+            "args": [],
             "returns": {
                 "type": "void"
             }
@@ -67,37 +42,6 @@
                 {
                     "type": "pay",
                     "name": "payment"
-                }
-            ],
-            "returns": {
-                "type": "void"
-            }
-        },
-        {
-            "name": "withdraw",
-            "args": [],
-            "returns": {
-                "type": "void"
-            }
-        },
-        {
-            "name": "receiveMessage",
-            "args": [
-                {
-                    "type": "uint64",
-                    "name": "nonce"
-                },
-                {
-                    "type": "asset",
-                    "name": "asset"
-                },
-                {
-                    "type": "uint64",
-                    "name": "amount"
-                },
-                {
-                    "type": "address",
-                    "name": "receiver"
                 }
             ],
             "returns": {
@@ -133,18 +77,6 @@
             }
         },
         {
-            "name": "liquidate",
-            "args": [
-                {
-                    "type": "account",
-                    "name": "borrower"
-                }
-            ],
-            "returns": {
-                "type": "void"
-            }
-        },
-        {
             "name": "snipe",
             "args": [
                 {
@@ -169,27 +101,71 @@
             }
         },
         {
-            "name": "borrow_of",
+            "name": "set_collateral",
             "args": [
                 {
-                    "type": "address",
-                    "name": "address"
+                    "type": "uint64",
+                    "name": "asset_id"
                 }
             ],
             "returns": {
-                "type": "(uint64,uint64,uint64)"
+                "type": "void"
             }
         },
         {
-            "name": "supply_of",
+            "name": "create_collateral",
             "args": [
                 {
-                    "type": "address",
-                    "name": "address"
+                    "type": "string",
+                    "name": "name"
+                },
+                {
+                    "type": "string",
+                    "name": "unit_name"
+                },
+                {
+                    "type": "uint64",
+                    "name": "supply"
                 }
             ],
             "returns": {
-                "type": "(uint64,uint64)"
+                "type": "void"
+            }
+        },
+        {
+            "name": "receiveMessage",
+            "args": [
+                {
+                    "type": "uint64",
+                    "name": "nonce"
+                },
+                {
+                    "type": "asset",
+                    "name": "asset"
+                },
+                {
+                    "type": "uint64",
+                    "name": "amount"
+                },
+                {
+                    "type": "address",
+                    "name": "receiver"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "liquidate",
+            "args": [
+                {
+                    "type": "account",
+                    "name": "borrower"
+                }
+            ],
+            "returns": {
+                "type": "void"
             }
         }
     ],
