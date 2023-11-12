@@ -49,7 +49,7 @@ ALGORAND
 ```
 
 # Flow Diagram
-[Flow](https://github.com/devarogundade/tunnel/assets/81397790/2d9f5714-8cbb-452b-844e-d68b27aef384)
+<img width="2544" alt="arch" src="https://github.com/devarogundade/tunnel/assets/81397790/39368f30-2ff5-46e2-bd0a-68227ccc9341">
 
 # Preview
 ![Preview](https://github.com/devarogundade/tunnel/assets/81397790/ad274cfb-0d38-4c21-bfd7-3333dc6edc14)
