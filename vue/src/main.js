@@ -1,5 +1,7 @@
 import './assets/main.css'
 
+import "./scripts/init"
+
 import { createApp } from 'vue'
 import { createStore } from 'vuex'
 
