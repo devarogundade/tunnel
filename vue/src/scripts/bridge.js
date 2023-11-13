@@ -126,7 +126,7 @@ export async function trySupply(amount) {
         const payment = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
             from: accounts[0],
             to: TUNNEL_ADDR,
-            amount: Number(amount),
+            amount: BigInt(amount),
             suggestedParams
         })
 

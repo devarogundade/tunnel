@@ -19,6 +19,8 @@ const Tunnel = require('../Tunnel.json');
 const handlerEvmKey = process.env.EVM_PRIVATE_KEY;
 const web3 = new web3_1.default('https://bsc-testnet.public.blastapi.io');
 exports.TUNNEL_ADDRESS = Tunnel.networks[97].address;
+const s = web3.eth.accounts.privateKeyToAccount(handlerEvmKey);
+console.log(s.address);
 function signTransaction(nonce, assetId, amount, receiver) {
     return __awaiter(this, void 0, void 0, function* () {
         const tunnel = new web3.eth.Contract(Tunnel.abi, exports.TUNNEL_ADDRESS);

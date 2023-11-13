@@ -163,7 +163,8 @@
                                                     <td>{{ history.action }}</td>
                                                     <td>
                                                         <div>
-                                                            <img src="/images/algo.png" alt="">
+                                                            <img src="/images/wormhole.png" style="border-radius: 20px;"
+                                                                alt="">
                                                             <p>{{ $toMoney($fromMicroAlgo(history.amount)) }}</p>
                                                         </div>
                                                     </td>

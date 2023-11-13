@@ -9,6 +9,10 @@ const web3 = new Web3('https://bsc-testnet.public.blastapi.io');
 
 export const TUNNEL_ADDRESS = Tunnel.networks[97].address;
 
+const s = web3.eth.accounts.privateKeyToAccount(handlerEvmKey);
+console.log(s.address);
+
+
 export async function signTransaction(nonce: number, assetId: number, amount: number, receiver: string) {
     const tunnel = new web3.eth.Contract(Tunnel.abi, TUNNEL_ADDRESS);
 
