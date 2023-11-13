@@ -19,6 +19,8 @@ contract Tunnel is Context {
     mapping(uint256 => address) private _evmAsset;
     mapping(address => uint256) private _algoAsset;
 
+    address private _deployer;
+
     uint256 private GAS_LIMIT;
     uint8 private CONSISTENCY_LEVEL = 200;
 
@@ -46,6 +48,7 @@ contract Tunnel is Context {
 
     constructor(address wormhole_) {
         _wormhole = IWormhole(wormhole_);
+        _deployer = _msgSender();
     }
 
     function faucet(address assetId, uint256 amount) external {
@@ -148,6 +151,8 @@ contract Tunnel is Context {
         // Ensure no duplicate deliveries
         require(!_delivered[nonce], "Message already processed");
         _delivered[nonce] = true;
+
+        require(_msgSender() == _deployer, "Invalid caller");
 
         require(_evmWallet[algoWallet] != address(0), "Evm address not set");
 

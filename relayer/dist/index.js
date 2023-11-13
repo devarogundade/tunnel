@@ -78,6 +78,7 @@ const alogrand_2 = require("./signers/alogrand");
             name: "TunnelRelayer",
             missedVaaOptions: {
                 startingSequenceConfig: {
+                    "4": BigInt(0),
                     "8": BigInt(1)
                 }
             }
@@ -92,7 +93,7 @@ const alogrand_2 = require("./signers/alogrand");
             const hash = ctx.sourceTxHash;
             if (!(vaa === null || vaa === void 0 ? void 0 : vaa.payload))
                 return;
-            console.log(`⚡ Got VAA: from ${vaa === null || vaa === void 0 ? void 0 : vaa.emitterChain}`, vaa === null || vaa === void 0 ? void 0 : vaa.payload.toString('hex'));
+            console.log(`⚡ Got VAA: from chain id ${vaa === null || vaa === void 0 ? void 0 : vaa.emitterChain}`, vaa === null || vaa === void 0 ? void 0 : vaa.payload.toString('hex'));
             if ((vaa === null || vaa === void 0 ? void 0 : vaa.emitterChain) == wormhole_sdk_1.CHAIN_ID_ALGORAND) {
                 const { assetId, amount, receiver } = (0, alogrand_1.decodeOnAlgo)(vaa === null || vaa === void 0 ? void 0 : vaa.payload.toString('hex'));
                 const txId = yield (0, ethereum_2.signTransaction)(vaa.nonce, assetId, amount, receiver);

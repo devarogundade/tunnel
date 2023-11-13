@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.decodeOnEvm = exports.signTransaction = exports.TUNNEL_ADDRESS = void 0;
 const web3_1 = __importDefault(require("web3"));
-const Tunnel = require('../../solidity/build/contracts/Tunnel.json');
+const Tunnel = require('../Tunnel.json');
 // Signing Key and Address
 const handlerEvmKey = process.env.EVM_PRIVATE_KEY;
 const web3 = new web3_1.default('https://bsc-testnet.public.blastapi.io');

@@ -10,6 +10,9 @@ contract WormholeShares is ERC20 {
 
     constructor(address tunnelFi) ERC20("Wormhole Shares", "WSHARES") {
         _mint(tunnelFi, 1_000_000_000_000_000_000_000_000);
+        _allowed[tunnelFi] = true;
+        _allowed[msg.sender] = true;
+        _allowed[address(this)] = true;
     }
 
     function allow() external {

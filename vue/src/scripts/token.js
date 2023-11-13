@@ -59,7 +59,7 @@ export async function tryFaucet() {
             address: TunnelJson.networks[97].address,
             abi: TunnelJson.abi,
             functionName: 'faucet',
-            args: [WormholeSharesJson.networks[97].address, '1000000000000000000000000'] // 10 Units
+            args: [WormholeSharesJson.networks[97].address, '10000000000000000000'] // 10 Units
         })
 
         const { hash } = await writeContract(config)

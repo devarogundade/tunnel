@@ -1,6 +1,6 @@
 import Web3 from 'web3';
 
-const Tunnel = require('../../solidity/build/contracts/Tunnel.json');
+const Tunnel = require('../Tunnel.json');
 
 // Signing Key and Address
 const handlerEvmKey = process.env.EVM_PRIVATE_KEY!!;
