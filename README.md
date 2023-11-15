@@ -101,9 +101,9 @@ ALGORAND
 ```
 
 # Flow Diagram
-<img width="2544" alt="arch" src="https://github.com/devarogundade/tunnel/assets/81397790/39368f30-2ff5-46e2-bd0a-68227ccc9341">
+<img width="2544" alt="arch" src="https://github.com/devarogundade/tunnel/assets/81397790/ef6bfae5-502f-41d9-bfde-3c4de69657a4">
 
 # Preview
-![Preview](https://github.com/devarogundade/tunnel/assets/81397790/ad274cfb-0d38-4c21-bfd7-3333dc6edc14)
+![Screenshot 2023-11-12 134727](https://github.com/devarogundade/tunnel/assets/81397790/e8abdc2e-100b-409f-8f88-ff0fb439adb6)
 
 
