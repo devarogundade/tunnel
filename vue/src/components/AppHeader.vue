@@ -93,52 +93,54 @@ export default {
             connection: false,
         }
     },
-    mounted() {
-        const metadata = {
-            name: 'TunnelFi',
-            description: 'Connect Your Web3 Wallet',
-            url: 'https://web3modal.com',
-            icons: ['https://avatars.githubusercontent.com/u/37784886']
-        }
-
-        const chains = [bscTestnet]
-        defaultWagmiConfig({ chains, projectId, metadata })
-
-        watchAccount((account) => {
-            this.$store.commit('setWallet0', account.address)
-        })
-
-        const peraWallet = new PeraWalletConnect({
-            chainId: this.$algorandTestnet().id,
-        });
-
-        peraWallet.reconnectSession().then(async (accounts) => {
-            peraWallet.connector?.on("disconnect", this.peraDisconnect(peraWallet))
-
-            if (peraWallet.isConnected && accounts.length > 0) {
-                this.$store.commit('setWallet1', accounts[0])
-
-                const appInfo = await readOptIn(accounts[0]);
-
-                if (!appInfo) return
-
-                const localStates = appInfo['app-local-state']['key-value'];
-
-                const state = {}
-
-                for (let index = 0; index < localStates.length; index++) {
-
-                    const key = Buffer.from(localStates[index].key, 'base64').toString();
-                    const value = Number(localStates[index].value.uint);
-
-                    state[key] = value
-                }
-
-                this.$store.commit('setLocalState', state)
+    updated() {
+        if (this.$route.name != 'home') {
+            const metadata = {
+                name: 'TunnelFi',
+                description: 'Connect Your Web3 Wallet',
+                url: 'https://web3modal.com',
+                icons: ['https://avatars.githubusercontent.com/u/37784886']
             }
-        }).catch((error) => {
-            console.error(error)
-        });
+
+            const chains = [bscTestnet]
+            defaultWagmiConfig({ chains, projectId, metadata })
+
+            watchAccount((account) => {
+                this.$store.commit('setWallet0', account.address)
+            })
+
+            const peraWallet = new PeraWalletConnect({
+                chainId: this.$algorandTestnet().id,
+            });
+
+            peraWallet.reconnectSession().then(async (accounts) => {
+                peraWallet.connector?.on("disconnect", this.peraDisconnect(peraWallet))
+
+                if (peraWallet.isConnected && accounts.length > 0) {
+                    this.$store.commit('setWallet1', accounts[0])
+
+                    const appInfo = await readOptIn(accounts[0]);
+
+                    if (!appInfo) return
+
+                    const localStates = appInfo['app-local-state']['key-value'];
+
+                    const state = {}
+
+                    for (let index = 0; index < localStates.length; index++) {
+
+                        const key = Buffer.from(localStates[index].key, 'base64').toString();
+                        const value = Number(localStates[index].value.uint);
+
+                        state[key] = value
+                    }
+
+                    this.$store.commit('setLocalState', state)
+                }
+            }).catch((error) => {
+                console.error(error)
+            });
+        }
     },
     methods: {
         peraDisconnect: async function (peraWallet) {

@@ -38,9 +38,7 @@ const TUNNEL_ADDR = 'I3V5SKQY4D74PDB5UFASOQ6VPVBLF25TNLVKQ3JCDB4CKHZW5YPXQTBQ4Q'
 const WORMHOLE_ADDR = 'C2SZBD4ZFFDXANBCUTG5GBUEWMQ34JS5LFGDRTEVJBAXDRF6ZWB7Q4KHHM'
 const STORAGE_ADDR = 'KIJYDTKU6IWJKJAP7JGQDQERWQEKOH7GHPWU3KPR5I37UICFZ5JOCS46E4'
 
-const algodClient = algokit.getAlgoClient({
-    server: 'https://testnet-api.algonode.cloud',
-});
+const algodClient = new algosdk.Algodv2('a'.repeat(64), "https://testnet-api.algonode.cloud", undefined)
 
 const peraWallet = new PeraWalletConnect({
     chainId: 416002,
