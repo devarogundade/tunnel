@@ -49,3 +49,22 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-direction: column;
+  padding: 100px 0;
+}
+
+.empty p {
+  color: var(--text-normal);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 120%;
+  /* 16.8px */
+  letter-spacing: 0.28px;
+}

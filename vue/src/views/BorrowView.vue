@@ -175,6 +175,12 @@
                                             </tbody>
                                         </div>
                                     </table>
+
+                                    <div class="empty"
+                                        v-if="activities.filter(h => h.action == 'borrow' || h.action == 'repay').length == 0">
+                                        <img src="/images/empty.png" alt="">
+                                        <p>No transaction history!</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
